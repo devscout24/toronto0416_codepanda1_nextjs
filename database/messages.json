@@ -1,0 +1,38 @@
+[
+  {
+    "id": 2,
+    "avatarBackground": "bg-red-500/30",
+    "username": "ReactBard",
+    "content": "React components dance in the night,",
+    "color": "text-pink-400",
+    "duration": 2000,
+    "status": "read",
+    "updatedAt": "2025-08-21T18:08:26.996Z"
+  },
+  {
+    "id": 5,
+    "avatarBackground": "bg-purple-500/30",
+    "username": "DevRhymer",
+    "content": "Static pages load in a flash,",
+    "color": "text-purple-400",
+    "duration": 3500,
+    "status": "read",
+    "updatedAt": "2025-08-21T19:09:54.256Z"
+  },
+  {
+    "username": "Rafaela_Bauch",
+    "content": "Pax cuppedia decet sortitus velociter.",
+    "status": "read",
+    "id": 1755803410164,
+    "createdAt": "2025-08-21T19:10:10.164Z",
+    "updatedAt": "2025-08-21T19:13:31.522Z"
+  },
+  {
+    "username": "Doyle54",
+    "content": "Ut tepidus trans bene truculenter tabula aperio adflicto.",
+    "status": "read",
+    "id": 1755803653095,
+    "createdAt": "2025-08-21T19:14:13.095Z",
+    "updatedAt": "2025-08-21T19:15:03.604Z"
+  }
+]

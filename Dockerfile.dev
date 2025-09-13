@@ -1,0 +1,44 @@
+# Development Dockerfile with hot reload and auto-sync
+FROM node:18-alpine
+
+# Install dumb-init and inotify-tools for proper signal handling and file watching
+RUN apk add --no-cache dumb-init inotify-tools
+
+# Create app user with proper UID/GID that matches host
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Set working directory
+WORKDIR /app
+
+# Install Bun globally as root
+RUN npm install -g bun
+
+# Create directories and set permissions
+RUN mkdir -p /app/.next /app/node_modules && \
+    chown -R nodejs:nodejs /app
+
+# Copy package files first (for better caching)
+COPY --chown=nodejs:nodejs package*.json ./
+COPY --chown=nodejs:nodejs bun.lock* ./
+
+# Switch to nodejs user
+USER nodejs
+
+# Install all dependencies (including dev dependencies)
+RUN bun install
+
+# Copy source code and scripts
+COPY --chown=nodejs:nodejs . .
+
+# Make startup script executable
+RUN chmod +x scripts/docker-dev-start.sh
+
+# Expose port
+EXPOSE 3000
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start development server with auto-sync
+CMD ["./scripts/docker-dev-start.sh"]
