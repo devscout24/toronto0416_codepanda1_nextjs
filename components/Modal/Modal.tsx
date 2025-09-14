@@ -1,14 +1,14 @@
 "use client";
+
+import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PropsWithChildren } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
-
-import { PropsWithChildren } from "react";
+} from "../animate-ui/components/radix/dialog";
 
 interface ModalProps {
   modalId: string;

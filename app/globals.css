@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--grey-50);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -30,9 +30,9 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
+  --color-secondary: var(--orange-500);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
+  --color-primary: var(--green-500);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -41,17 +41,89 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Expose full scales to Tailwind */
+  --color-primary-50: var(--green-50);
+  --color-primary-100: var(--green-100);
+  --color-primary-200: var(--green-200);
+  --color-primary-300: var(--green-300);
+  --color-primary-400: var(--green-400);
+  --color-primary-500: var(--green-500);
+  --color-primary-600: var(--green-600);
+  --color-primary-700: var(--green-700);
+  --color-primary-800: var(--green-800);
+  --color-primary-900: var(--green-900);
+
+  --color-secondary-50: var(--orange-50);
+  --color-secondary-100: var(--orange-100);
+  --color-secondary-200: var(--orange-200);
+  --color-secondary-300: var(--orange-300);
+  --color-secondary-400: var(--orange-400);
+  --color-secondary-500: var(--orange-500);
+  --color-secondary-600: var(--orange-600);
+  --color-secondary-700: var(--orange-700);
+  --color-secondary-800: var(--orange-800);
+  --color-secondary-900: var(--orange-900);
+
+  --color-neutral-50: var(--grey-50);
+  --color-neutral-100: var(--grey-100);
+  --color-neutral-200: var(--grey-200);
+  --color-neutral-300: var(--grey-300);
+  --color-neutral-400: var(--grey-400);
+  --color-neutral-500: var(--grey-500);
+  --color-neutral-600: var(--grey-600);
+  --color-neutral-700: var(--grey-700);
+  --color-neutral-800: var(--grey-800);
+  --color-neutral-900: var(--grey-900);
 }
 
 :root {
   --radius: 0.625rem;
 
+  /* Secondary: ORANGE (50 → 900) */
+  --orange-50: oklch(0.972 0.023 73.77);
+  --orange-100: oklch(0.925 0.058 70.84);
+  --orange-200: oklch(0.872 0.092 70.29);
+  --orange-300: oklch(0.819 0.135 68.98);
+  --orange-400: oklch(0.774 0.165 66.75);
+  --orange-500: oklch(0.724 0.213 63.5); /* default secondary */
+  --orange-600: oklch(0.669 0.196 61.27);
+  --orange-700: oklch(0.56 0.177 57.91);
+  --orange-800: oklch(0.474 0.142 55.04);
+  --orange-900: oklch(0.404 0.112 52.26);
+
+  /* Primary: GREEN (50 → 900) */
+  --green-50: oklch(0.965 0.029 137.61);
+  --green-100: oklch(0.902 0.069 137.38);
+  --green-200: oklch(0.847 0.116 136.74);
+  --green-300: oklch(0.769 0.173 136.55);
+  --green-400: oklch(0.7 0.197 136.05);
+  --green-500: oklch(0.623 0.23 136.17); /* default primary */
+  --green-600: oklch(0.56 0.224 135.77);
+  --green-700: oklch(0.473 0.204 134.71);
+  --green-800: oklch(0.403 0.172 133.87);
+  --green-900: oklch(0.335 0.135 133.17);
+
+  /* Natural: GREY (50 → 900) */
+  --grey-50: oklch(0.922 0.004 264.54);
+  --grey-100: oklch(0.756 0.007 264.27);
+  --grey-200: oklch(0.648 0.008 264.31);
+  --grey-300: oklch(0.511 0.008 265.08);
+  --grey-400: oklch(0.397 0.009 264.82);
+  --grey-500: oklch(0.27 0.007 266.47);
+  --grey-600: oklch(0.225 0.006 267.53);
+  --grey-700: oklch(0.18 0.005 267.62);
+  --grey-800: oklch(0.14 0.004 268.21);
+  --grey-900: oklch(0.105 0.003 269.13);
+
   /* Main page background and text colors */
-  --background: oklch(1 0 0); /* Main body background color - white */
+  --background: oklch(
+    100% 0.00011 271.152
+  ); /* Main body background color - white */
   --foreground: oklch(0.145 0 0); /* Main body text color - dark gray/black */
 
   /* Card component colors */
-  --card: oklch(1 0 0); /* Card background color - white */
+  --card: oklch(100% 0.00011 271.152); /* Card background color - white */
   --card-foreground: oklch(0.145 0 0); /* Card text color - dark gray/black */
 
   /* Popover/dropdown component colors */
@@ -61,15 +133,15 @@
   ); /* Popover text color - dark gray/black */
 
   /* Primary button and element colors */
-  --primary: oklch(0.205 0 0); /* Primary button background - dark gray */
+  /* --primary: oklch(0.205 0 0); Primary button background - dark gray */
   --primary-foreground: oklch(
-    0.985 0 0
+    100% 0.00011 271.152
   ); /* Primary button text color - light gray/white */
 
   /* Secondary button and element colors */
-  --secondary: oklch(0.97 0 0); /* Secondary button background - light gray */
+  /* --secondary: oklch(0.97 0 0); /* Secondary button background - light gray */
   --secondary-foreground: oklch(
-    0.205 0 0
+    0.985 0 0
   ); /* Secondary button text color - dark gray */
 
   /* Muted/disabled element colors */
@@ -203,5 +275,9 @@
   }
   body {
     @apply bg-background text-foreground; /* Apply main background and text colors to body */
+  }
+
+  .section-container {
+    @apply mx-auto max-w-[1200px];
   }
 }
