@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { PlusIcon, MinusIcon } from 'lucide-react';
+import * as React from "react";
+import { PlusIcon, MinusIcon } from "lucide-react";
 
 import {
   Counter as CounterPrimitive,
@@ -7,26 +7,37 @@ import {
   CounterMinusButton as CounterMinusButtonPrimitive,
   CounterPlusButton as CounterPlusButtonPrimitive,
   type CounterProps as CounterPropsPrimitive,
-} from '@/components/animate-ui/primitives/animate/counter';
-import { Button } from '@/components/animate-ui/components/buttons/button';
-import { cn } from '@/lib/utils';
+} from "@/components/animate-ui/primitives/animate/counter";
+import { Button } from "@/components/animate-ui/components/buttons/button";
+import { cn } from "@/lib/utils";
 
-type CounterProps = Omit<CounterPropsPrimitive, 'children' | 'asChild'>;
+type CounterProps = Omit<CounterPropsPrimitive, "children" | "asChild">;
 
 function Counter({ className, ...props }: CounterProps) {
   return (
     <CounterPrimitive
-      className={cn('flex items-center p-1 border rounded-lg', className)}
+      className={cn(
+        "flex items-center overflow-hidden rounded-lg border",
+        className,
+      )}
       {...props}
     >
       <CounterMinusButtonPrimitive asChild>
-        <Button size="icon-sm" variant="accent" className="rounded-sm">
+        <Button
+          size="icon-sm"
+          variant="accent"
+          className="my-0.5 rounded-none border-r bg-transparent hover:bg-transparent"
+        >
           <MinusIcon className="size-4" />
         </Button>
       </CounterMinusButtonPrimitive>
       <CounterNumberPrimitive className="px-2.5" />
       <CounterPlusButtonPrimitive asChild>
-        <Button size="icon-sm" variant="accent" className="rounded-sm">
+        <Button
+          size="icon-sm"
+          variant="accent"
+          className="my-0.5 rounded-none border-l bg-transparent hover:bg-transparent"
+        >
           <PlusIcon className="size-4" />
         </Button>
       </CounterPlusButtonPrimitive>

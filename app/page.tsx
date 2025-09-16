@@ -1,8 +1,9 @@
 import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
-import ProductCard, { SkeletonProductCard } from "@/components/Card";
+import ProductCard from "@/components/card";
+import { TProductCard } from "@/types/product.type";
 import Link from "next/link";
 
-const productData = [
+const productData: TProductCard[] = [
   {
     id: "1",
     title: "Fresh Atlantic Salmon",
@@ -10,11 +11,11 @@ const productData = [
     image: "/images/salmon.png",
     tags: ["Halal", "Gluten-Free"],
     badge: "Buy 1 Get 1",
-    rating: 5,
-    oldPrice: "$14.99",
-    price: "$11.49",
-    unit: "/kg",
-    stockStatus: "In Stock",
+    rating: 4,
+    oldPrice: "14.99",
+    price: "11.49",
+    unit: "kg",
+    stockStatus: "out-of-stock",
     isFavorite: true,
   },
   {
@@ -24,10 +25,10 @@ const productData = [
     image: "/images/salmon.png",
     tags: ["Halal", "Vegan"],
     rating: 5,
-    oldPrice: "$14.99",
-    price: "$11.49",
-    unit: "/kg",
-    stockStatus: "In Stock",
+    oldPrice: "14.99",
+    price: "11.49",
+    unit: "kg",
+    stockStatus: "in-stock",
     isFavorite: true,
   },
   {
@@ -37,11 +38,11 @@ const productData = [
     image: "/images/salmon.png",
     tags: ["Sugar-Free", "Halal"],
     badge: "Buy 1 Get 1",
-    rating: 5,
-    oldPrice: "$14.99",
-    price: "$11.49",
-    unit: "/kg",
-    stockStatus: "In Stock",
+    rating: 3,
+    oldPrice: "14.99",
+    price: "11.49",
+    unit: "kg",
+    stockStatus: "in-stock",
     isFavorite: true,
   },
 ];
@@ -59,9 +60,18 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex gap-4">
-        <ProductCard payload={productData[0]} />
-        <SkeletonProductCard />
+      <div className="bg-primary my-4 h-2 w-full"></div>
+
+      <div className="flex flex-col gap-4 md:flex-row">
+        {/* <SkeletonProductCard /> */}
+
+        {productData.map((product, idx) => (
+          <ProductCard
+            key={product.id}
+            payload={product}
+            priority={idx === 0}
+          />
+        ))}
       </div>
     </section>
   );

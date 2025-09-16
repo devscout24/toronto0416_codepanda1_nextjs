@@ -76,7 +76,10 @@ const CounterMinusButton = ({
       data-slot="counter-minus-button"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      disabled={value <= 0}
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        // Prevent going below zero and disable at 0
+        if (value <= 0) return;
         setValue(value - 1);
         onClick?.(e);
       }}
