@@ -79,8 +79,8 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   return (
-    <section>
-      <Card className="flex h-fit min-h-[428px] w-full min-w-[287px] flex-col overflow-hidden p-0">
+    <section className="w-full">
+      <Card className="flex h-fit min-h-[428px] w-full flex-col overflow-hidden p-0">
         <CardHeader className="relative p-0">
           <Image
             src="/images/card-img.jpg"
@@ -89,7 +89,6 @@ export default function ProductCard({
             height={428}
             className="max-h-[428px] w-full"
             priority={priority}
-            sizes="(max-width: 768px) 100vw, 287px"
           />
           <div className="absolute top-4 flex w-full items-center justify-between px-4">
             <div>{payload.badge && <Badge>{payload.badge}</Badge>}</div>

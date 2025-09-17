@@ -23,6 +23,7 @@ import {
 } from "../ui/sheet";
 import { Menu } from "lucide-react";
 import { Badge } from "../ui/badge";
+// import Image from "next/image";
 
 export default function MainNav() {
   const FullScreen = () => (
@@ -114,6 +115,12 @@ export default function MainNav() {
     <nav className="section-container flex items-center justify-between">
       <Link href="/">
         <Logo className="cursor-pointer" />
+        {/* <Image
+          alt="logo"
+          src="@/assets/svgs/Sufis_Logo.svg"
+          width={25}
+          height={25}
+        /> */}
       </Link>
 
       <Sheet>
