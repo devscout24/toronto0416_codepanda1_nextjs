@@ -1,12 +1,7 @@
 import { TTestimonial } from "@/types/testimonials.type";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Rating from "../shared/Rating";
+import CarouselBtn from "./components/carouselBtn";
 
 export default function Testimonials() {
   const testimonials: TTestimonial[] = [
@@ -59,7 +54,7 @@ export default function Testimonials() {
 
   return (
     <section className="section-container">
-      <div className="rounded-2xl bg-white p-14 text-center">
+      <div className="rounded-2xl bg-white p-8 text-center md:p-14">
         <Carousel>
           <CarouselContent>
             {testimonials.map((testimonial) => (
@@ -76,7 +71,7 @@ export default function Testimonials() {
                     {testimonial.name}
                   </h2>
                   <Rating rating={testimonial.rating} readOnly />
-                  <p className="text-sm md:w-1/2 lg:text-base">
+                  <p className="w-full text-sm md:w-1/2 lg:text-base">
                     {testimonial.feedback}
                   </p>
                 </div>
@@ -85,10 +80,8 @@ export default function Testimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div>
-            <CarouselPrevious className="bottom-0" />
-            <CarouselNext />
-          </div>
+
+          <CarouselBtn />
         </Carousel>
       </div>
     </section>
