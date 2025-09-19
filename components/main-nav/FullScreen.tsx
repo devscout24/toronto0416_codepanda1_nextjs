@@ -44,11 +44,11 @@ export default function FullScreen({
           </IconButton>
         </Link>
 
-        <IconButton className="bg-primary flex size-11 items-center justify-center rounded-full text-white">
+        <IconButton className="bg-primary-700 flex size-11 items-center justify-center rounded-full text-white">
           <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
         </IconButton>
 
-        <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
+        <IconButton className="bg-primary-700 relative flex size-11 items-center justify-center rounded-full text-white">
           <BagIcon className="size-[1.5rem]" />
           <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
             9+
@@ -56,8 +56,8 @@ export default function FullScreen({
         </IconButton>
 
         <Avatar className="size-11">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src="/images/images.png" />
+          <AvatarFallback>KA</AvatarFallback>
         </Avatar>
       </div>
     </nav>

@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 export function SkeletonProductCard() {
   return (
     <section>
-      <Card className="flex h-[447px] w-[305px] flex-col overflow-hidden p-0">
+      <Card className="flex h-[447px] w-full flex-col overflow-hidden p-0">
         <CardHeader className="relative p-0">
           {/* Image placeholder */}
           <Skeleton className="h-[215px] w-full rounded-none" />
@@ -79,7 +79,7 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   return (
-    <section className="w-full">
+    <section className="w-full select-none">
       <Card className="flex h-fit min-h-[428px] w-full flex-col overflow-hidden p-0">
         <CardHeader className="relative p-0">
           <Image
@@ -93,7 +93,7 @@ export default function ProductCard({
           <div className="absolute top-4 flex w-full items-center justify-between px-4">
             <div>{payload.badge && <Badge>{payload.badge}</Badge>}</div>
             <div>
-              <LikeButton />
+              <LikeButton favorite={payload.isFavorite} />
             </div>
           </div>
         </CardHeader>

@@ -5,8 +5,12 @@ import { IconButton } from "@/components/animate-ui/components/buttons/icon";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-export default function LikeButton() {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+export default function LikeButton({
+  favorite = false,
+}: {
+  favorite?: boolean;
+}) {
+  const [isLiked, setIsLiked] = useState<boolean>(favorite);
 
   return (
     <IconButton

@@ -2,14 +2,15 @@
 
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import { useCarousel } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-export default function CarouselBtn() {
+export default function CarouselBtn({ className }: { className?: string }) {
   const { canScrollPrev, scrollPrev, canScrollNext, scrollNext } =
     useCarousel();
 
   return (
-    <section className="space-x-10">
+    <section className={cn("space-x-10", className)}>
       <Button
         onClick={scrollPrev}
         disabled={!canScrollPrev}

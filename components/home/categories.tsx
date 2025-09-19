@@ -7,6 +7,8 @@ import Categories4Icon from "@/assets/icons/categories4.svg";
 import Categories5Icon from "@/assets/icons/categories5.svg";
 import { ArrowRight } from "lucide-react";
 import { IconButton } from "../animate-ui/components/buttons/icon";
+import { handleMouseDown } from "@/utils/handleMouseDown";
+import Link from "next/link";
 
 export default function Categories() {
   const categories = [
@@ -47,27 +49,6 @@ export default function Categories() {
     },
   ];
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    const scrollContainer = e.currentTarget;
-    if (!scrollContainer) return;
-
-    const startX = e.clientX;
-    const scrollLeft = scrollContainer.scrollLeft;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX - startX;
-      scrollContainer.scrollLeft = scrollLeft - x;
-    };
-
-    const handleMouseUp = () => {
-      scrollContainer.removeEventListener("mousemove", handleMouseMove);
-      scrollContainer.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    scrollContainer.addEventListener("mousemove", handleMouseMove);
-    scrollContainer.addEventListener("mouseup", handleMouseUp);
-  };
-
   return (
     <section>
       <div className="section-container">
@@ -93,12 +74,14 @@ export default function Categories() {
                 </div>
               </div>
             ))}
-            <div className="bg-primary-900 flex-1 space-y-6 rounded-sm p-3.5 text-nowrap text-white">
-              <IconButton variant="secondary" className="rounded-full">
-                <ArrowRight />
-              </IconButton>
-              <p>Show All</p>
-            </div>
+            <Link href="/all-category">
+              <div className="bg-primary-900 flex-1 space-y-6 rounded-sm p-3.5 text-nowrap text-white">
+                <IconButton variant="secondary" className="rounded-full">
+                  <ArrowRight />
+                </IconButton>
+                <p>Show All</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
