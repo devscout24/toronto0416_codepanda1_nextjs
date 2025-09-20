@@ -8,7 +8,7 @@ import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import PaymentIcon from "@/assets/icons/secure-payment.svg";
 import SupportIcon from "@/assets/icons/support.svg";
 
-export default function Home() {
+export default function HomePage() {
   const benefits = [
     {
       icon: ShippingIcon,

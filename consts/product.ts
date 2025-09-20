@@ -1,11 +1,15 @@
-import { TProductCard } from "@/types/product.type";
+import { TProduct, TProductDetails } from "@/types/product.type";
 
-export const productData: TProductCard[] = [
+export const productData: TProduct[] = [
   {
     id: "1",
     title: "Fresh Atlantic Salmon",
     description: "Wild-caught sustainable salmon fillet",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Gluten-Free"],
     badge: "Buy 1 Get 1",
     rating: 4,
@@ -20,7 +24,11 @@ export const productData: TProductCard[] = [
     title: "Organic Cucumbers",
     description:
       "Crisp and refreshing cucumbers sourced from local farms. Perfect for salads, raita, or light snacking.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Vegan"],
     rating: 5,
     oldPrice: "14.99",
@@ -34,7 +42,11 @@ export const productData: TProductCard[] = [
     title: "Premium Basmati Rice",
     description:
       "ong-grain aromatic basmati rice, aged for perfect fluffiness.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Sugar-Free", "Halal"],
     badge: "Buy 1 Get 1",
     rating: 3,
@@ -49,7 +61,11 @@ export const productData: TProductCard[] = [
     title: "Golden Mustard Oil",
     description:
       "Pure cold-pressed mustard oil with a rich aroma. Excellent for cooking traditional dishes and pickles.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Gluten-Free"],
     badge: "Buy 1 Get 1",
     rating: 4,
@@ -64,7 +80,11 @@ export const productData: TProductCard[] = [
     title: "Fresh Farm Eggs",
     description:
       "Farm-fresh brown eggs, high in protein and nutrition. Perfect for breakfast, baking, or hearty meals.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Vegan"],
     rating: 5,
     oldPrice: "14.99",
@@ -78,7 +98,11 @@ export const productData: TProductCard[] = [
     title: "Organic Red Lentils (Masoor Dal)",
     description:
       "Protein-rich split red lentils. Easy to cook, light on digestion, and perfect for everyday dal curry.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Sugar-Free", "Halal"],
     badge: "Buy 1 Get 1",
     rating: 3,
@@ -93,7 +117,11 @@ export const productData: TProductCard[] = [
     title: "Brown Sugar",
     description:
       "Natural brown sugar with rich caramel flavor. Great for tea, coffee, and desserts.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Gluten-Free"],
     badge: "Buy 1 Get 1",
     rating: 4,
@@ -108,7 +136,11 @@ export const productData: TProductCard[] = [
     title: "Premium Black Tea Leaves",
     description:
       "Strong and flavorful tea leaves handpicked from the finest gardens. Enjoy a refreshing cup any time of day.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Halal", "Vegan"],
     rating: 5,
     oldPrice: "14.99",
@@ -122,7 +154,11 @@ export const productData: TProductCard[] = [
     title: "Fresh Green Chili",
     description:
       "Spicy, farm-fresh green chilies to add a kick to your curries and chutneys.",
-    image: "/images/salmon.png",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
     tags: ["Sugar-Free", "Halal"],
     badge: "Buy 1 Get 1",
     rating: 3,
@@ -133,3 +169,59 @@ export const productData: TProductCard[] = [
     isFavorite: true,
   },
 ];
+
+export const productDetails: TProductDetails = {
+  product: {
+    id: "6",
+    title: "Organic Red Lentils (Masoor Dal)",
+    description:
+      "Protein-rich split red lentils. Easy to cook, light on digestion, and perfect for everyday dal curry. Impossible Dead Reckoning Part 1!",
+    images: [
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+      "/images/card-img.jpg",
+    ],
+    tags: ["Sugar-Free", "Halal"],
+    badge: "Buy 1 Get 1",
+    rating: 3,
+    oldPrice: "14.99",
+    price: "11.49",
+    unit: "kg",
+    stockStatus: "in-stock",
+    isFavorite: false,
+  },
+  aboutProduct:
+    "<body style='line-height: 1.6; color: #333;'><div class='product-container' style='width: 100%; margin: 20px auto;'><div class='product-header' style='margin-bottom: 20px;'><h1 style='font-size: 24px; color: #333;'>Mission: Impossible Dead Reckoning Part 1 Target Secured Blue Graphic T-Shirt</h1><p class='product-description' style='font-size: 16px; color: #555;'>Ethan Hunt and the IMF are back for another action-packed adventure in Mission: Impossible Dead Reckoning Part 1! This time Ethan must put the mission above all else as they engage in a harrowing race around the world to save humanity from a new all-powerful enemy and a terrifying new weapon.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Product Description</h2><ul style='list-style-type: disc; margin-left: 20px;'><li style='margin-bottom: 10px;'>Enjoy comfort and fashion at the same time with this unique men’s graphic tee design.</li><li style='margin-bottom: 10px;'>Strut your stuff with this stylish new men's t-shirt, perfect for every occasion!</li><li style='margin-bottom: 10px;'>Find the perfect fit for you! Check out size charts for more information.</li><li style='margin-bottom: 10px;'>Printed in the U.S.A. with safe water-based inks. Easy care, machine wash cold inside out with similar colors, tumble dry low (hang dry for best results).</li><li style='margin-bottom: 10px;'>Officially licensed apparel. Designed by and exclusive collaboration with top brands & world-class artists.</li></ul></div><div class='note' style='background-color: #294711; padding: 20px 15px; margin-top: 30px; border-radius: 15px;'><p style='font-size: 14px; color: #62A929;'>Note: We aim to show you accurate product information. Manufacturers, suppliers, and others provide what you see here, and we have not verified it.</p></div><div class='shipping-return' style='margin-top: 30px;'><div class='shipping' style='width: 45%;'><h3 style='font-size: 18px; color: #333; margin-bottom: 10px;'>Shipping Cost</h3><p style='font-size: 14px; color: #555;'>Shipping cost is based on weight. Just add products to your cart and use the Shipping Calculator to see the shipping price.</p></div><div class='return-policy' style='width: 45%;'><h3 style='font-size: 18px; color: #333; margin-bottom: 10px; margin-top: 20px;'>Return Policy</h3><p style='font-size: 14px; color: #555;'>We want you to be 100% satisfied with your purchase. Items can be returned or exchanged within 30 days of delivery.</p></div></div></div></body>",
+  reviews: [
+    {
+      id: 1,
+      rating: 5,
+      reviewer: "Andres Iniesta",
+      date: "29th Jun, 2023",
+      comment:
+        "Looking at this product is so gorgeous! I love it. I think it's hard to find other shops that have this kind of quality. Machine washable, washing in cold water with like-colored garments, hang dry, no shrinkage and lasting longer.",
+    },
+    {
+      id: 2,
+      rating: 4,
+      reviewer: "Andres Iniesta",
+      date: "28th Jun, 2023",
+      comment:
+        "Looking at this product is so gorgeous! I love it. I think it's hard to find other shops that have this kind of quality. Machine washable, washing in cold water with like-colored garments, hang dry, no shrinkage and lasting longer.",
+    },
+    {
+      id: 3,
+      rating: 3,
+      reviewer: "Andres Iniesta",
+      date: "27th Jun, 2023",
+      comment:
+        "Looking at this product is so gorgeous! I love it. I think it's hard to find other shops that have this kind of quality. Machine washable, washing in cold water with like-colored garments, hang dry, no shrinkage and lasting longer.",
+    },
+  ],
+};

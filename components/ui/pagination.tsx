@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import {
   ChevronLeftIcon,
@@ -6,7 +8,10 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Button,
+  buttonVariants,
+} from "../animate-ui/components/buttons/button";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (

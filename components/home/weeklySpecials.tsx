@@ -2,7 +2,7 @@ import Link from "next/link";
 import { RippleButton } from "../animate-ui/components/buttons/ripple";
 import ProductCard from "../card";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import CarouselBtn from "./components/carouselBtn";
+import CarouselBtn from "../shared/carouselBtn";
 import { productData } from "@/consts/product";
 import { ArrowRight } from "lucide-react";
 

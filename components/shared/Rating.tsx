@@ -89,7 +89,7 @@ const Rating: React.FC<RatingProps> = ({
               className={`transition-colors duration-150 ${
                 filled
                   ? "text-secondary-600"
-                  : "text-secondary-200 hover:text-secondary-100"
+                  : "hover:text-secondary-300 text-neutral-100"
               }`}
             />
           </button>

@@ -4,10 +4,13 @@ import { Skeleton } from "../ui/skeleton";
 import { Badge } from "../ui/badge";
 import { Counter } from "../animate-ui/components/animate/counter";
 import LikeButton from "./components/LikeButton";
-import { RippleButton } from "../animate-ui/components/buttons/ripple";
 import Rating from "../shared/Rating";
-import { TProductCard } from "@/types/product.type";
+import { TProduct } from "@/types/product.type";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import CardActionGuard from "./components/CardActionGuard";
+import { Button } from "../animate-ui/components/buttons/button";
+// import { Button } from "../animate-ui/components/buttons/button";
 
 export function SkeletonProductCard() {
   return (
@@ -75,81 +78,89 @@ export default function ProductCard({
   payload,
   priority = false,
 }: {
-  payload: TProductCard;
+  payload: TProduct;
   priority?: boolean;
 }) {
   return (
     <section className="w-full select-none">
-      <Card className="flex h-fit min-h-[428px] w-full flex-col overflow-hidden p-0">
-        <CardHeader className="relative p-0">
-          <Image
-            src="/images/card-img.jpg"
-            alt={payload.title}
-            width={287}
-            height={428}
-            className="max-h-[428px] w-full"
-            priority={priority}
-          />
-          <div className="absolute top-4 flex w-full items-center justify-between px-4">
-            <div>{payload.badge && <Badge>{payload.badge}</Badge>}</div>
+      <Link href={`/all-category/${payload.id}`}>
+        <Card className="group flex h-fit min-h-[428px] w-full cursor-pointer flex-col overflow-hidden p-0">
+          <CardHeader className="relative p-0">
+            <div className="overflow-hidden">
+              <Image
+                src={payload.images[0]}
+                alt={payload.title}
+                width={287}
+                height={428}
+                className="h-[15.5rem] w-full object-cover duration-700 group-hover:scale-125"
+                priority={priority}
+              />
+            </div>
+            <div className="absolute top-4 flex w-full items-center justify-between px-4">
+              <div>{payload.badge && <Badge>{payload.badge}</Badge>}</div>
+              <CardActionGuard className="justify-end">
+                <LikeButton favorite={payload.isFavorite} />
+              </CardActionGuard>
+            </div>
+          </CardHeader>
+
+          <CardContent className="mt-1.5">
             <div>
-              <LikeButton favorite={payload.isFavorite} />
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="mt-1.5">
-          <div>
-            {payload?.tags.length > 0 && (
-              <div className="flex gap-2">
-                {payload.tags.map((tag) => (
-                  <Badge key={tag} variant="accent" className="rounded-md">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="my-2.5">
-            <h2 className="text-lg font-semibold">{payload.title}</h2>
-            <p className="line-clamp-1">{payload.description}</p>
-          </div>
-
-          <div className="mb-5">
-            <Rating rating={payload.rating} readOnly />
-          </div>
-
-          <div className="mb-2.5 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <p className="text-neutral-300 line-through">
-                ${payload.oldPrice}
-              </p>
-              <p className="text-primary-600 text-lg">
-                ${payload.price}/{payload.unit}
-              </p>
-            </div>
-            <div
-              className={cn(
-                payload.stockStatus === "out-of-stock"
-                  ? "text-red-600"
-                  : "text-primary-700",
+              {payload?.tags.length > 0 && (
+                <div className="flex gap-2">
+                  {payload.tags.map((tag) => (
+                    <Badge key={tag} variant="accent" className="rounded-md">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
               )}
-            >
-              {payload.stockStatus === "out-of-stock"
-                ? "Out of Stock"
-                : "In Stock"}
             </div>
-          </div>
-        </CardContent>
 
-        <CardFooter className="mt-auto mb-4 flex items-center justify-between gap-4">
-          <Counter />
-          <RippleButton variant="secondary" className="flex-1">
-            Add to Cart
-          </RippleButton>
-        </CardFooter>
-      </Card>
+            <div className="my-2.5">
+              <h2 className="line-clamp-1 text-lg font-semibold">
+                {payload.title}
+              </h2>
+              <p className="line-clamp-1">{payload.description}</p>
+            </div>
+
+            <div className="mb-5">
+              <Rating rating={payload.rating} readOnly />
+            </div>
+
+            <div className="mb-2.5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <p className="text-neutral-300 line-through">
+                  ${payload.oldPrice}
+                </p>
+                <p className="text-primary-600 text-lg">
+                  ${payload.price}/{payload.unit}
+                </p>
+              </div>
+              <div
+                className={cn(
+                  payload.stockStatus === "out-of-stock"
+                    ? "text-red-600"
+                    : "text-primary-700",
+                )}
+              >
+                {payload.stockStatus === "out-of-stock"
+                  ? "Out of Stock"
+                  : "In Stock"}
+              </div>
+            </div>
+          </CardContent>
+
+          <CardFooter className="mt-auto mb-4 flex items-center justify-between gap-4">
+            <CardActionGuard className="w-full">
+              <Counter />
+              <Button variant="secondary" className="flex-1">
+                Add to Cart
+              </Button>
+            </CardActionGuard>
+          </CardFooter>
+        </Card>
+      </Link>
     </section>
   );
 }

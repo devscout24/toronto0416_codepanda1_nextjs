@@ -1,5 +1,5 @@
 import ProductCard from "../card";
-import CarouselBtn from "../home/components/carouselBtn";
+import CarouselBtn from "../shared/carouselBtn";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { productData } from "@/consts/product";
 
@@ -17,7 +17,7 @@ export default function RecentlyViewed() {
           {productData.map((product) => (
             <CarouselItem
               key={product.id}
-              className="md:basis-1/2 lg:basis-1/4"
+              className="md:basis-1/2 lg:basis-1/3"
             >
               <ProductCard payload={product} />
             </CarouselItem>
