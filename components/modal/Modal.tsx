@@ -52,9 +52,9 @@ export default function Modal({
 
   return (
     <Dialog open={modal === openId} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-[600px]">
+      <DialogContent className="max-h-[90dvh] overflow-y-auto bg-white sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="cursor-pointer text-center text-4xl font-bold">
+          <DialogTitle className="cursor-pointer text-center text-xl font-bold">
             {title}
           </DialogTitle>
         </DialogHeader>

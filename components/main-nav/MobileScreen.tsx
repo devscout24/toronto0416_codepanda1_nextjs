@@ -55,12 +55,14 @@ export default function MobileScreen({
               <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
             </IconButton>
 
-            <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
-              <BagIcon className="size-[1.5rem]" />
-              <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
-                9+
-              </Badge>
-            </IconButton>
+            <Link href="/cart">
+              <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
+                <BagIcon className="size-[1.5rem]" />
+                <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
+                  9+
+                </Badge>
+              </IconButton>
+            </Link>
           </div>
 
           <div className="ml-6">

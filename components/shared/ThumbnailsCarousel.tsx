@@ -72,7 +72,7 @@ export function ThumbnailCarousel({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselBtn className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-between" />
+        <CarouselBtn className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-between px-4" />
       </Carousel>
 
       <Carousel
