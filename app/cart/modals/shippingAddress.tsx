@@ -2,7 +2,7 @@
 
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/animate-ui/components/buttons/button";
+import { TCartAddress } from "@/types/cart.type";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),
@@ -28,13 +29,21 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   phone: z
     .string()
-    .min(1, "Phone number is required")
-    .regex(/^\+880\d{9}$/, "Invalid phone number"),
+    .min(
+      1,
+      "Phone number is required",
+    ) /* .regex(/^\+880\d{9}$/, "Invalid phone number") */,
   deliveryNote: z.string().optional(),
 });
 
-export default function ShippingAddress() {
-  const [address, setAddress] = useState<"home" | "office">("home");
+export default function ShippingAddress({
+  setAddress,
+}: {
+  setAddress: Dispatch<SetStateAction<TCartAddress | null>>;
+}) {
+  const [addressSelected, setAddressSelected] = useState<"home" | "office">(
+    "home",
+  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,9 +62,8 @@ export default function ShippingAddress() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    setAddress({ ...values, addressType: addressSelected });
+    window.history.back();
   }
 
   return (
@@ -66,20 +74,20 @@ export default function ShippingAddress() {
           <button
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
-              address === "home" &&
+              addressSelected === "home" &&
                 "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
-            onClick={() => setAddress("home")}
+            onClick={() => setAddressSelected("home")}
           >
             Home Address
           </button>
           <button
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
-              address === "office" &&
+              addressSelected === "office" &&
                 "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
-            onClick={() => setAddress("office")}
+            onClick={() => setAddressSelected("office")}
           >
             Office Address
           </button>
@@ -281,7 +289,12 @@ export default function ShippingAddress() {
           </div>
 
           <div className="flex gap-5">
-            <Button variant="outline" type="button" className="flex-1">
+            <Button
+              variant="outline"
+              type="button"
+              className="flex-1"
+              onClick={() => window.history.back()}
+            >
               Cancel
             </Button>
             <Button type="submit" className="flex-1">

@@ -25,3 +25,17 @@ export type TCart = {
   checkout: TCheckoutCart;
   cart: TCartProduct[];
 };
+
+export type TCartAddress = {
+  addressType: "home" | "office";
+  city: string;
+  area: string;
+  blockSector: string;
+  streetRoad: string;
+  houseNo: string;
+  flatNo: string;
+  floorNo: string;
+  name: string;
+  phone: string;
+  deliveryNote?: string;
+};
