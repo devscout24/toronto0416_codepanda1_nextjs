@@ -9,6 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../animate-ui/components/radix/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ModalProps {
   modalId: string;
@@ -25,6 +28,7 @@ export default function Modal({
   const router = useRouter();
   const searchParams = useSearchParams();
   const modal = searchParams.get(modalId);
+  const isMobile = useIsMobile();
 
   const handleOpenChange = (open: boolean) => {
     if (open) {
@@ -50,15 +54,29 @@ export default function Modal({
     }
   };
 
+  if (isMobile) {
+    return (
+      <Drawer open={modal === openId} onOpenChange={handleOpenChange}>
+        <DrawerContent className="h-[130vh] bg-white px-4">
+          <DrawerHeader>
+            <DrawerTitle className="cursor-pointer text-center text-xl font-bold">
+              {title}
+            </DrawerTitle>
+          </DrawerHeader>
+          <ScrollArea className="h-[66vh]">{children}</ScrollArea>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
   return (
     <Dialog open={modal === openId} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-[600px]">
+      <DialogContent className="max-h-[90dvh] overflow-y-auto bg-white sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="cursor-pointer text-center text-4xl font-bold">
+          <DialogTitle className="cursor-pointer text-center text-xl font-bold">
             {title}
           </DialogTitle>
         </DialogHeader>
-
         {children}
       </DialogContent>
     </Dialog>

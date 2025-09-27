@@ -1,11 +1,9 @@
-import Logo from "@/assets/svgs/Sufis_Logo.svg";
 import FacebookIcon from "@/assets/icons/facebook.svg";
 import InstaIcon from "@/assets/icons/insta.svg";
 import TwitterIcon from "@/assets/icons/twitter.svg";
 import LocationIcon from "@/assets/icons/location.svg";
 import PhoneIcon from "@/assets/icons/phone.svg";
 import EmailIcon from "@/assets/icons/email.svg";
-
 import PaypalIcon from "@/assets/svgs/Paypal.svg";
 import AmexIcon from "@/assets/svgs/Amex.svg";
 import AppleIcon from "@/assets/svgs/Apple pay.svg";
@@ -13,6 +11,8 @@ import DiscoverIcon from "@/assets/svgs/Discover.svg";
 import GoogleIcon from "@/assets/svgs/Google pay.svg";
 import MasterCadIcon from "@/assets/svgs/Mastercad.svg";
 import VisaIcon from "@/assets/svgs/Visa.svg";
+import SufisLogo from "../logo";
+import { Separator } from "../ui/separator";
 
 export default function Footer() {
   const footerNav = {
@@ -36,15 +36,15 @@ export default function Footer() {
       <section className="bg-primary-900 w-full py-15">
         <div className="section-container flex w-full flex-col items-start justify-between gap-10 md:flex-row">
           <div>
-            <Logo />
+            <SufisLogo size={9} />
             <p className="mt-4 mb-5">
               Distracted by the readable content of <br /> a page when looking
               at its layout.
             </p>
             <div className="flex items-center gap-5">
-              <FacebookIcon />
-              <InstaIcon />
-              <TwitterIcon />
+              <FacebookIcon className="hover:text-secondary cursor-pointer" />
+              <InstaIcon className="hover:text-secondary cursor-pointer" />
+              <TwitterIcon className="hover:text-secondary cursor-pointer" />
             </div>
           </div>
 
@@ -54,8 +54,11 @@ export default function Footer() {
               <ul>
                 {footerNav[category as keyof typeof footerNav].map(
                   (item, idx) => (
-                    <li className="mb-2" key={idx}>
-                      <p>{item.name}</p>
+                    <li key={idx} className="group mb-2 cursor-pointer">
+                      <div className="w-fit">
+                        <p>{item.name}</p>
+                        <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
+                      </div>
                     </li>
                   ),
                 )}

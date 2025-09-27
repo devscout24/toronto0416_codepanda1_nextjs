@@ -1,46 +1,61 @@
-import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
+import Banner from "@/components/home/banner";
 import BestSelling from "@/components/home/bestSelling";
 import Categories from "@/components/home/categories";
 import Hero from "@/components/home/hero";
 import Testimonials from "@/components/home/testimonials";
 import WeeklySpecials from "@/components/home/weeklySpecials";
+import ShippingIcon from "@/assets/icons/free-shipping.svg";
+import PaymentIcon from "@/assets/icons/secure-payment.svg";
+import SupportIcon from "@/assets/icons/support.svg";
 
-export default function Home() {
+export default function HomePage() {
+  const benefits = [
+    {
+      icon: ShippingIcon,
+      title: "Free Shipping",
+      description: "On all orders over $109.00",
+    },
+    {
+      icon: PaymentIcon,
+      title: "100% Payment Secure",
+      description: "Your payment are safe with us.",
+    },
+    {
+      icon: SupportIcon,
+      title: "Support 24/7",
+      description: "Contact us 24 hours a day",
+    },
+  ];
+
   return (
     <section className="mb-28 space-y-28">
       <Hero />
       <Categories />
       <WeeklySpecials />
-
-      <div className="section-container">
-        <div className="overflow-hidden rounded-2xl bg-[url('/images/bg-image1.png')] bg-cover bg-center py-[3.7rem] text-center text-white">
-          <h2 className="text-2xl font-semibold md:text-3xl">
-            Next-Day Delivery in Durham Region
-          </h2>
-          <p className="mt-2 text-sm md:text-base">
-            Place your order by 8 PM for guaranteed delivery tomorrow
-          </p>
-          <RippleButton
-            variant="secondary"
-            className="mx-auto mt-10 w-fit px-8 py-6"
-          >
-            Shop Now
-          </RippleButton>
-        </div>
-      </div>
-
+      <Banner />
       <BestSelling />
       <Testimonials />
 
-      {/* <div className="section-container my-4">
-        <Link href={"?modal=test-modal"}>
-          <RippleButton>Ripple Button</RippleButton>
-        </Link>
-
-        <Link href={"?modal2=test-modal2"}>
-          <RippleButton variant="secondary">Ripple Button</RippleButton>
-        </Link>
-      </div> */}
+      <section>
+        {
+          <div className="section-container flex flex-col items-start justify-between gap-10 md:flex-row">
+            {benefits.map((benefit, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-4 md:flex-col lg:flex-row"
+              >
+                <benefit.icon />
+                <div className="space-y-2">
+                  <h4 className="text-xl font-semibold lg:text-base">
+                    {benefit.title}
+                  </h4>
+                  <p className="mt-2 text-sm">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        }
+      </section>
     </section>
   );
 }

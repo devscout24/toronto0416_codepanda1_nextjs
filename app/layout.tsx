@@ -4,6 +4,7 @@ import "./globals.css";
 import Modals from "@/components/modal";
 import MainNav from "@/components/main-nav";
 import Footer from "@/components/footer";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,9 @@ export default function RootLayout({
         <div className="flex min-h-screen flex-col">
           <MainNav />
           {children}
-          <Modals />
+          <Suspense fallback={null}>
+            <Modals />
+          </Suspense>
           <div className="mt-auto">
             <Footer />
           </div>

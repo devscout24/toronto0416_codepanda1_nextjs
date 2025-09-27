@@ -278,6 +278,19 @@
   }
 
   .section-container {
-    @apply mx-auto max-w-[1200px] px-2 lg:px-1;
+    @apply mx-auto max-w-[1200px] px-4 lg:px-6;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sticky-nav {
+    transition: top 0.3s ease-in-out;
   }
 }

@@ -5,8 +5,8 @@ import Search from "./search";
 export default function Hero() {
   return (
     <>
-      <section className="flex h-[85vh] w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pb-16">
-        <div className="section-container flex w-full flex-col items-center gap-12 md:flex-row md:justify-between">
+      <section className="flex h-[78vh] w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pb-16">
+        <div className="section-container flex w-full flex-col items-center md:flex-row md:justify-between">
           <div className="text-white">
             <h1 className="text-3xl font-bold md:text-6xl">
               From our store <br /> to your door
@@ -27,12 +27,12 @@ export default function Hero() {
               src="/images/hero-image.png"
               width={500}
               height={500}
-              className="h-[23.0625rem] w-[27.5rem]"
+              className="w-full lg:w-[27.5rem]"
             />
           </div>
         </div>
       </section>
-      <div className="-mt-64">
+      <div className="-mt-56">
         <Search />
       </div>
     </>

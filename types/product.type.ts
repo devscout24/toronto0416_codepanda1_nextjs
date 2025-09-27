@@ -1,8 +1,8 @@
-export type TProductCard = {
+export type TProduct = {
   id: string;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   tags: string[];
   badge?: string;
   rating: number;
@@ -11,4 +11,18 @@ export type TProductCard = {
   unit: string;
   stockStatus: "out-of-stock" | "in-stock";
   isFavorite: boolean;
+};
+
+export type TProductReviews = {
+  id: number;
+  rating: number;
+  reviewer: string;
+  date: string;
+  comment: string;
+};
+
+export type TProductDetails = {
+  product: TProduct;
+  aboutProduct: string; // HTML string for rich text rendering;
+  reviews: TProductReviews[];
 };
