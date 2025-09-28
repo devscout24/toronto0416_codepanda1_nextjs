@@ -1,4 +1,5 @@
 // import ShippingAddress from "@/app/cart/modals/shippingAddress";
+import SuccessModal from "@/app/cart/components/successModal";
 import Modal from "./Modal";
 
 export default function Modals() {
@@ -15,6 +16,10 @@ export default function Modals() {
       >
         <ShippingAddress />
       </Modal> */}
+
+       <Modal title="" modalId="place-order-modal" openId="place-order">
+        <SuccessModal/>
+      </Modal>
     </>
   );
 }
