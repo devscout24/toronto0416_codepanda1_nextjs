@@ -10,6 +10,8 @@ import { useState } from "react";
 import { TCartAddress } from "@/types/cart.type";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import DeliveryOptionPage from "./deliveryOption";
 
 export default function Shipping() {
   const [address, setAddress] = useState<TCartAddress | null>(null);
@@ -80,9 +82,16 @@ export default function Shipping() {
       <div className="mt-10">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Delivery option</h3>
-          <Button variant="ghost" className="text-primary hover:text-primary">
-            View options <ChevronRight />
-          </Button>
+
+
+          <Drawer  direction="right">
+            <DrawerTrigger><Button variant="ghost" className="text-primary hover:text-primary">
+              View options <ChevronRight />
+            </Button></DrawerTrigger>
+            <DrawerContent className="">
+              <DeliveryOptionPage />
+            </DrawerContent>
+          </Drawer>
         </div>
 
         <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
