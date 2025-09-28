@@ -6,22 +6,38 @@ import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import Link from "next/link";
 import Modal from "@/components/modal/Modal";
 import ShippingAddress from "../modals/shippingAddress";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { TCartAddress } from "@/types/cart.type";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DeliveryOptionPage from "./deliveryOption";
+import AddressOptionPage from "./addressOption";
 
-export default function Shipping() {
-  const [address, setAddress] = useState<TCartAddress | null>(null);
+export default function Shipping({ address, setAddress }: { address: TCartAddress | null; setAddress: Dispatch<SetStateAction<TCartAddress | null>>; }) {
+  const [deliveryOption, setDeliveryOption] = useState<string>("standard");
+  const [btnClose, setBtnClose] = useState<boolean>(false);
+  const [addressBtnOpen, setAddressBtnOpen] = useState<boolean>(false);
 
-  console.log("address", address);
+  // console.log("address", address);
 
   return (
     <section>
       <div className="w-full rounded-2xl bg-white p-5">
-        <h3 className="text-lg font-semibold">Shipping Address</h3>
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-lg font-semibold">Shipping Address</h3>
+          <Drawer open={addressBtnOpen} onOpenChange={setAddressBtnOpen} direction="right">
+              <DrawerTrigger><Button
+                variant="ghost"
+                className="text-secondary-500 hover:text-secondary-500"
+              >
+                Select Address <ChevronRight />
+              </Button></DrawerTrigger>
+              <DrawerContent className="bg-white !max-w-[500px]">
+                <AddressOptionPage setAddressBtnOpen={setAddressBtnOpen} setAddress={setAddress}/>
+              </DrawerContent>
+            </Drawer>
+        </div>
 
         {address ? (
           <div className="rounded-lg border p-5">
@@ -35,18 +51,14 @@ export default function Shipping() {
 
               <div className="flex items-center gap-5">
                 <Button
+                  onClick={() => setAddress(null)}
                   variant="ghost"
                   className="text-red-500 hover:text-red-500"
                 >
                   Remove
                 </Button>
                 {/* <Separator orientation="vertical" /> */}
-                <Button
-                  variant="ghost"
-                  className="text-secondary-500 hover:text-secondary-500"
-                >
-                  Edit Address
-                </Button>
+
               </div>
             </div>
             <p>{address.phone}</p>
@@ -69,7 +81,6 @@ export default function Shipping() {
         >
           +Add Address
         </Link>
-
         <Modal
           title="Add new shipping address"
           modalId="shipping-address"
@@ -84,12 +95,12 @@ export default function Shipping() {
           <h3 className="text-lg font-semibold">Delivery option</h3>
 
 
-          <Drawer  direction="right">
+          <Drawer open={btnClose} onOpenChange={setBtnClose} direction="right">
             <DrawerTrigger><Button variant="ghost" className="text-primary hover:text-primary">
               View options <ChevronRight />
             </Button></DrawerTrigger>
-            <DrawerContent className="">
-              <DeliveryOptionPage />
+            <DrawerContent className="bg-white !max-w-[500px]">
+              <DeliveryOptionPage setBtnClose={setBtnClose} setDeliveryOption={setDeliveryOption} />
             </DrawerContent>
           </Drawer>
         </div>
@@ -98,11 +109,11 @@ export default function Shipping() {
           <div className="flex items-center gap-5">
             <ShippingIcon />
             <div>
-              <h3 className="text-lg font-semibold">Standard delivery</h3>
+              <h3 className="text-lg font-semibold">{deliveryOption === "premium" ? "Premium Delivery" : "Standard Delivery"}</h3>
               <p className="text-neutral-500">Guaranteed by 18-19 Aug</p>
             </div>
           </div>
-          <p className="text-lg font-semibold">$20.00</p>
+          <p className="text-lg font-semibold">{deliveryOption === "premium" ? "$30" : "$20"}</p>
         </div>
       </div>
     </section>

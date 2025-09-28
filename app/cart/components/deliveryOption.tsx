@@ -5,15 +5,17 @@ import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import LeftIcon from "@/assets/icons/chevron-down.svg";
 import { Checkbox } from '@/components/animate-ui/components/radix/checkbox';
 
-export default function DeliveryOptionPage() {
+export default function DeliveryOptionPage({ setDeliveryOption, setBtnClose }: { setDeliveryOption: (option: string) => void, setBtnClose: (value: boolean) => void }) {
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
     const handleSelect = (option: string) => {
         setSelectedOption(option);
+
     };
 
     const handleSave = () => {
-        console.log("✅ Selected Delivery Option:", selectedOption);
+        setDeliveryOption(selectedOption || "standard");
+        setBtnClose(false);
     };
 
     return (
@@ -27,13 +29,17 @@ export default function DeliveryOptionPage() {
                 </h1>
 
                 <div className='space-y-5 my-10'>
-                    <div className="border p-5 rounded-xl border-neutral-100 flex items-center gap-5">
+                    {/* Standard delivery */}
+                    <div
+                        className="border p-5 rounded-xl border-neutral-100 flex items-center gap-5 cursor-pointer"
+                        onClick={() => handleSelect("standard")} // click anywhere on card
+                    >
                         <Checkbox
-                            className='size-6 rounded-full'
+                            className="size-6 rounded-full"
                             checked={selectedOption === "standard"}
                             onCheckedChange={() => handleSelect("standard")}
                         />
-                        <div className='flex items-center gap-5'>
+                        <div className="flex items-center gap-5">
                             <ShippingIcon />
                             <div>
                                 <h3 className="text-lg font-semibold">Standard delivery</h3>
@@ -42,7 +48,11 @@ export default function DeliveryOptionPage() {
                         </div>
                     </div>
 
-                    <div className="border p-5 rounded-xl border-neutral-200 flex items-center gap-5">
+                    {/* Premium delivery */}
+                    <div
+                        className="border p-5 rounded-xl border-neutral-100 flex items-center gap-5 cursor-pointer"
+                        onClick={() => handleSelect("premium")} // click anywhere on card
+                    >
                         <Checkbox
                             className='size-6 rounded-full'
                             checked={selectedOption === "premium"}
@@ -57,6 +67,7 @@ export default function DeliveryOptionPage() {
                         </div>
                     </div>
                 </div>
+
             </DrawerHeader>
 
             <div className='grid grid-cols-2 gap-5 px-5'>

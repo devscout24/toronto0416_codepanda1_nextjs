@@ -7,9 +7,11 @@ import Link from "next/link";
 export default function Checkout({
   title,
   redirectTo,
+  isDisabled = false,
 }: {
   title: string;
   redirectTo: string;
+  isDisabled?: boolean;
 }) {
   const checkoutData: TCheckoutCart = {
     product: 3,
@@ -70,7 +72,7 @@ export default function Checkout({
         </div>
 
         <Link href={redirectTo}>
-          <Button className="w-full">{title}</Button>
+          <Button disabled={isDisabled} className="w-full">{title}</Button>
         </Link>
       </div>
     </section>
