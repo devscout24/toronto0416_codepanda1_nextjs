@@ -57,10 +57,12 @@ export default function FullScreen({
           </IconButton>
         </Link>
 
-        <Avatar className="size-11">
-          <AvatarImage src="/images/images.png" />
-          <AvatarFallback>KA</AvatarFallback>
-        </Avatar>
+        <Link href={"/account"}>
+          <Avatar className="size-11">
+            <AvatarImage src="/images/images.png" />
+            <AvatarFallback>KA</AvatarFallback>
+          </Avatar>
+        </Link>
       </div>
     </nav>
   );

@@ -1,7 +1,3 @@
-import React from 'react'
-
 export default function AccountPage() {
-  return (
-    <div>page</div>
-  )
+  return <section className="section-container">Account Page</section>;
 }

@@ -6,7 +6,7 @@ import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import Link from "next/link";
 import Modal from "@/components/modal/Modal";
 import ShippingAddress from "../modals/shippingAddress";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, Suspense, useState } from "react";
 import { TCartAddress } from "@/types/cart.type";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -14,7 +14,13 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DeliveryOptionPage from "./deliveryOption";
 import AddressOptionPage from "./addressOption";
 
-export default function Shipping({ address, setAddress }: { address: TCartAddress | null; setAddress: Dispatch<SetStateAction<TCartAddress | null>>; }) {
+export default function Shipping({
+  address,
+  setAddress,
+}: {
+  address: TCartAddress | null;
+  setAddress: Dispatch<SetStateAction<TCartAddress | null>>;
+}) {
   const [deliveryOption, setDeliveryOption] = useState<string>("standard");
   const [btnClose, setBtnClose] = useState<boolean>(false);
   const [addressBtnOpen, setAddressBtnOpen] = useState<boolean>(false);
@@ -26,17 +32,26 @@ export default function Shipping({ address, setAddress }: { address: TCartAddres
       <div className="w-full rounded-2xl bg-white p-5">
         <div className="mb-2 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Shipping Address</h3>
-          <Drawer open={addressBtnOpen} onOpenChange={setAddressBtnOpen} direction="right">
-              <DrawerTrigger><Button
+          <Drawer
+            open={addressBtnOpen}
+            onOpenChange={setAddressBtnOpen}
+            direction="right"
+          >
+            <DrawerTrigger>
+              <Button
                 variant="ghost"
                 className="text-secondary-500 hover:text-secondary-500"
               >
                 Select Address <ChevronRight />
-              </Button></DrawerTrigger>
-              <DrawerContent className="bg-white !max-w-[500px]">
-                <AddressOptionPage setAddressBtnOpen={setAddressBtnOpen} setAddress={setAddress}/>
-              </DrawerContent>
-            </Drawer>
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="!max-w-[500px] bg-white">
+              <AddressOptionPage
+                setAddressBtnOpen={setAddressBtnOpen}
+                setAddress={setAddress}
+              />
+            </DrawerContent>
+          </Drawer>
         </div>
 
         {address ? (
@@ -58,7 +73,6 @@ export default function Shipping({ address, setAddress }: { address: TCartAddres
                   Remove
                 </Button>
                 {/* <Separator orientation="vertical" /> */}
-
               </div>
             </div>
             <p>{address.phone}</p>
@@ -81,26 +95,35 @@ export default function Shipping({ address, setAddress }: { address: TCartAddres
         >
           +Add Address
         </Link>
-        <Modal
-          title="Add new shipping address"
-          modalId="shipping-address"
-          openId="shipping-modal"
-        >
-          <ShippingAddress setAddress={setAddress} />
-        </Modal>
+        <Suspense fallback={null}>
+          <Modal
+            title="Add new shipping address"
+            modalId="shipping-address"
+            openId="shipping-modal"
+          >
+            <ShippingAddress setAddress={setAddress} />
+          </Modal>
+        </Suspense>
       </div>
 
       <div className="mt-10">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Delivery option</h3>
 
-
           <Drawer open={btnClose} onOpenChange={setBtnClose} direction="right">
-            <DrawerTrigger><Button variant="ghost" className="text-primary hover:text-primary">
-              View options <ChevronRight />
-            </Button></DrawerTrigger>
-            <DrawerContent className="bg-white !max-w-[500px]">
-              <DeliveryOptionPage setBtnClose={setBtnClose} setDeliveryOption={setDeliveryOption} />
+            <DrawerTrigger>
+              <Button
+                variant="ghost"
+                className="text-primary hover:text-primary"
+              >
+                View options <ChevronRight />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="!max-w-[500px] bg-white">
+              <DeliveryOptionPage
+                setBtnClose={setBtnClose}
+                setDeliveryOption={setDeliveryOption}
+              />
             </DrawerContent>
           </Drawer>
         </div>
@@ -109,11 +132,17 @@ export default function Shipping({ address, setAddress }: { address: TCartAddres
           <div className="flex items-center gap-5">
             <ShippingIcon />
             <div>
-              <h3 className="text-lg font-semibold">{deliveryOption === "premium" ? "Premium Delivery" : "Standard Delivery"}</h3>
+              <h3 className="text-lg font-semibold">
+                {deliveryOption === "premium"
+                  ? "Premium Delivery"
+                  : "Standard Delivery"}
+              </h3>
               <p className="text-neutral-500">Guaranteed by 18-19 Aug</p>
             </div>
           </div>
-          <p className="text-lg font-semibold">{deliveryOption === "premium" ? "$30" : "$20"}</p>
+          <p className="text-lg font-semibold">
+            {deliveryOption === "premium" ? "$30" : "$20"}
+          </p>
         </div>
       </div>
     </section>
