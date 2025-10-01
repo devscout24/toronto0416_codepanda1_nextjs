@@ -8,51 +8,47 @@ import {
 import { useEffect, useState } from "react";
 import FullScreen from "./FullScreen";
 import MobileScreen from "./MobileScreen";
+import { usePathname } from "next/navigation";
 
-export const NavItem = ({ name, href }: { name: string; href: string }) => (
-  <NavigationMenuList>
-    <NavigationMenuItem>
-      <NavigationMenuLink href={href}>
-        <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
-      </NavigationMenuLink>
-    </NavigationMenuItem>
-  </NavigationMenuList>
-);
+const baseLinkClasses =
+  "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
+const getLinkClasses = (isActive: boolean) =>
+  `${baseLinkClasses} ${isActive ? "text-primary font-semibold" : "text-neutral-600"}`;
+
+export const NavItem = ({ name, href }: { name: string; href: string }) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
+  return (
+    <NavigationMenuList>
+      <NavigationMenuItem>
+        <NavigationMenuLink
+          href={href}
+          className={getLinkClasses(isActive)}
+          data-active={isActive ? "true" : undefined}
+          aria-current={isActive ? "page" : undefined}
+        >
+          <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  );
+};
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
+
   const navList = [
-    {
-      name: "Home",
-      href: "/",
-    },
-    {
-      name: "All Category",
-      href: "/all-category",
-    },
-    {
-      name: "About Us",
-      href: "/",
-    },
-    {
-      name: "Contact Us",
-      href: "/",
-    },
+    { name: "Home", href: "/" },
+    { name: "All Category", href: "/all-category" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Contact Us", href: "/contact-us" },
   ];
 
-  const handleScroll = () => {
-    if (window.scrollY > 500) {
-      setIsSticky(true);
-    } else {
-      setIsSticky(false);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => setIsSticky(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -62,9 +58,7 @@ export default function MainNav() {
           ? "fixed top-0 right-0 left-0 z-50 transition-all duration-300 ease-in-out"
           : ""
       }`}
-      style={{
-        top: isSticky ? "0" : "auto",
-      }}
+      style={{ top: isSticky ? "0" : "auto" }}
     >
       <div className="hidden lg:block">
         <FullScreen navList={navList} />

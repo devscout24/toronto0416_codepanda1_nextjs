@@ -90,7 +90,7 @@ export default function Shipping({
         )}
 
         <Link
-          href="?shipping-address=shipping-modal"
+          href="?shipping=shipping"
           className="border-primary bg-primary-50 text-primary mt-5 flex h-24 w-full cursor-pointer items-center justify-center rounded-lg border border-dashed text-lg font-semibold"
         >
           +Add Address
@@ -98,8 +98,8 @@ export default function Shipping({
         <Suspense fallback={null}>
           <Modal
             title="Add new shipping address"
-            modalId="shipping-address"
-            openId="shipping-modal"
+            modalId="shipping"
+            openId="shipping"
           >
             <ShippingAddress setAddress={setAddress} />
           </Modal>

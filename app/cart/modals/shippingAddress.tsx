@@ -39,7 +39,7 @@ const formSchema = z.object({
 export default function ShippingAddress({
   setAddress,
 }: {
-  setAddress: Dispatch<SetStateAction<TCartAddress | null>>;
+  setAddress?: Dispatch<SetStateAction<TCartAddress | null>>;
 }) {
   const [addressSelected, setAddressSelected] = useState<"home" | "office">(
     "home",
@@ -62,7 +62,9 @@ export default function ShippingAddress({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setAddress({ ...values, addressType: addressSelected });
+    if (setAddress) {
+      setAddress({ ...values, addressType: addressSelected });
+    }
     window.history.back();
   }
 

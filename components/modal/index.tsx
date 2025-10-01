@@ -1,4 +1,4 @@
-// import ShippingAddress from "@/app/cart/modals/shippingAddress";
+import ShippingAddress from "@/app/cart/modals/shippingAddress";
 import SuccessModal from "@/app/cart/components/successModal";
 import Modal from "./Modal";
 
@@ -9,16 +9,16 @@ export default function Modals() {
         Home search modal
       </Modal>
 
-      {/* <Modal
+      <Modal
         title="Add new shipping address"
         modalId="shipping-address"
         openId="shipping-modal"
       >
         <ShippingAddress />
-      </Modal> */}
+      </Modal>
 
-       <Modal title="" modalId="place-order-modal" openId="place-order">
-        <SuccessModal/>
+      <Modal title="" modalId="place-order-modal" openId="place-order">
+        <SuccessModal />
       </Modal>
     </>
   );

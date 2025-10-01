@@ -1,4 +1,4 @@
-type TPersonalInfo = {
+export type TPersonalInfo = {
   name: string;
   email: string;
   phone: string;
@@ -6,14 +6,14 @@ type TPersonalInfo = {
   receiveMarketingEmail: boolean;
 };
 
-type TAddressBookEntry = {
+export type TAddressBookEntry = {
   name: string;
   phone: string;
   address: string;
   type: "Home" | "Office";
 };
 
-type TOrder = {
+export type TOrder = {
   orderId: string;
   placedOn: string;
   item: string;
@@ -25,4 +25,11 @@ export type TUserProfile = {
   personalInfo: TPersonalInfo;
   addressBook: TAddressBookEntry[];
   recentOrders: TOrder[];
+};
+
+export type TInvoice = {
+  id: string;
+  status: "Paid" | "Pending" | "Failed";
+  amount: string;
+  downloadUrl?: string; // Optional since it's an action
 };
