@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -247,6 +248,7 @@ interface DataTableProps<TData, TValue> {
   enableSorting?: boolean;
   enableFiltering?: boolean;
   pageSize?: number;
+  getRowLink?: (row: TData) => string | undefined | null;
 }
 
 export function DataTable<TData, TValue>({
@@ -260,11 +262,13 @@ export function DataTable<TData, TValue>({
   enableSorting = true,
   enableFiltering = true,
   pageSize = 10,
+  getRowLink,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -357,11 +361,42 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+              table.getRowModel().rows.map((row) => {
+                const rowHref = getRowLink?.(row.original) ?? undefined;
+
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={cn(rowHref && "cursor-pointer")}
+                    tabIndex={rowHref ? 0 : undefined}
+                    onClick={(event) => {
+                      if (!rowHref) {
+                        return;
+                      }
+
+                      const target = event.target as HTMLElement;
+                      if (
+                        target.closest(
+                          "a, button, input, textarea, select, label, [data-prevent-row-click]",
+                        )
+                      ) {
+                        return;
+                      }
+
+                      router.push(rowHref);
+                    }}
+                    onKeyDown={(event) => {
+                      if (!rowHref) {
+                        return;
+                      }
+
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        router.push(rowHref);
+                      }
+                    }}
+                  >
                   {row.getVisibleCells().map((cell, cellIndex) => {
                     const isFirstCell = cellIndex === 0;
                     const isLastCell =
@@ -370,7 +405,7 @@ export function DataTable<TData, TValue>({
                       <TableCell
                         key={cell.id}
                         className={cn(
-                          "px-5",
+                          "px-5 py-5",
                           !isFirstCell && !isLastCell && "text-center",
                           isLastCell && "text-right",
                         )}
@@ -382,8 +417,9 @@ export function DataTable<TData, TValue>({
                       </TableCell>
                     );
                   })}
-                </TableRow>
-              ))
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

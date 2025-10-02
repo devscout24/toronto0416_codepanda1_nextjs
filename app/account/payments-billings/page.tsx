@@ -97,6 +97,7 @@ export default function PaymentsBillingsPage() {
           columns={columns}
           data={invoices}
           enableColumnVisibility={false}
+          enableFiltering={false}
           enablePagination={false}
         />
       </div>

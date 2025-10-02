@@ -37,13 +37,12 @@ export default function AddressBookPage() {
       <h2 className="text-xl font-semibold">Address Book</h2>
 
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
-        <h2 className="text-xl font-semibold">Personal Info</h2>
-
-        <div className="mt-5">
+        <div>
           <DataTable
             columns={columns}
             data={userData.addressBook}
             enableColumnVisibility={false}
+            enableFiltering={false}
             enablePagination={false}
           />
         </div>

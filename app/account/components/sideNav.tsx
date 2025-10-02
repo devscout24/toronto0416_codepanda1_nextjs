@@ -46,7 +46,7 @@ const navItems: TNavItem[] = [
   {
     label: "My Orders",
     icon: OrdersIcon,
-    path: "/account/orders",
+    path: "/account/my-orders",
   },
   {
     label: "Settings",
@@ -73,20 +73,29 @@ const getLinkClasses = (isActive: boolean) =>
 export default function SideNav() {
   const pathname = usePathname();
 
-  const isPathActive = (path?: string): boolean =>
-    path ? pathname === path : false;
+  const matchPath = (path?: string, allowNested = false): boolean => {
+    if (!path) return false;
+
+    if (pathname === path) return true;
+
+    if (!allowNested) return false;
+
+    const normalized = path.endsWith("/") ? path : `${path}/`;
+    return pathname.startsWith(normalized);
+  };
 
   return (
     <nav>
-      <h2 className="mb-5">Hello, Kodu Azad</h2>
+      <h2 className="mb-5 font-semibold">Hello, Kodu Azad</h2>
 
       <ul className="space-y-5">
         {navItems.map((item, index) => {
           const children = item.children ?? [];
           const hasActiveChild = children.some((child) =>
-            isPathActive(child.path),
+            matchPath(child.path, true),
           );
-          const itemIsActive = isPathActive(item.path) || hasActiveChild;
+          const itemIsActive =
+            matchPath(item.path, children.length === 0) || hasActiveChild;
 
           return (
             <li key={index}>
@@ -109,7 +118,7 @@ export default function SideNav() {
               {children.length > 0 && (
                 <ul className="mt-5 ml-5">
                   {children.map((child, childIndex) => {
-                    const childIsActive = isPathActive(child.path);
+                    const childIsActive = matchPath(child.path, true);
 
                     return (
                       <li key={childIndex}>

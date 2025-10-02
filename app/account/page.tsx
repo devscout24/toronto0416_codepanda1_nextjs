@@ -19,6 +19,7 @@ export default function AccountPage() {
           </div>
 
           <div className="col-span-2 rounded-xl bg-white p-5">
+            <h2 className="text-xl font-semibold">Recent orders</h2>
             <RecentOrders payload={userData.recentOrders} />
           </div>
         </div>

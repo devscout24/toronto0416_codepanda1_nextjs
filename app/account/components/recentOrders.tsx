@@ -44,13 +44,13 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold">Recent orders</h2>
-
       <DataTable
         columns={orderColumns}
         data={payload}
         enableColumnVisibility={false}
+        enableFiltering={false}
         enablePagination={false}
+        getRowLink={(row) => `/account/my-orders/${row.orderId}`}
       />
     </div>
   );

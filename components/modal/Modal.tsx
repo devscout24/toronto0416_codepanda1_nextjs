@@ -57,7 +57,10 @@ export default function Modal({
   if (isMobile) {
     return (
       <Drawer open={modal === openId} onOpenChange={handleOpenChange}>
-        <DrawerContent className="h-[130vh] bg-white px-4">
+        <DrawerContent
+          aria-describedby={undefined}
+          className="h-[130vh] bg-white px-4"
+        >
           <DrawerHeader>
             <DrawerTitle className="cursor-pointer text-center text-xl font-bold">
               {title}
@@ -71,7 +74,10 @@ export default function Modal({
 
   return (
     <Dialog open={modal === openId} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto bg-white sm:max-w-[600px]">
+      <DialogContent
+        aria-describedby={undefined}
+        className="max-h-[90dvh] overflow-y-auto bg-white sm:max-w-[600px]"
+      >
         <DialogHeader>
           <DialogTitle className="cursor-pointer text-center text-xl font-bold">
             {title}
