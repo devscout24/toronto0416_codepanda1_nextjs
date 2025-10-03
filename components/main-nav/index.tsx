@@ -41,7 +41,7 @@ export default function MainNav() {
   const navList = [
     { name: "Home", href: "/" },
     { name: "All Category", href: "/all-category" },
-    { name: "About Us", href: "/about-us" },
+    // { name: "About Us", href: "/about-us" },
     { name: "Contact Us", href: "/contact-us" },
   ];
 
