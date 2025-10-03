@@ -37,7 +37,7 @@ export default function Shipping({
             onOpenChange={setAddressBtnOpen}
             direction="right"
           >
-            <DrawerTrigger>
+            <DrawerTrigger asChild>
               <Button
                 variant="ghost"
                 className="text-secondary-500 hover:text-secondary-500"
@@ -90,7 +90,7 @@ export default function Shipping({
         )}
 
         <Link
-          href="?shipping-address=shipping-modal"
+          href="?shipping=shipping"
           className="border-primary bg-primary-50 text-primary mt-5 flex h-24 w-full cursor-pointer items-center justify-center rounded-lg border border-dashed text-lg font-semibold"
         >
           +Add Address
@@ -98,8 +98,8 @@ export default function Shipping({
         <Suspense fallback={null}>
           <Modal
             title="Add new shipping address"
-            modalId="shipping-address"
-            openId="shipping-modal"
+            modalId="shipping"
+            openId="shipping"
           >
             <ShippingAddress setAddress={setAddress} />
           </Modal>
@@ -111,7 +111,7 @@ export default function Shipping({
           <h3 className="text-lg font-semibold">Delivery option</h3>
 
           <Drawer open={btnClose} onOpenChange={setBtnClose} direction="right">
-            <DrawerTrigger>
+            <DrawerTrigger asChild>
               <Button
                 variant="ghost"
                 className="text-primary hover:text-primary"

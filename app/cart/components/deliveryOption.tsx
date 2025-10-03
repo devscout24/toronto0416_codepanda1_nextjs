@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { DrawerHeader, DrawerClose } from '@/components/ui/drawer'
+import { DrawerHeader, DrawerClose, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
 import React, { useState } from 'react'
 import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import LeftIcon from "@/assets/icons/chevron-down.svg";
@@ -20,13 +20,16 @@ export default function DeliveryOptionPage({ setDeliveryOption, setBtnClose }: {
 
     return (
         <div className='p-3'>
-            <DrawerHeader>
-                <h1 className='text-lg font-medium flex gap-3 items-center'>
+            <DrawerHeader className='space-y-3'>
+                <div className='flex items-center gap-3'>
                     <DrawerClose className='mt-0.5'>
                         <LeftIcon className='rotate-90 hover:cursor-pointer' />
                     </DrawerClose>
-                    Delivery Option
-                </h1>
+                    <DrawerTitle className='text-lg font-medium'>Delivery Option</DrawerTitle>
+                </div>
+                <DrawerDescription>
+                    Pick how you would like us to ship your items.
+                </DrawerDescription>
 
                 <div className='space-y-5 my-10'>
                     {/* Standard delivery */}

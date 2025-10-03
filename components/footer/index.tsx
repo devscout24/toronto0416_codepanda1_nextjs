@@ -13,21 +13,22 @@ import MasterCadIcon from "@/assets/svgs/Mastercad.svg";
 import VisaIcon from "@/assets/svgs/Visa.svg";
 import SufisLogo from "../logo";
 import { Separator } from "../ui/separator";
+import Link from "next/link";
 
 export default function Footer() {
   const footerNav = {
     Resources: [
-      { name: "Home", href: "#" },
-      { name: "Best Selling", href: "#" },
-      { name: "Weekly Special", href: "#" },
-      { name: "Explore All", href: "#" },
+      { name: "Home", href: "/" },
+      { name: "Best Selling", href: "/all-category" },
+      { name: "Weekly Special", href: "/all-category" },
+      { name: "Explore All", href: "/all-category" },
     ],
     Information: [
-      { name: "Contact Us", href: "#" },
-      { name: "Privacy policy", href: "#" },
-      { name: "Refund policy", href: "#" },
-      { name: "Shipping & return", href: "#" },
-      { name: "Terms & conditions", href: "#" },
+      { name: "Contact Us", href: "/contact-us" },
+      { name: "Privacy policy", href: "/privacy-policy" },
+      { name: "Terms & conditions", href: "/terms-condition" },
+      // { name: "Refund policy", href: "#" },
+      // { name: "Shipping & return", href: "#" },
     ],
   };
 
@@ -55,10 +56,12 @@ export default function Footer() {
                 {footerNav[category as keyof typeof footerNav].map(
                   (item, idx) => (
                     <li key={idx} className="group mb-2 cursor-pointer">
-                      <div className="w-fit">
-                        <p>{item.name}</p>
-                        <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
-                      </div>
+                      <Link href={item.href}>
+                        <div className="w-fit">
+                          <p>{item.name}</p>
+                          <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
+                        </div>
+                      </Link>
                     </li>
                   ),
                 )}

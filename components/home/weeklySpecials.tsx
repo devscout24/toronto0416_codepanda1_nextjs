@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { RippleButton } from "../animate-ui/components/buttons/ripple";
 import ProductCard from "../card";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import CarouselBtn from "../shared/carouselBtn";
 import { productData } from "@/consts/product";
-import { ArrowRight } from "lucide-react";
+import { Button } from "../animate-ui/components/buttons/button";
 
 export default function WeeklySpecials() {
   return (
@@ -16,8 +15,10 @@ export default function WeeklySpecials() {
       <Carousel className="space-y-7">
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-semibold md:text-3xl">Weekly Specials</h1>
-          <CarouselBtn className="space-x-2" />
-          {/* <RippleButton variant="link">Browse All</RippleButton> */}
+
+          <Link href="/all-category">
+            <Button variant="link">Browse All</Button>
+          </Link>
         </div>
         <CarouselContent>
           {productData.map((product) => (
@@ -29,15 +30,10 @@ export default function WeeklySpecials() {
             </CarouselItem>
           ))}
 
-          <CarouselItem className="ml-4 w-1/6 basis-1/6 p-0 hover:scale-100">
-            <Link href="/all-category">
-              <RippleButton className="h-full w-full rounded-xl">
-                Browse All
-                <ArrowRight />
-              </RippleButton>
-            </Link>
-          </CarouselItem>
+          <CarouselItem className="group relative z-50 -ml-48 basis-1/6 overflow-hidden rounded-r-xl p-0"></CarouselItem>
         </CarouselContent>
+
+        <CarouselBtn className="mx-auto w-fit space-x-2" />
       </Carousel>
     </section>
   );
