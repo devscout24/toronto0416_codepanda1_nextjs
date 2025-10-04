@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
         </h2>
       </div>
 
-      <div className="section-container my-10">
+      <div className="section-container my-10 w-full">
         <div>{reactElements}</div>
       </div>
     </section>

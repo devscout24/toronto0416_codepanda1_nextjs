@@ -45,11 +45,11 @@ export default function CartPage() {
 
   return (
     <section className="section-container space-y-28 pt-10 pb-28">
-      <div className="flex flex-col items-start gap-10 md:flex-row">
-        <div className="w-full md:w-[70%]">
+      <div className="flex w-full flex-col items-start gap-10 lg:flex-row">
+        <div className="w-full lg:w-[70%]">
           <ProductCart />
         </div>
-        <div className="w-full md:w-[30%]">
+        <div className="w-full lg:w-[30%]">
           <Checkout title="Proceed to Checkout" redirectTo="/cart/checkout" />
         </div>
       </div>

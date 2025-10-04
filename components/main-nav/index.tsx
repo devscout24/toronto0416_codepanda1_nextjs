@@ -37,6 +37,8 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const isUserLoggedIn = true;
 
   const navList = [
     { name: "Home", href: "/" },
@@ -48,6 +50,11 @@ export default function MainNav() {
   useEffect(() => {
     const handleScroll = () => setIsSticky(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
+
+    // if (typeof window !== "undefined") {
+    //   setIsUserLoggedIn(localStorage.getItem("user") === null ? false : true);
+    // }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -61,10 +68,10 @@ export default function MainNav() {
       style={{ top: isSticky ? "0" : "auto" }}
     >
       <div className="hidden lg:block">
-        <FullScreen navList={navList} />
+        <FullScreen navList={navList} isUserLoggedIn={isUserLoggedIn} />
       </div>
       <div className="lg:hidden">
-        <MobileScreen navList={navList} />
+        <MobileScreen navList={navList} isUserLoggedIn={isUserLoggedIn} />
       </div>
     </section>
   );
