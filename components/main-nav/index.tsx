@@ -37,8 +37,8 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
-  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const isUserLoggedIn = true;
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const isUserLoggedIn = true;
 
   const navList = [
     { name: "Home", href: "/" },
@@ -51,9 +51,9 @@ export default function MainNav() {
     const handleScroll = () => setIsSticky(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
 
-    // if (typeof window !== "undefined") {
-    //   setIsUserLoggedIn(localStorage.getItem("user") === null ? false : true);
-    // }
+    if (typeof window !== "undefined") {
+      setIsUserLoggedIn(localStorage.getItem("user") === null ? false : true);
+    }
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

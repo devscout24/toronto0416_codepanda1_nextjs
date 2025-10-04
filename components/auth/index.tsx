@@ -130,7 +130,19 @@ export function LoginForm({
                   />
                 </Field>
                 <Field>
-                  <Button type="submit">Login</Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      type="submit"
+                      className="w-full flex-1"
+                      onClick={() => window.history.back()}
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit" className="w-full flex-1">
+                      Login
+                    </Button>
+                  </div>
                   <FieldDescription className="text-center">
                     Don&apos;t have an account? <a href="#">Sign up</a>
                   </FieldDescription>

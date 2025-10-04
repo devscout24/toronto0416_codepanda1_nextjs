@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
-// import { Button } from "../animate-ui/components/buttons/button";
 
 export function SkeletonProductCard() {
   return (
