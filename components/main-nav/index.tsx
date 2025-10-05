@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import FullScreen from "./FullScreen";
+import MobileScreen from "./MobileScreen";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "../ui/navigation-menu";
-import { useEffect, useState } from "react";
-import FullScreen from "./FullScreen";
-import MobileScreen from "./MobileScreen";
-import { usePathname } from "next/navigation";
 
 const baseLinkClasses =
   "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
@@ -23,12 +24,14 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
     <NavigationMenuList>
       <NavigationMenuItem>
         <NavigationMenuLink
-          href={href}
+          asChild
           className={getLinkClasses(isActive)}
           data-active={isActive ? "true" : undefined}
           aria-current={isActive ? "page" : undefined}
         >
-          <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+          <Link href={href}>
+            <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+          </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
