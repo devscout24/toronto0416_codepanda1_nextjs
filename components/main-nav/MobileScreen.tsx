@@ -16,6 +16,7 @@ import SearchIcon from "@/assets/icons/search.svg";
 import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
 import { Menu } from "lucide-react";
+import { Input } from "../ui/input";
 
 export default function MobileScreen({
   navList,
@@ -41,15 +42,23 @@ export default function MobileScreen({
             <SufisLogo size={10} />
           </SheetHeader>
 
+          <div className="relative mx-auto w-fit">
+            <Input
+              placeholder="Search"
+              className="w-[15rem] rounded-full bg-white pr-8"
+            />
+            <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
+          </div>
+
           <div className="flex items-center justify-center gap-5">
-            <Link href={"?home-search-modal=search-modal"}>
+            {/* <Link href={"?home-search-modal=search-modal"}>
               <IconButton
                 variant="ghost"
                 className="flex size-11 items-center justify-center rounded-full"
               >
                 <SearchIcon className="size-[1.5rem]" />
               </IconButton>
-            </Link>
+            </Link> */}
 
             <IconButton className="bg-primary flex size-11 items-center justify-center rounded-full text-white">
               <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />

@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchIcon from "@/assets/icons/search.svg";
 import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
+import { Input } from "../ui/input";
 
 export default function FullScreen({
   navList,
@@ -35,14 +36,19 @@ export default function FullScreen({
         </NavigationMenu>
       </div>
       <div className="flex items-center gap-5">
-        <Link href={"?home-search-modal=search-modal"}>
+        {/* <Link href={"?home-search-modal=search-modal"}>
           <IconButton
             variant="ghost"
             className="flex size-11 items-center justify-center rounded-full"
           >
             <SearchIcon className="size-[1.5rem]" />
           </IconButton>
-        </Link>
+        </Link> */}
+
+        <div className="relative w-full">
+          <Input placeholder="Search" className="w-[18rem] rounded-full pr-8" />
+          <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
+        </div>
 
         <IconButton className="bg-primary-700 flex size-11 items-center justify-center rounded-full text-white">
           <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
@@ -57,10 +63,12 @@ export default function FullScreen({
           </IconButton>
         </Link>
 
-        <Avatar className="size-11">
-          <AvatarImage src="/images/images.png" />
-          <AvatarFallback>KA</AvatarFallback>
-        </Avatar>
+        <Link href={"/account"}>
+          <Avatar className="size-11">
+            <AvatarImage src="/images/images.png" />
+            <AvatarFallback>KA</AvatarFallback>
+          </Avatar>
+        </Link>
       </div>
     </nav>
   );

@@ -71,9 +71,17 @@ export default function Checkout({
           <span className="float-right">${checkoutData.total}</span>
         </div>
 
-        <Link href={redirectTo}>
-          <Button disabled={isDisabled} className="w-full">{title}</Button>
-        </Link>
+        {!isDisabled ? (
+          <Link href={redirectTo}>
+            <Button disabled={isDisabled} className="w-full">
+              {title}
+            </Button>
+          </Link>
+        ) : (
+          <Button className="w-full" disabled>
+            Need to Add Address
+          </Button>
+        )}
       </div>
     </section>
   );

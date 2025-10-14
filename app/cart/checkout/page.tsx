@@ -7,6 +7,7 @@ import { TCartAddress } from "@/types/cart.type";
 
 export default function CheckoutPage() {
   const [address, setAddress] = useState<TCartAddress | null>(null);
+
   return (
     <section className="section-container w-full space-y-28 pt-10 pb-28">
       <div className="flex flex-col items-start gap-10 md:flex-row">

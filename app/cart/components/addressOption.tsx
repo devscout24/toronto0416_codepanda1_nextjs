@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { DrawerHeader, DrawerClose } from '@/components/ui/drawer'
+import { DrawerHeader, DrawerClose, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
 import LeftIcon from "@/assets/icons/chevron-down.svg";
 import { Checkbox } from '@/components/animate-ui/components/radix/checkbox';
 import Link from 'next/link';
@@ -26,13 +26,16 @@ export default function AddressOptionPage({
 
   return (
     <div className='p-3'>
-      <DrawerHeader>
-        <h1 className='text-lg font-medium flex gap-3 items-center'>
+      <DrawerHeader className='space-y-3'>
+        <div className='flex items-center gap-3'>
           <DrawerClose className='mt-0.5'>
             <LeftIcon className='rotate-90 hover:cursor-pointer' />
           </DrawerClose>
-          Shipping Address
-        </h1>
+          <DrawerTitle className='text-lg font-medium'>Shipping Address</DrawerTitle>
+        </div>
+        <DrawerDescription>
+          Choose an address for this order or add a new one below.
+        </DrawerDescription>
 
         <div className="space-y-5 my-10">
           {addresses?.map((address, index) => (
