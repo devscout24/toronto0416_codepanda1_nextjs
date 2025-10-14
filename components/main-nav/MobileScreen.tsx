@@ -17,11 +17,15 @@ import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
 import { Menu } from "lucide-react";
 import { Input } from "../ui/input";
+import { Button } from "../animate-ui/components/buttons/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function MobileScreen({
   navList,
+  isUserLoggedIn,
 }: {
   navList: { name: string; href: string }[];
+  isUserLoggedIn: boolean;
 }) {
   return (
     <nav className="section-container flex items-center justify-between">
@@ -45,34 +49,40 @@ export default function MobileScreen({
           <div className="relative mx-auto w-fit">
             <Input
               placeholder="Search"
-              className="w-[15rem] rounded-full bg-white pr-8"
+              className="w-[14rem] rounded-full bg-white pr-8"
             />
             <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
           </div>
 
-          <div className="flex items-center justify-center gap-5">
-            {/* <Link href={"?home-search-modal=search-modal"}>
-              <IconButton
-                variant="ghost"
-                className="flex size-11 items-center justify-center rounded-full"
-              >
-                <SearchIcon className="size-[1.5rem]" />
+          {isUserLoggedIn ? (
+            <div className="flex items-center justify-center gap-5">
+              <IconButton className="bg-primary flex size-11 items-center justify-center rounded-full text-white">
+                <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
               </IconButton>
-            </Link> */}
 
-            <IconButton className="bg-primary flex size-11 items-center justify-center rounded-full text-white">
-              <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
-            </IconButton>
+              <Link href="/cart">
+                <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
+                  <BagIcon className="size-[1.5rem]" />
+                  <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
+                    9+
+                  </Badge>
+                </IconButton>
+              </Link>
 
-            <Link href="/cart">
-              <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
-                <BagIcon className="size-[1.5rem]" />
-                <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
-                  9+
-                </Badge>
-              </IconButton>
+              <Link href={"/account"}>
+                <Avatar className="size-11">
+                  <AvatarImage src="/images/images.png" />
+                  <AvatarFallback>KA</AvatarFallback>
+                </Avatar>
+              </Link>
+            </div>
+          ) : (
+            <Link href="?login-modal=login" className="mx-2">
+              <Button variant="secondary" className="w-full">
+                Sign in
+              </Button>
             </Link>
-          </div>
+          )}
 
           <div className="ml-6">
             <NavigationMenu className="flex-col items-start">

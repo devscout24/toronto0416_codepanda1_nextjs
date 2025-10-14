@@ -106,7 +106,7 @@ export default function ProductCart() {
       </div>
       <Separator className="mt-5" />
 
-      <div>
+      <div className="overflow-x-auto">
         <DataTable
           columns={columns}
           data={cartData}

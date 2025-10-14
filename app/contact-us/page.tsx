@@ -19,8 +19,8 @@ export default function ContactUsPage() {
         </h2>
       </div>
 
-      <div className="section-container my-10 flex items-start gap-10">
-        <div className="w-[30%] space-y-8">
+      <div className="section-container my-10 flex flex-col items-start gap-5 md:flex-row">
+        <div className="w-full space-y-8 md:w-[50%] lg:w-[30%]">
           <div className="space-y-2.5">
             <h3 className="text-xl font-semibold">Address</h3>
 
@@ -66,7 +66,7 @@ export default function ContactUsPage() {
           </div>
         </div>
 
-        <div className="w-[70%] rounded-3xl bg-white p-8">
+        <div className="w-full rounded-3xl bg-white p-8 md:w-[50%] lg:w-[70%]">
           <div className="space-y-5">
             <div className="flex items-center gap-5">
               <div className="flex-1 space-y-2.5">

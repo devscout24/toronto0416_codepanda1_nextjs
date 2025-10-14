@@ -3,15 +3,18 @@
 import React from "react";
 import HelpIcon from "@/assets/icons/profile (1).svg";
 import PoliciesIcon from "@/assets/icons/profile (2).svg";
-import SettingsIcon from "@/assets/icons/profile (3).svg";
+// import SettingsIcon from "@/assets/icons/profile (3).svg";
 import OrdersIcon from "@/assets/icons/profile (4).svg";
 import PaymentIcon from "@/assets/icons/profile (5).svg";
 import AddressIcon from "@/assets/icons/profile (6).svg";
 import ProfileIcon from "@/assets/icons/profile (7).svg";
 import UserIcon from "@/assets/icons/profile (8).svg";
+import LogOutIcon from "@/assets/icons/log-out.svg";
+import LoveIcon from "@/assets/icons/heart.svg";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 type TNavItem = {
   label: string;
@@ -48,20 +51,30 @@ const navItems: TNavItem[] = [
     icon: OrdersIcon,
     path: "/account/my-orders",
   },
+  // {
+  //   label: "Settings",
+  //   icon: SettingsIcon,
+  //   path: "/account/settings",
+  // },
   {
-    label: "Settings",
-    icon: SettingsIcon,
-    path: "/account/settings",
+    label: "Wishlist",
+    icon: LoveIcon,
+    path: "/account/my-wishlist",
   },
   {
     label: "Policies",
     icon: PoliciesIcon,
-    path: "/account/policies",
+    path: "/privacy-policy",
   },
   {
     label: "Help & Support",
     icon: HelpIcon,
-    path: "/account/help-support",
+    path: "/contact-us",
+  },
+  {
+    label: "Logout",
+    icon: LogOutIcon,
+    path: "?logout-modal=logout",
   },
 ];
 
@@ -102,7 +115,11 @@ export default function SideNav() {
               {item.path ? (
                 <Link
                   href={item.path}
-                  className={getLinkClasses(itemIsActive)}
+                  className={cn(
+                    getLinkClasses(itemIsActive),
+                    item.label === "Logout" &&
+                      "text-red-500 hover:text-red-500",
+                  )}
                   aria-current={itemIsActive ? "page" : undefined}
                 >
                   <item.icon />

@@ -14,14 +14,14 @@ export default function CarouselBtn({ className }: { className?: string }) {
       <Button
         onClick={scrollPrev}
         disabled={!canScrollPrev}
-        className="text-primary border-primary size-12 rounded-full border bg-transparent hover:text-white"
+        className="text-primary border-primary size-8 rounded-full border bg-transparent hover:text-white md:size-12"
       >
         <ArrowLeft />
       </Button>
       <Button
         onClick={scrollNext}
         disabled={!canScrollNext}
-        className="text-primary border-primary size-12 rounded-full border bg-transparent hover:text-white"
+        className="text-primary border-primary size-8 rounded-full border bg-transparent hover:text-white md:size-12"
       >
         <ArrowRight />
       </Button>

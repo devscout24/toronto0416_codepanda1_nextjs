@@ -130,7 +130,7 @@ export default function Shipping({
 
         <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
           <div className="flex items-center gap-5">
-            <ShippingIcon />
+            <ShippingIcon className="hidden md:block" />
             <div>
               <h3 className="text-lg font-semibold">
                 {deliveryOption === "premium"

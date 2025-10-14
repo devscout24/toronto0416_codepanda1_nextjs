@@ -9,7 +9,7 @@ import { TProduct } from "@/types/product.type";
 export default function DetailsView({ payload }: { payload: TProduct }) {
   return (
     <section className="flex flex-col-reverse items-center justify-between gap-10 lg:flex-row">
-      <div className="flex h-96 w-full flex-col rounded-2xl bg-white p-5 md:p-10 lg:w-1/2">
+      <div className="flex w-full flex-col rounded-2xl bg-white p-5 md:p-10 lg:h-[35rem] lg:w-1/2">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
@@ -40,13 +40,13 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
             <h2 className="text-lg font-semibold">{payload.title}</h2>
             <p className="line-clamp-5">{payload.description}</p>
           </div>
-
-          <div>
-            <Rating rating={payload.rating} readOnly />
-          </div>
         </div>
 
         <div className="mt-auto space-y-4">
+          <div>
+            <Rating rating={payload.rating} readOnly />
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <p className="text-neutral-300 line-through">
@@ -57,6 +57,7 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
               </p>
             </div>
           </div>
+
           <div className="flex gap-4">
             <Button variant="secondary" className="flex-1">
               Add to Cart

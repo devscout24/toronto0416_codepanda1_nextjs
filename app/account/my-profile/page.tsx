@@ -1,6 +1,7 @@
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { userData } from "@/consts/user";
+import Link from "next/link";
 
 export default function MyProfilePage() {
   const ShowField = ({ title, value }: { title: string; value: string }) => {
@@ -34,9 +35,11 @@ export default function MyProfilePage() {
           <ShowField title="Country" value={userData.personalInfo.country} />
         </div>
 
-        <div className="mt-5 flex justify-end">
-          <Button>Edit Profile</Button>
-        </div>
+        <Link href={"?profile-edit-modal=profile-edit"}>
+          <div className="mt-5 flex justify-end">
+            <Button>Edit Profile</Button>
+          </div>
+        </Link>
       </div>
     </section>
   );

@@ -58,21 +58,24 @@ export function ThumbnailCarousel({
       >
         <CarouselContent className="ml-0">
           {images.map((image, index) => (
-            <CarouselItem key={`${image}-${index}`} className="pl-0">
-              <div className="relative aspect-video w-full overflow-hidden">
+            <CarouselItem
+              key={`${image}-${index}`}
+              className="h-80 pl-0 lg:h-96"
+            >
+              <div className="relative aspect-video h-full w-full overflow-hidden">
                 <Image
                   fill
                   src={image}
                   alt="product image"
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 640px, 100vw"
+                  className="h-full object-cover"
+                  // sizes="(min-width: 1024px) 640px, 100vw"
                   priority={index === 0}
                 />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselBtn className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-between px-4" />
+        <CarouselBtn className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-between md:px-4" />
       </Carousel>
 
       <Carousel
@@ -86,7 +89,7 @@ export function ThumbnailCarousel({
             return (
               <CarouselItem
                 key={index}
-                className="basis-1/2 pl-0 md:basis-1/5 lg:basis-1/3"
+                className="h-20 basis-1/2 pl-0 md:basis-1/5 lg:h-40 lg:basis-1/3"
               >
                 <button
                   type="button"
@@ -99,7 +102,7 @@ export function ThumbnailCarousel({
                     handleThumbClick(index);
                   }}
                   className={cn(
-                    "relative h-16 w-full overflow-hidden rounded-md border transition",
+                    "relative h-full w-full overflow-hidden rounded-md border transition",
                     isActive
                       ? "border-primary"
                       : "hover:border-input border-transparent",
@@ -111,7 +114,7 @@ export function ThumbnailCarousel({
                     src={image}
                     alt="product image thumbnail"
                     className="object-cover"
-                    sizes="(min-width: 1024px) 120px, (min-width: 768px) 96px, 40vw"
+                    // sizes="(min-width: 1024px) 120px, (min-width: 768px) 96px, 80vw"
                   />
                 </button>
               </CarouselItem>
