@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import FullScreen from "./FullScreen";
+import MobileScreen from "./MobileScreen";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "../ui/navigation-menu";
-import { useEffect, useState } from "react";
-import FullScreen from "./FullScreen";
-import MobileScreen from "./MobileScreen";
-import { usePathname } from "next/navigation";
 
 const baseLinkClasses =
   "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
@@ -23,12 +24,14 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
     <NavigationMenuList>
       <NavigationMenuItem>
         <NavigationMenuLink
-          href={href}
+          asChild
           className={getLinkClasses(isActive)}
           data-active={isActive ? "true" : undefined}
           aria-current={isActive ? "page" : undefined}
         >
-          <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+          <Link href={href}>
+            <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+          </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
@@ -37,6 +40,8 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const isUserLoggedIn = true;
 
   const navList = [
     { name: "Home", href: "/" },
@@ -48,6 +53,11 @@ export default function MainNav() {
   useEffect(() => {
     const handleScroll = () => setIsSticky(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
+
+    if (typeof window !== "undefined") {
+      setIsUserLoggedIn(localStorage.getItem("user") === null ? false : true);
+    }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -61,10 +71,10 @@ export default function MainNav() {
       style={{ top: isSticky ? "0" : "auto" }}
     >
       <div className="hidden lg:block">
-        <FullScreen navList={navList} />
+        <FullScreen navList={navList} isUserLoggedIn={isUserLoggedIn} />
       </div>
       <div className="lg:hidden">
-        <MobileScreen navList={navList} />
+        <MobileScreen navList={navList} isUserLoggedIn={isUserLoggedIn} />
       </div>
     </section>
   );

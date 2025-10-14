@@ -6,6 +6,9 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../animate-ui/components/buttons/button";
 import CancelOrder from "@/app/account/components/cancelOrder";
+import MyProfileEdit from "@/app/account/components/myProfileEdit";
+import { LoginForm } from "../auth";
+import Logout from "../auth/logout";
 
 export default function Modals() {
   return (
@@ -52,6 +55,22 @@ export default function Modals() {
 
           <Button className="w-full">Submit</Button>
         </div>
+      </Modal>
+
+      <Modal
+        title="Edit My Profile"
+        modalId="profile-edit-modal"
+        openId="profile-edit"
+      >
+        <MyProfileEdit />
+      </Modal>
+
+      <Modal title="" modalId="login-modal" openId="login">
+        <LoginForm />
+      </Modal>
+
+      <Modal title="" modalId="logout-modal" openId="logout">
+        <Logout />
       </Modal>
     </>
   );

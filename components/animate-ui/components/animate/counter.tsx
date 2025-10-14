@@ -26,7 +26,7 @@ function Counter({ className, ...props }: CounterProps) {
         <Button
           size="icon-sm"
           variant="accent"
-          className="my-0.5 rounded-none border-r bg-transparent hover:bg-transparent"
+          className="my-0.5 rounded-none border-r bg-transparent shadow-none hover:bg-transparent"
         >
           <MinusIcon className="size-4" />
         </Button>
@@ -36,7 +36,7 @@ function Counter({ className, ...props }: CounterProps) {
         <Button
           size="icon-sm"
           variant="accent"
-          className="my-0.5 rounded-none border-l bg-transparent hover:bg-transparent"
+          className="my-0.5 rounded-none border-l bg-transparent shadow-none hover:bg-transparent"
         >
           <PlusIcon className="size-4" />
         </Button>
