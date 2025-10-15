@@ -5,6 +5,7 @@ import { DataTable } from "@/components/data-table";
 import { cn } from "@/lib/utils";
 import { TInvoice } from "@/types/user.type";
 import { ColumnDef } from "@tanstack/react-table";
+import Header from "../components/header";
 
 const invoices: TInvoice[] = [
   {
@@ -75,7 +76,7 @@ export default function PaymentsBillingsPage() {
 
   return (
     <section className="w-full">
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold">
             Billing history and invoices
@@ -90,7 +91,27 @@ export default function PaymentsBillingsPage() {
         >
           Download
         </Button>
-      </div>
+      </div> */}
+      <Header>
+        <div className="flex items-center justify-between w-full">
+          <div>
+          <h2 className="text-xl font-semibold">
+            Billing history and invoices
+          </h2>
+          <p className="text-sm text-neutral-400">
+            Manage Your billing and payment details
+          </p>
+        </div>
+        <Button
+          variant="accent"
+          className="bg-neutral-200 text-white hover:bg-neutral-300"
+        >
+          Download
+        </Button>
+        </div>
+      </Header>
+
+
 
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
         <DataTable

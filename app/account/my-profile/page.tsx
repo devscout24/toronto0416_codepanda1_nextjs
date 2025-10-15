@@ -2,6 +2,7 @@ import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { userData } from "@/consts/user";
 import Link from "next/link";
+import Header from "../components/header";
 
 export default function MyProfilePage() {
   const ShowField = ({ title, value }: { title: string; value: string }) => {
@@ -15,7 +16,8 @@ export default function MyProfilePage() {
 
   return (
     <section className="w-full">
-      <h2 className="text-xl font-semibold">My Profile</h2>
+      {/* <h2 className="text-xl font-semibold">My Profile</h2> */}
+      <Header><h1 className="text-xl font-semibold">My Profile</h1></Header>
 
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
         <h2 className="text-xl font-semibold">Personal Info</h2>

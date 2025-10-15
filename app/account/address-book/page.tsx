@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TAddressBookEntry } from "@/types/user.type";
 import { userData } from "@/consts/user";
 import Link from "next/link";
+import Header from "../components/header";
 
 export default function AddressBookPage() {
   const columns: ColumnDef<TAddressBookEntry>[] = [
@@ -34,7 +35,8 @@ export default function AddressBookPage() {
 
   return (
     <section className="w-full">
-      <h2 className="text-xl font-semibold">Address Book</h2>
+      {/* <h2 className="text-xl font-semibold">Address Book</h2> */}
+      <Header><h1 className="text-xl font-semibold">Address Book</h1></Header>
 
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
         <div>

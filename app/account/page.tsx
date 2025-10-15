@@ -2,11 +2,12 @@ import PersonalInfo from "./components/personalInfo";
 import AddressBook from "./components/addressBook";
 import RecentOrders from "./components/recentOrders";
 import { userData } from "@/consts/user";
+import Header from "./components/header";
 
 export default function AccountPage() {
   return (
     <section className="w-full">
-      <h2 className="text-xl font-semibold">Manage My Account</h2>
+      <Header><h1 className="text-xl font-semibold">My Account</h1></Header>
 
       <div className="mt-5">
         <div className="grid grid-cols-2 gap-5">
