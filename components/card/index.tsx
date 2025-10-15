@@ -84,7 +84,7 @@ export default function ProductCard({
     <section className="w-full select-none">
       <Link href={`/all-category/${payload.id}`}>
         <Card className="group flex h-fit min-h-[428px] w-full cursor-pointer flex-col overflow-hidden p-0">
-          <CardHeader className="relative p-0">
+          <CardHeader className="relative p-0 z-30">
             <div className="overflow-hidden">
               <Image
                 src={payload.images[0]}

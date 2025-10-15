@@ -29,7 +29,7 @@ export default function DeliveryOptionPage({
   };
 
   return (
-    <div className="p-3">
+    <div className="p-1 md:p-3">
       <DrawerHeader className="space-y-3">
         <div className="flex items-center gap-3">
           <DrawerClose className="mt-0.5">
@@ -46,26 +46,26 @@ export default function DeliveryOptionPage({
         <div className="my-10 space-y-5">
           {/* Standard delivery */}
           <div
-            className="flex cursor-pointer items-center gap-5 rounded-xl border border-neutral-100 p-5"
+            className="flex cursor-pointer items-center gap-3 md:gap-5 rounded-xl border border-neutral-100 p-3 md:p-5"
             onClick={() => handleSelect("standard")} // click anywhere on card
           >
             <Checkbox
-              className="size-6 rounded-full"
+              className="size-5 md:size-6 rounded-full"
               checked={selectedOption === "standard"}
               onCheckedChange={() => handleSelect("standard")}
             />
             <div className="flex items-center gap-5">
               <ShippingIcon className="hidden md:block" />
               <div>
-                <h3 className="text-lg font-semibold">Standard delivery</h3>
-                <p className="text-neutral-500">Guaranteed by 18-19 Aug</p>
+                <h3 className="text-base md:text-lg font-semibold">Standard delivery</h3>
+                <p className="text-sm md:text-base text-neutral-500">Guaranteed by 18-19 Aug</p>
               </div>
             </div>
           </div>
 
           {/* Premium delivery */}
           <div
-            className="flex cursor-pointer items-center gap-5 rounded-xl border border-neutral-100 p-5"
+            className="flex cursor-pointer items-center gap-5 rounded-xl border border-neutral-100 p-3 md:p-5"
             onClick={() => handleSelect("premium")} // click anywhere on card
           >
             <Checkbox
@@ -76,8 +76,8 @@ export default function DeliveryOptionPage({
             <div className="flex items-center gap-5">
               <ShippingIcon className="hidden md:block" />
               <div>
-                <h3 className="text-lg font-semibold">Premium delivery</h3>
-                <p className="text-neutral-500">Guaranteed by 18-19 Aug</p>
+                <h3 className="text-base md:text-lg font-semibold">Premium delivery</h3>
+                <p className="text-sm md:text-base text-neutral-500">Guaranteed by 18-19 Aug</p>
               </div>
             </div>
           </div>

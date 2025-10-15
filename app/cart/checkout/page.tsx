@@ -10,11 +10,11 @@ export default function CheckoutPage() {
 
   return (
     <section className="section-container w-full space-y-28 pt-10 pb-28">
-      <div className="flex flex-col items-start gap-10 md:flex-row">
-        <div className="w-full md:w-[70%]">
+      <div className="flex flex-col items-start gap-5 lg:gap-10 md:flex-row">
+        <div className="w-full md:w-[60%] lg:w-[70%]">
           <Shipping address={address} setAddress={setAddress} />
         </div>
-        <div className="w-full md:w-[30%]">
+        <div className="w-full md:w-[40%] lg:w-[30%]">
           <Checkout
             isDisabled={!address || address === null ? true : false}
             title="Proceed to Pay"

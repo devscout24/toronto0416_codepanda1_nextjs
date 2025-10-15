@@ -30,7 +30,7 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
           aria-current={isActive ? "page" : undefined}
         >
           <Link href={href}>
-            <h3 className="text-2xl font-semibold lg:text-base">{name}</h3>
+            <h3 className="text-lg md:text-xl font-semibold lg:text-base">{name}</h3>
           </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -38,7 +38,7 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
   );
 };
 
-export default function MainNav() {
+export default function  MainNav() {
   const [isSticky, setIsSticky] = useState(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   // const isUserLoggedIn = true;

@@ -24,6 +24,13 @@ export const userData: TUserProfile = {
         "Shathi, Dhalamulgow, purboadhab, Netrokona, Purbothala Sadar, Netrokona, Mymensingh",
       type: "Office",
     },
+    {
+      name: "Kodu Azad",
+      phone: "+880 1253 254652",
+      address:
+        "Shathi, Dhalamulgow, purboadhab, Netrokona, Purbothala Sadar, Netrokona, Mymensingh",
+      type: "Office",
+    },
   ],
   recentOrders: [
     {

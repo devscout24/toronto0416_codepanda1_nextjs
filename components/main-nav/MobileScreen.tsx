@@ -85,7 +85,7 @@ export default function MobileScreen({
           )}
 
           <div className="ml-6">
-            <NavigationMenu className="flex-col items-start">
+            <NavigationMenu className="flex-col items-start mt-8">
               {navList.map((item) => (
                 <NavItem key={item.name} {...item} />
               ))}

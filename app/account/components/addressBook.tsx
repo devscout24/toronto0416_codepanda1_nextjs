@@ -1,5 +1,6 @@
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TAddressBookEntry } from "@/types/user.type";
 
@@ -20,26 +21,28 @@ export default function AddressBook({
         </Button>
       </div>
 
-      <div className="flex w-full items-center gap-2">
-        {addressBook.length > 0 &&
-          addressBook.map((address, idx) => (
-            <div key={idx} className="w-full rounded-lg border p-2.5">
-              <div className="flex w-full items-center justify-between">
+      <ScrollArea className="h-full md:h-[10rem]">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full items-center gap-2">
+          {addressBook.length > 0 &&
+            addressBook.map((address, idx) => (
+              <div key={idx} className="w-full rounded-lg border p-2.5">
                 <div className="flex w-full items-center justify-between">
-                  <p className="font-semibold">{address.name}</p>
-                  <Badge className="rounded-full bg-black">
-                    {address.type === "Home" ? "Home" : "Office"}
-                  </Badge>
+                  <div className="flex w-full items-center justify-between">
+                    <p className="font-semibold">{address.name}</p>
+                    <Badge className="rounded-full bg-black">
+                      {address.type === "Home" ? "Home" : "Office"}
+                    </Badge>
+                  </div>
                 </div>
+                <p className="text-sm">{address.phone}</p>
+
+                <Separator className="my-2.5" />
+
+                <p className="text-sm">{address.address}</p>
               </div>
-              <p className="text-sm">{address.phone}</p>
-
-              <Separator className="my-2.5" />
-
-              <p className="text-sm">{address.address}</p>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      </ScrollArea>
     </>
   );
 }

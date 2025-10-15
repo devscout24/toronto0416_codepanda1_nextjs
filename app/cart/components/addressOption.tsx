@@ -37,26 +37,26 @@ export default function AddressOptionPage({
           Choose an address for this order or add a new one below.
         </DrawerDescription>
 
-        <div className="space-y-5 my-10">
+        <div className="space-y-2 md:space-y-5 my-3 md:my-8">
           {addresses?.map((address, index) => (
             <div
               key={index}
               className="border p-5 rounded-xl gap-5 cursor-pointer"
               onClick={() => setSelectedIndex(index)}
             >
-              <div className="flex items-start justify-between border-b border-gray-200 pb-5">
-                <div className='flex gap-5 items-start'>
+              <div className="flex flex-col md:flex-row gap-4 items-start justify-between border-b border-gray-200 pb-5">
+                <div className='flex gap-3 md:gap-5 items-start'>
                   <Checkbox
-                    className="size-6 rounded-full mt-1"
+                    className="size-5 md:size-6 rounded-full mt-1"
                     checked={selectedIndex === index}
                     onCheckedChange={() => setSelectedIndex(index)}
                   />
                   <span>
-                    <h1 className='text-xl font-medium'>{address?.name}</h1>
+                    <h1 className='text-lg md:text-xl font-medium'>{address?.name}</h1>
                     <p className=''>{address?.phone}</p>
                   </span>
                 </div>
-                <Badge className='capitalize bg-black/90 text-sm px-3 py-1 rounded-full mt-1'>{address?.addressType}</Badge>
+                <Badge className='capitalize bg-black/90 text-xs md:text-sm px-3 py-1 rounded-full mt-1'>{address?.addressType}</Badge>
               </div>
               <p className='mt-5'>
                 Flat#{address?.flatNo}, Floor#{address?.floorNo}, House: {address?.houseNo}, {address?.streetRoad}, Block: {address?.blockSector}, {address?.area}, {address?.city}
@@ -67,8 +67,8 @@ export default function AddressOptionPage({
 
       </DrawerHeader>
 
-      <div className='grid grid-cols-2 gap-5 px-5'>
-        <DrawerClose className='border border-neutral-200 rounded-lg font-medium hover:cursor-pointer'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 px-5'>
+        <DrawerClose className='border border-neutral-200 rounded-lg h-10 font-medium hover:cursor-pointer'>
           Edit Address
         </DrawerClose>
         <Button className='h-10' onClick={handleSave}>

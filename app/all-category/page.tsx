@@ -8,7 +8,7 @@ export default function AllCategoryPage() {
   return (
     <section className="section-container w-full pt-10">
       <div className="flex items-start gap-7">
-        <div>
+        <div className="hidden lg:block">
           <Suspense fallback={<FiltersSkeleton />}>
             <Filters />
           </Suspense>

@@ -291,7 +291,7 @@ export default function Filters() {
   }, [updateParams]);
 
   return (
-    <section className="rounded-2xl bg-white p-5">
+    <section className="rounded-2xl bg-white p-5 shadow">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <FilterIcon />

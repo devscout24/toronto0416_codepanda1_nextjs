@@ -19,8 +19,8 @@ export default function ContactUsPage() {
         </h2>
       </div>
 
-      <div className="section-container my-10 flex flex-col items-start gap-5 md:flex-row">
-        <div className="w-full space-y-8 md:w-[50%] lg:w-[30%]">
+      <div className="section-container my-10 flex flex-col items-start gap-5 px-5 md:px-8 lg:px-5 lg:flex-row">
+        <div className="w-full space-y-8 lg:w-[40%]">
           <div className="space-y-2.5">
             <h3 className="text-xl font-semibold">Address</h3>
 
@@ -66,10 +66,10 @@ export default function ContactUsPage() {
           </div>
         </div>
 
-        <div className="w-full rounded-3xl bg-white p-8 md:w-[50%] lg:w-[70%]">
+        <div className="w-full rounded-3xl bg-white p-8 lg:w-[70%]">
           <div className="space-y-5">
-            <div className="flex items-center gap-5">
-              <div className="flex-1 space-y-2.5">
+            <div className="flex flex-col lg:flex-row items-center gap-5">
+              <div className="w-full lg:w-1/2 space-y-2.5">
                 <Label>Name</Label>
                 <Input
                   type="text"
@@ -78,7 +78,7 @@ export default function ContactUsPage() {
                 />
               </div>
 
-              <div className="flex-1 space-y-2.5">
+              <div className="w-full lg:w-1/2 space-y-2.5">
                 <Label>Email</Label>
                 <Input
                   type="text"

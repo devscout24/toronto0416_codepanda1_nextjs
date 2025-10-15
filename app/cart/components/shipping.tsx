@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DeliveryOptionPage from "./deliveryOption";
 import AddressOptionPage from "./addressOption";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Shipping({
   address,
@@ -46,10 +47,12 @@ export default function Shipping({
               </Button>
             </DrawerTrigger>
             <DrawerContent className="!max-w-[500px] bg-white">
-              <AddressOptionPage
-                setAddressBtnOpen={setAddressBtnOpen}
-                setAddress={setAddress}
-              />
+              <ScrollArea className="h-full">
+                <AddressOptionPage
+                  setAddress={setAddress}
+                  setAddressBtnOpen={setAddressBtnOpen}
+                />
+              </ScrollArea>
             </DrawerContent>
           </Drawer>
         </div>

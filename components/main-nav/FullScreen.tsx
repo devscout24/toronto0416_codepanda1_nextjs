@@ -44,7 +44,7 @@ export default function FullScreen({
           <div className="relative w-full">
             <Input
               placeholder="Search"
-              className="w-[18rem] rounded-full pr-8"
+              className="w-[15rem] xl:w-[18rem] rounded-full pr-8"
             />
             <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
           </div>
