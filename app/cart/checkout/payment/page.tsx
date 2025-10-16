@@ -1,5 +1,5 @@
 import React from 'react'
-import Checkout from '../../components/checkout'
+import Checkout from '../../components/checkout';
 import Credit from '@/assets/icons/credit.svg';
 import Stripe from "@/assets/icons/stripe.svg";
 import Paypal from "@/assets/icons/paypal.svg";
@@ -56,8 +56,6 @@ export default function PaymentPage() {
                 </div>
               </div>
             </div>
-
-
           </section>
         </div>
         <div className="w-full md:w-[40%] lg:w-[30%]">

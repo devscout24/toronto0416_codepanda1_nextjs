@@ -44,16 +44,18 @@ export default function CartPage() {
   // };
 
   return (
-    <section className="section-container space-y-28 pt-10 pb-28">
-      <div className="flex w-full flex-col items-start gap-10 lg:flex-row">
-        <div className="w-full lg:w-[70%]">
-          <ProductCart />
+    <section className="pt-10 pb-28 mx-4 lg:mx-6">
+      <div className="max-w-[1200px] mx-auto space-y-28">
+        <div className="flex w-full flex-col items-start gap-10 lg:flex-row">
+          <div className="w-full lg:w-[70%]">
+            <ProductCart />
+          </div>
+          <div className="w-full lg:w-[30%]">
+            <Checkout title="Proceed to Checkout" redirectTo="/cart/checkout" />
+          </div>
         </div>
-        <div className="w-full lg:w-[30%]">
-          <Checkout title="Proceed to Checkout" redirectTo="/cart/checkout" />
-        </div>
+        <RecentlyViewed title="Need Anything Else?" />
       </div>
-      <RecentlyViewed title="Need Anything Else?" />
     </section>
   );
 }

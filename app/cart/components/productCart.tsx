@@ -51,14 +51,14 @@ export default function ProductCart() {
               alt={row.original.product_name}
               width={100}
               height={100}
-              className="size-16 rounded-xl object-cover"
+              className="size-16 rounded-xl object-cover hidden md:block"
             />
             <div>
-              <Label htmlFor={row.original.id} className="text-base">
+              <Label htmlFor={row.original.id} className="text-sm md:text-base">
                 {row.original.product_name}
               </Label>
-              <p className="text-sm">{row.original.sku}</p>
-              <div className="mt-4 text-red-600 hover:text-red-600">Remove</div>
+              <p className="text-xs md:text-sm">{row.original.sku}</p>
+              <div className="mt-2 md:mt-4 text-red-600 hover:text-red-600">Remove</div>
             </div>
           </div>
         </div>
@@ -68,14 +68,14 @@ export default function ProductCart() {
       header: "Price",
       accessorKey: "price",
       cell: ({ row }) => (
-        <div className="font-semibold">${row.original.price}</div>
+        <div className="text-sm md:text-base font-semibold">${row.original.price}</div>
       ),
     },
     {
       header: "Quantity",
       accessorKey: "quantity",
       cell: ({ row }) => (
-        <div className="mx-auto w-fit">
+        <div className="mx-auto w-fit text-sm md:text-base">
           <Counter value={row.original.quantity} />
         </div>
       ),
@@ -84,7 +84,7 @@ export default function ProductCart() {
       header: "Total",
       accessorKey: "total",
       cell: ({ row }) => (
-        <div className="font-semibold">
+        <div className="font-semibold text-sm md:text-base">
           ${row.original.price * row.original.quantity}
         </div>
       ),
