@@ -17,8 +17,20 @@ import { Suspense } from "react";
 import FiltersSkeleton from "./filtersSkeleton";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { allProducts } from "./action";
+import { TProduct } from "@/types/product.type";
 
-export default function AllProducts() {
+export default async function AllProducts() {
+  
+   let productData: TProduct[] = []; 
+
+  try {
+    productData = await allProducts(); 
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    productData = [];
+  }
+
   return (
     <section>
       <div className="mb-7 flex items-center justify-between rounded-2xl bg-white p-4 relative z-50">
