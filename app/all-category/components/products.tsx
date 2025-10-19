@@ -1,7 +1,6 @@
 import ProductCard from "@/components/card";
 import AppPagination from "@/components/pagination/pagination";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -10,30 +9,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { productData } from "@/consts/product";
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { SlidersHorizontal } from "lucide-react";
 import Filters from "./filters";
 import { Suspense } from "react";
 import FiltersSkeleton from "./filtersSkeleton";
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AllProducts() {
   return (
     <section>
-      <div className="mb-7 flex items-center justify-between rounded-2xl bg-white p-4 relative z-50">
+      <div className="relative z-50 mb-7 flex items-center justify-between rounded-2xl bg-white p-4">
         <div className="flex items-center gap-4">
           <div className="block lg:hidden">
-            <Drawer
-              direction="left"
-            >
+            <Drawer direction="left">
               <DrawerTrigger asChild>
                 <Button variant="outline">
                   <SlidersHorizontal />
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="!max-w-[275px] bg-white rounded-2xl border">
-                <DrawerClose className='hover:cursor-pointer mt-5 flex justify-end mr-5'>
+              <DrawerContent className="!max-w-[275px] rounded-2xl border bg-white">
+                <DrawerClose className="mt-5 mr-5 flex justify-end hover:cursor-pointer">
                   X
                 </DrawerClose>
                 <ScrollArea className="h-full pb-10">
@@ -48,7 +49,7 @@ export default function AllProducts() {
         </div>
         <div>
           <Select>
-            <SelectTrigger className="w-[120px] md:w-[180px] bg-neutral-50 py-5 text-black">
+            <SelectTrigger className="w-[120px] bg-neutral-50 py-5 text-black md:w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
