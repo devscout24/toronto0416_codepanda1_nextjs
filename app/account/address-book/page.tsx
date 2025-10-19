@@ -7,6 +7,7 @@ import { TAddressBookEntry } from "@/types/user.type";
 import { userData } from "@/consts/user";
 import Link from "next/link";
 import Header from "../components/header";
+import { Badge } from "@/components/ui/badge";
 
 export default function AddressBookPage() {
   const columns: ColumnDef<TAddressBookEntry>[] = [
@@ -39,7 +40,7 @@ export default function AddressBookPage() {
       <Header><h1 className="text-xl font-semibold">Address Book</h1></Header>
 
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
-        <div>
+        <div className="hidden md:block">
           <DataTable
             columns={columns}
             data={userData.addressBook}
@@ -48,6 +49,22 @@ export default function AddressBookPage() {
             enablePagination={false}
           />
         </div>
+
+        {/* Address book for small devices */}
+        <div className="block md:hidden">
+          {userData.addressBook.map((entry) => (
+            <div key={entry.address} className="mb-4 border-b pb-4">
+              <span className="flex items-center justify-between">
+                <h3 className="font-semibold">{entry.name}</h3>
+                <Badge>{entry.type}</Badge>
+              </span>
+              <p className="my-2">{entry.address}</p>
+              <p className="">{entry.phone}</p>
+            </div>
+          ))}
+        </div>
+
+
 
         <div className="mt-5 flex justify-end">
           <Link href="?shipping-address=shipping-modal">

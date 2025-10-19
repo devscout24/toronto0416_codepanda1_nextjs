@@ -1,7 +1,6 @@
 import ProductCard from "@/components/card";
 import AppPagination from "@/components/pagination/pagination";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -9,8 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { productData } from "@/consts/product";
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
+// import { productData } from "@/consts/product";
+// import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { SlidersHorizontal } from "lucide-react";
 import Filters from "./filters";
 import { Suspense } from "react";
@@ -21,15 +20,17 @@ import { allProducts } from "./action";
 import { TProduct } from "@/types/product.type";
 
 export default async function AllProducts() {
-  
-   let productData: TProduct[] = []; 
+  let productData: TProduct[] = [];
 
   try {
-    productData = await allProducts(); 
+    productData = await allProducts();
   } catch (error) {
     console.error("Failed to fetch products:", error);
     productData = [];
   }
+
+  // Log the fetched product data
+  console.log(productData);
 
   return (
     <section>

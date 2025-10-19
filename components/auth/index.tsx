@@ -30,6 +30,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { loginUser } from "@/lib/action";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required"),
@@ -49,9 +50,9 @@ export function LoginForm({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    localStorage.setItem("user", JSON.stringify(values.email));
-    window.history.back();
-  }
+  loginUser({ username: values.email, password: values.password });
+}
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

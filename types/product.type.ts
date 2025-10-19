@@ -5,12 +5,15 @@ export type TProduct = {
   images: string[];
   tags: string[];
   badge?: string;
-  rating: number;
   oldPrice: string;
   price: string;
   unit: string;
   stockStatus: "out-of-stock" | "in-stock";
+  rating: number;
+  reviews: TProductReviews[];
+  discountPercentage?: number;
   isFavorite: boolean;
+  aboutProduct: string;
 };
 
 export type TProductReviews = {
@@ -23,6 +26,13 @@ export type TProductReviews = {
 
 export type TProductDetails = {
   product: TProduct;
-  aboutProduct: string; // HTML string for rich text rendering;
+  aboutProduct: string;
   reviews: TProductReviews[];
+};
+
+export type TProductResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TProduct;
 };

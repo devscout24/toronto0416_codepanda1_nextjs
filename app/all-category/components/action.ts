@@ -1,16 +1,17 @@
 import fetcher from "@/lib/fetcher";
-import { TProduct, TProductDetails } from "@/types/product.type";
+import { TProduct, TProductDetails, TProductResponse } from "@/types/product.type";
 
-export const allProducts = async () => {
+// Fetch all products
+export const allProducts = async (): Promise<TProduct[]> => {
   try {
-    const response = await fetcher("/products");
+    const response = await fetcher<TProductResponse>("/products");
+    console.log(response)
 
     if (!response?.data) {
       console.error("No products found");
       return [];
     }
-
-    return response.data as TProduct[];
+    return Array.isArray(response.data) ? response.data : [response.data];
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -18,16 +19,21 @@ export const allProducts = async () => {
 };
 
 
-export const getProductDetails = async (id: string) => {
+// Fetch product details by ID
+export const getProductDetails = async (id: string): Promise<TProductDetails | null> => {
   try {
-    const response = await fetcher(`/products/${id}`);
+    const response = await fetcher<TProductResponse>(`/products/${id}`);
 
     if (!response?.data) {
       console.error(`Product with id ${id} not found`);
       return null;
     }
 
-    return response.data as TProductDetails;
+    return {
+      product: response.data,
+      aboutProduct: response.data.aboutProduct,  // Extract aboutProduct
+      reviews: response.data.reviews,  // Extract reviews
+    };
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
     return null;

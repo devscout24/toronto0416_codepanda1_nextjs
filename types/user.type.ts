@@ -34,3 +34,29 @@ export type TInvoice = {
   amount: string;
   downloadUrl?: string; // Optional since it's an action
 };
+
+
+
+
+// sing in resposne
+// types/apiResponse.ts
+
+export interface ApiResponse<T> {
+  status: string;
+  status_code: number;
+  message: string;
+  data: T;
+}
+
+export interface LoginData {
+  access: string;
+  refresh: string;
+  user: User;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
