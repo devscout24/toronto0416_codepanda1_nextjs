@@ -3,14 +3,12 @@
 import { useCallback } from "react";
 import { BadgeAlert } from "lucide-react";
 import { Button } from "../ui/button";
+import { useLogoutAuth } from "@/hook/useLogoutAuth";
 
 export default function Logout() {
+  const { handleLogout } = useLogoutAuth();
   const handleCancel = useCallback(() => window.history.back(), []);
-  const handleLogout = useCallback(() => {
-    localStorage.removeItem("user");
-    window.history.back();
-  }, []);
-
+  
   return (
     <section className="flex flex-col items-center justify-center gap-5">
       <BadgeAlert className="size-20" />

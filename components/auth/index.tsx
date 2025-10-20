@@ -31,6 +31,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { loginUser } from "@/lib/action";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required"),
@@ -49,9 +50,17 @@ export function LoginForm({
     },
   });
 
+  const router = useRouter();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-  loginUser({ username: values.email, password: values.password });
-}
+    loginUser({ username: values.email, password: values.password })
+      .then(() => {
+        router.push('/');
+      })
+      .catch((error) => {
+        console.error("Login failed", error);
+      });
+  }
 
 
   return (

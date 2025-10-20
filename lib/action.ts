@@ -53,3 +53,14 @@ export async function getUserSession() {
         return null;
     }
 }
+
+
+export async function logoutUser() {
+    try {
+        const cookieStore = await cookies();
+        cookieStore.delete("access_token");
+        cookieStore.delete("refresh_token");
+    } catch (error) {
+        console.error("Error logging out user:", error);
+    }
+}

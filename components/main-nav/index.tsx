@@ -10,6 +10,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "../ui/navigation-menu";
+import { isUser } from "@/utils/isUser";
+import { useUserAuth } from "@/hook/useUserAuth";
 
 const baseLinkClasses =
   "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
@@ -38,10 +40,11 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
   );
 };
 
-export default function  MainNav() {
+export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  // const isUserLoggedIn = true;
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  // const isUserLoggedIn = isUser();
+  const { isUserLoggedIn, loading } = useUserAuth();
 
   const navList = [
     { name: "Home", href: "/" },
@@ -54,20 +57,28 @@ export default function  MainNav() {
     const handleScroll = () => setIsSticky(window.scrollY > 500);
     window.addEventListener("scroll", handleScroll);
 
-    if (typeof window !== "undefined") {
-      setIsUserLoggedIn(localStorage.getItem("user") === null ? false : true);
-    }
+    // if (typeof window !== "undefined") {
+    //   setIsUserLoggedIn(async () => await isUser());
+    // }
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // useEffect(() => {
+  //   const checkUserLoggedIn = async () => {
+  //     const loggedIn = await isUser(); // Your async logic to check login status
+  //     setIsUserLoggedIn(loggedIn); // Update state dynamically
+  //   };
+
+  //   checkUserLoggedIn();
+  // }, []);
+
   return (
     <section
-      className={`w-full bg-white ${
-        isSticky
-          ? "fixed top-0 right-0 left-0 z-50 transition-all duration-300 ease-in-out"
-          : ""
-      }`}
+      className={`w-full bg-white ${isSticky
+        ? "fixed top-0 right-0 left-0 z-50 transition-all duration-300 ease-in-out"
+        : ""
+        }`}
       style={{ top: isSticky ? "0" : "auto" }}
     >
       <div className="hidden lg:block">
