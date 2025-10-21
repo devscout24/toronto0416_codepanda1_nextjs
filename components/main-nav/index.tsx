@@ -11,7 +11,8 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 import { isUser } from "@/utils/isUser";
-import { useUserAuth } from "@/hook/useUserAuth";
+import { useUserAuth } from "@/hooks/useUserAuth";
+import { tr } from "zod/v4/locales";
 
 const baseLinkClasses =
   "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
@@ -42,9 +43,8 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
-  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  // const isUserLoggedIn = isUser();
-  const { isUserLoggedIn, loading } = useUserAuth();
+  // const { isUserLoggedIn, loading } = useUserAuth();
+  const isUserLoggedIn = true;
 
   const navList = [
     { name: "Home", href: "/" },
@@ -63,15 +63,6 @@ export default function MainNav() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // useEffect(() => {
-  //   const checkUserLoggedIn = async () => {
-  //     const loggedIn = await isUser(); // Your async logic to check login status
-  //     setIsUserLoggedIn(loggedIn); // Update state dynamically
-  //   };
-
-  //   checkUserLoggedIn();
-  // }, []);
 
   return (
     <section

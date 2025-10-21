@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 import { BadgeAlert } from "lucide-react";
 import { Button } from "../ui/button";
-import { useLogoutAuth } from "@/hook/useLogoutAuth";
+import { useLogoutAuth } from "@/hooks/useLogoutAuth";
 
 export default function Logout() {
   const { handleLogout } = useLogoutAuth();

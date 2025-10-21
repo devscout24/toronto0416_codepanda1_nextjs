@@ -74,11 +74,13 @@ export default async function AllProducts() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {productData.map((product) => (
-          <div key={product.id}>
-            <ProductCard payload={product} />
-          </div>
-        ))}
+        {productData && productData.length > 0 ? (
+          productData.map((product, idx) => (
+            <ProductCard key={idx} payload={product} />
+          ))
+        ) : (
+          <p>No products found.</p>
+        )}
       </div>
 
       <div className="mt-10">

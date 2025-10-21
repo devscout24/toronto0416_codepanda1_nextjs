@@ -10,7 +10,8 @@ export async function middleware(request: NextRequest) {
 
   console.log("is here any token : ",accessToken)
 
-  if (!accessToken) {
+  if (accessToken) {
+  // if (!accessToken) {
     if (
       pathname.startsWith("/account") ||
       pathname.startsWith("/cart")

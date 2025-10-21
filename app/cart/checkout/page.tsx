@@ -1,12 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkout from "../components/checkout";
 import Shipping from "../components/shipping";
 import { TCartAddress } from "@/types/cart.type";
+import { addAddress } from "../components/action";
 
 export default function CheckoutPage() {
   const [address, setAddress] = useState<TCartAddress | null>(null);
+
+  useEffect(() => {
+    if (address) {
+      const saveAddress = async () => {
+        try {
+          const response = await addAddress(address);
+          if (response && response.error) {
+            console.error("Error adding address:", response.error);
+          } else {
+            console.log("Address added successfully");
+          }
+        } catch (error) {
+          console.error("An error occurred while adding the address:", error);
+        }
+      };
+
+      saveAddress();
+    }
+  }, [address]);
 
   return (
     <section className="section-container w-full space-y-28 pt-10 pb-28">

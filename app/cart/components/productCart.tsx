@@ -9,34 +9,52 @@ import { Separator } from "@/components/ui/separator";
 import { TCartProduct } from "@/types/cart.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getCart } from "./action";
 
 export default function ProductCart() {
-  const cartData: TCartProduct[] = [
-    {
-      id: "1",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 2,
-    },
-    {
-      id: "2",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 1,
-    },
-    {
-      id: "3",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 3,
-    },
-  ];
+  const [cartData, setCartData] = useState<TCartProduct[]>([]);
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await getCart();
+        setCartData(response);
+      } catch (error) {
+        console.error("An error occurred while fetching the cart data:", error);
+      }
+    };
+
+    fetchCartData();
+  }, []);
+
+
+  // const cartData: TCartProduct[] = [
+  //   {
+  //     id: "1",
+  //     image: "/images/card-img.jpg",
+  //     product_name: "Superior Halal Beef Burgers",
+  //     sku: "SPHE •XCCZ",
+  //     price: 49.99,
+  //     quantity: 2,
+  //   },
+  //   {
+  //     id: "2",
+  //     image: "/images/card-img.jpg",
+  //     product_name: "Superior Halal Beef Burgers",
+  //     sku: "SPHE •XCCZ",
+  //     price: 49.99,
+  //     quantity: 1,
+  //   },
+  //   {
+  //     id: "3",
+  //     image: "/images/card-img.jpg",
+  //     product_name: "Superior Halal Beef Burgers",
+  //     sku: "SPHE •XCCZ",
+  //     price: 49.99,
+  //     quantity: 3,
+  //   },
+  // ];
 
   const columns: ColumnDef<TCartProduct>[] = [
     {
@@ -76,7 +94,13 @@ export default function ProductCart() {
       accessorKey: "quantity",
       cell: ({ row }) => (
         <div className="mx-auto w-fit text-sm md:text-base">
-          <Counter value={row.original.quantity} />
+          <Counter
+            value={row.original.quantity}
+            onChange={(newValue) => {
+              // TODO: Implement quantity update logic
+              console.log(`Update quantity for ${row.original.id} to ${newValue}`);
+            }}
+          />
         </div>
       ),
     },
