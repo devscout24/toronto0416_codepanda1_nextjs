@@ -1,5 +1,6 @@
 import ProductCart from "@/app/cart/components/productCart";
 import Header from "../components/header";
+import AllProducts from "@/app/all-category/components/products";
 
 export default function MyWishlistPage() {
   return (
@@ -8,7 +9,7 @@ export default function MyWishlistPage() {
       <Header><h1 className="text-xl font-semibold">My Wishlist</h1></Header>
 
       <div className="mt-5">
-        <ProductCart />
+        <AllProducts />
       </div>
     </section>
   );

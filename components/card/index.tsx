@@ -15,6 +15,7 @@ import { Button } from "../animate-ui/components/buttons/button";
 import defaultImg from "@/assets/images/default.png";
 import { useState } from "react";
 import { addCart } from "../action";
+import { addOrRemoveWishList } from "@/app/all-category/components/action";
 
 export function SkeletonProductCard() {
   return (
@@ -88,27 +89,40 @@ export default function ProductCard({
   const [count, setCount] = useState(0);
 
   const handleAddToCard = async (product_id: string | undefined) => {
-  if (!product_id) {
-    console.error("Error: Product ID is required.");
-    return;
-  }
+    if (!product_id) {
+      console.error("Error: Product ID is required.");
+      return;
+    }
 
-  try {
-    const response = await addCart({ product_id, quantity: count });
-    console.log("Product added to cart:", response);
-  } catch (error) {
-    console.error("Error adding product to cart:", error);
-  }
-};
+    try {
+      const response = await addCart({ product_id, quantity: count });
+      console.log("Product added to cart:", response);
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
+
+  const handleWishList = async (productId: string | undefined) => {
+    if (!productId) {
+      console.error("Error: Product ID is required for wishlist.");
+      return;
+    }
+    try {
+      const result = await addOrRemoveWishList(productId);
+      console.log(`Wishlist updated: ${result}`);
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
+  };
 
   return (
     <section className="w-full select-none">
       <Link href={`/all-category/${payload?.id}`}>
         <Card className="group flex h-fit min-h-[428px] w-full cursor-pointer flex-col overflow-hidden p-0">
-          <CardHeader className="relative p-0 z-30">
+          <CardHeader className="relative z-30 p-0">
             <div className="overflow-hidden">
               <Image
-                src={payload?.images? payload?.images[0] : defaultImg}
+                src={payload?.images ? payload?.images[0] : defaultImg}
                 alt={payload?.title || "Product Image"}
                 width={287}
                 height={428}
@@ -119,7 +133,9 @@ export default function ProductCard({
             <div className="absolute top-4 flex w-full items-center justify-between px-4">
               <div>{payload?.badge && <Badge>{payload.badge}</Badge>}</div>
               <CardActionGuard className="justify-end">
-                <LikeButton favorite={payload?.isFavorite} />
+                <button onClick={() => handleWishList(payload?.id)}>
+                  <LikeButton favorite={payload?.isFavorite} />
+                </button>
               </CardActionGuard>
             </div>
           </CardHeader>
@@ -172,16 +188,22 @@ export default function ProductCard({
           </CardContent>
 
           <CardFooter className="mt-auto mb-4 flex items-center justify-between gap-4">
-           <CardActionGuard className="w-full">
-             <Counter
-               value={count}
-               onChange={(value) => setCount(typeof value === 'number' ? value : count)}
-             />
-             <Button onClick={()=> handleAddToCard(payload?.id)} variant="secondary" className="flex-1">
-               Add to Cart
-             </Button>
-           </CardActionGuard>
-         </CardFooter>
+            <CardActionGuard className="w-full">
+              <Counter
+                value={count}
+                onChange={(value) =>
+                  setCount(typeof value === "number" ? value : count)
+                }
+              />
+              <Button
+                onClick={() => handleAddToCard(payload?.id)}
+                variant="secondary"
+                className="flex-1"
+              >
+                Add to Cart
+              </Button>
+            </CardActionGuard>
+          </CardFooter>
         </Card>
       </Link>
     </section>

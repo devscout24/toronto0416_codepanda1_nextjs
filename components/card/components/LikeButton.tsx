@@ -27,7 +27,7 @@ export default function LikeButton({
       )}
       onClick={handleClick}
     >
-      <LikeIcon className="mt-0.5 size-[1.1rem]" />
+      <LikeIcon className="mt-0.5 size-[18px]" />
     </IconButton>
   );
 }
