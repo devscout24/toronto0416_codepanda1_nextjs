@@ -10,10 +10,10 @@ export type TProduct = {
   unit: string;
   stockStatus: "out-of-stock" | "in-stock";
   rating: number;
-  reviews: TProductReviews[];
+  reviews?: TProductReviews[]; 
   discountPercentage?: number;
   isFavorite: boolean;
-  aboutProduct: string;
+  aboutProduct?: string; 
 };
 
 export type TProductReviews = {
@@ -25,14 +25,21 @@ export type TProductReviews = {
 };
 
 export type TProductDetails = {
-  product: TProduct;
-  aboutProduct: string;
-  reviews: TProductReviews[];
+  status: string;
+  status_code: number;
+  message: string;
+  data: {
+    product: TProduct ;
+    aboutProduct?: string; 
+    reviews?: TProductReviews[];
+  }; // Changed from TProduct to TProductDetails
 };
 
 export type TProductResponse = {
   status: string;
   status_code: number;
   message: string;
-  data: TProduct;
+  data: {
+    results: TProduct | TProduct[];
+  }
 };

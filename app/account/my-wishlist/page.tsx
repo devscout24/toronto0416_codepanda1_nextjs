@@ -1,4 +1,3 @@
-import ProductCart from "@/app/cart/components/productCart";
 import Header from "../components/header";
 import AllProducts from "@/app/all-category/components/products";
 

@@ -11,11 +11,11 @@ export const allProducts = async (): Promise<TProduct[]> => {
     const response = await fetcher<TProductResponse>("/products");
     console.log(response);
 
-    if (!response?.data) {
+    if (!response?.data?.results) {
       console.error("No products found");
       return [];
     }
-    return Array.isArray(response.data) ? response.data : [response.data];
+    return Array.isArray(response?.data?.results) ? response?.data?.results : [response?.data?.results];
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -29,15 +29,14 @@ export const getProductDetails = async (
   try {
     const response = await fetcher<TProductResponse>(`/products/${id}`);
 
-    if (!response?.data) {
+    if (!response?.data?.product) {
       console.error(`Product with id ${id} not found`);
       return null;
     }
 
     return {
-      product: response.data,
-      aboutProduct: response.data.aboutProduct, // Extract aboutProduct
-      reviews: response.data.reviews, // Extract reviews
+      product: response.data.product,
+      recently_viewed_products: response.data.recently_viewed_products ?? [],
     };
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);

@@ -9,16 +9,32 @@ import { getUserSession } from "./action";
  * @param options - Fetch options
  * @returns Promise with the response data
  */
-export async function fetcher<T = unknown>(endpoint: string, options?: RequestInit): Promise<T> {
+export async function fetcher<T = unknown>(
+  endpoint: string,
+  options?: RequestInit,
+): Promise<T> {
   if (!endpoint) {
     throw new Error("Endpoint is required for fetcher");
   }
 
+  // ...existing code...
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
-  const url = `${process.env.NEXT_PUBLIC_BASE_API}/${cleanEndpoint}`;
 
-  // Don't add auth header for auth endpoints
-  const isAuthEndpoint = ["/login"].includes(cleanEndpoint);
+  // Normalize base URL: ensure it includes a protocol and no trailing slash
+  const rawBase = process.env.NEXT_PUBLIC_BASE_API ?? "";
+  let base = rawBase.trim();
+  if (!base) {
+    throw new Error("NEXT_PUBLIC_BASE_API is not set");
+  }
+  if (!/^https?:\/\//i.test(base)) {
+    base = `http://${base}`; // assume http for local IPs; change to https if needed
+  }
+  base = base.replace(/\/+$/, ""); // remove trailing slashes
+  const url = `${base}/${cleanEndpoint}`;
+
+  // Don't add auth header for auth endpoints (normalize comparison)
+  const authEndpoints = ["login", "auth/login", "api/login"];
+  const isAuthEndpoint = authEndpoints.includes(cleanEndpoint);
   const accessToken = !isAuthEndpoint ? await getUserSession() : null;
 
   // Debug: Log the access token to verify it's being set correctly

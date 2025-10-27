@@ -29,9 +29,6 @@ export default async function AllProducts() {
     productData = [];
   }
 
-  // Log the fetched product data
-  console.log(productData);
-
   return (
     <section>
       <div className="mb-7 flex items-center justify-between rounded-2xl bg-white p-4 relative z-50">

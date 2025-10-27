@@ -10,9 +10,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "../ui/navigation-menu";
-import { isUser } from "@/utils/isUser";
 import { useUserAuth } from "@/hooks/useUserAuth";
-import { tr } from "zod/v4/locales";
 
 const baseLinkClasses =
   "px-2 py-1 transition-colors duration-300 hover:text-primary focus-visible:outline-none";
@@ -43,8 +41,8 @@ export const NavItem = ({ name, href }: { name: string; href: string }) => {
 
 export default function MainNav() {
   const [isSticky, setIsSticky] = useState(false);
-  // const { isUserLoggedIn, loading } = useUserAuth();
-  const isUserLoggedIn = true;
+  const { isUserLoggedIn, loading } = useUserAuth();
+  // const isUserLoggedIn = true;
 
   const navList = [
     { name: "Home", href: "/" },

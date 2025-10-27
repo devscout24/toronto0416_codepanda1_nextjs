@@ -1,4 +1,3 @@
-// hooks/useUserAuth.ts
 "use client";
 
 import { useEffect, useState } from "react";
@@ -18,7 +17,6 @@ export const useUserAuth = () => {
 
     checkUserLoggedIn();
 
-    // Poll every 5 seconds to check auth status
     const interval = setInterval(checkUserLoggedIn, 5000);
 
     return () => clearInterval(interval);

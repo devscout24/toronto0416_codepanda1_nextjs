@@ -53,7 +53,7 @@ export function LoginForm({
   const router = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    loginUser({ username: values.email, password: values.password })
+    loginUser({ email: values.email, password: values.password })
       .then(() => {
         router.push('/');
       })

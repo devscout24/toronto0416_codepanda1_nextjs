@@ -1,3 +1,5 @@
+"use client";
+
 import { Counter } from "@/components/animate-ui/components/animate/counter";
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import Rating from "@/components/shared/Rating";
@@ -5,8 +7,10 @@ import { ThumbnailCarousel } from "@/components/shared/ThumbnailsCarousel";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { TProduct } from "@/types/product.type";
+import { useState } from "react";
 
 export default function DetailsView({ payload }: { payload: TProduct }) {
+  const [count, setCount] = useState(0);
   return (
     <section className="flex flex-col-reverse items-center justify-between gap-10 lg:flex-row">
       <div className="flex w-full flex-col rounded-2xl bg-white p-5 md:p-10 lg:h-[35rem] lg:w-1/2">
@@ -62,7 +66,10 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
             <Button variant="secondary" className="flex-1">
               Add to Cart
             </Button>
-            <Counter />
+            <Counter value={count}
+                onChange={(value) =>
+                  setCount(typeof value === "number" ? value : count)
+                } />
           </div>
         </div>
       </div>
