@@ -16,10 +16,6 @@ export const useUserAuth = () => {
     };
 
     checkUserLoggedIn();
-
-    const interval = setInterval(checkUserLoggedIn, 5000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return { isUserLoggedIn, loading };

@@ -1,5 +1,5 @@
 export type TProduct = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   images: string[];
@@ -10,10 +10,10 @@ export type TProduct = {
   unit: string;
   stockStatus: "out-of-stock" | "in-stock";
   rating: number;
-  reviews?: TProductReviews[]; 
+  reviews?: TProductReviews[];
   discountPercentage?: number;
   isFavorite: boolean;
-  aboutProduct?: string; 
+  about_product?: string;
 };
 
 export type TProductReviews = {
@@ -24,22 +24,45 @@ export type TProductReviews = {
   comment: string;
 };
 
+export type TProductDetailsPayload = {
+  product: TProduct;
+  aboutProduct?: string;
+  reviews?: TProductReviews[];
+};
+
 export type TProductDetails = {
   status: string;
   status_code: number;
   message: string;
-  data: {
-    product: TProduct ;
-    aboutProduct?: string; 
-    reviews?: TProductReviews[];
-  }; // Changed from TProduct to TProductDetails
+  data: TProductDetailsPayload;
+};
+
+export type TProductData = {
+  count: number;
+  total_pages: number;
+  current_page: number;
+  per_page: number;
+  results: TProduct[];
 };
 
 export type TProductResponse = {
   status: string;
   status_code: number;
   message: string;
-  data: {
-    results: TProduct | TProduct[];
-  }
+  data: TProductData;
+};
+
+
+
+export type TFavoriteItem = {
+  id: number;
+  product: TProduct;
+  created_at: string;
+};
+
+export type TFavoriteResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TFavoriteItem[];
 };

@@ -1,21 +1,23 @@
 "use client";
 
+import { addOrRemoveWishList } from "@/app/all-category/components/action";
 import LikeIcon from "@/assets/icons/love.svg";
 import { IconButton } from "@/components/animate-ui/components/buttons/icon";
 import { cn } from "@/lib/utils";
-import { MouseEvent, useState } from "react";
+import { TProduct } from "@/types/product.type";
+import { MouseEvent} from "react";
 
-export default function LikeButton({
-  favorite = false,
-}: {
-  favorite?: boolean;
-}) {
-  const [isLiked, setIsLiked] = useState<boolean>(favorite);
+export default function LikeButton({ payload }: { payload?: TProduct }) {
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    setIsLiked(!isLiked);
+    if (!payload?.id) return;
+    try {
+      await addOrRemoveWishList(payload.id);
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
   };
 
   return (
@@ -23,7 +25,7 @@ export default function LikeButton({
       variant="secondary"
       className={cn(
         "bg-secondary-100 hover:text-secondary text-secondary-foreground hover:bg-secondary-100 rounded-full duration-200",
-        isLiked && "text-secondary",
+        payload?.isFavorite && "text-secondary",
       )}
       onClick={handleClick}
     >

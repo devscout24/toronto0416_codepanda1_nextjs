@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import CarouselBtn from "./carouselBtn";
+import defaultImage from "@/assets/images/default.png";
 
 type ThumbnailCarouselProps = {
   images: string[];
@@ -25,6 +26,13 @@ export function ThumbnailCarousel({
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [thumbApi, setThumbApi] = React.useState<CarouselApi | null>(null);
   const [selected, setSelected] = React.useState(0);
+
+  const [imageError, setImageError] = React.useState(false);
+
+  // Function to handle image loading errors
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   React.useEffect(() => {
     if (!api) return;
@@ -63,14 +71,26 @@ export function ThumbnailCarousel({
               className="h-80 pl-0 lg:h-96"
             >
               <div className="relative aspect-video h-full w-full overflow-hidden">
-                <Image
+                {/* <Image
                   fill
                   src={image}
                   alt="product image"
                   className="h-full object-cover"
                   // sizes="(min-width: 1024px) 640px, 100vw"
                   priority={index === 0}
-                />
+                /> */}
+
+                <Image
+                    fill
+                    src={
+                      imageError || !image || image.length === 0
+                        ? defaultImage
+                        : image
+                    }
+                    alt="product image"
+                  className="h-full object-cover"
+                    onError={handleImageError}
+                  />
               </div>
             </CarouselItem>
           ))}
@@ -109,12 +129,23 @@ export function ThumbnailCarousel({
                     thumbClassName,
                   )}
                 >
-                  <Image
+                  {/* <Image
                     fill
                     src={image}
                     alt="product image thumbnail"
                     className="object-cover"
                     // sizes="(min-width: 1024px) 120px, (min-width: 768px) 96px, 80vw"
+                  /> */}
+                  <Image
+                    fill
+                    src={
+                      imageError || !image || image.length === 0
+                        ? defaultImage
+                        : image
+                    }
+                    alt="product image thumbnail"
+                    className="object-cover"
+                    onError={handleImageError}
                   />
                 </button>
               </CarouselItem>

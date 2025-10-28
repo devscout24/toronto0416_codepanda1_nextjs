@@ -33,12 +33,9 @@ export async function fetcher<T = unknown>(
   const url = `${base}/${cleanEndpoint}`;
 
   // Don't add auth header for auth endpoints (normalize comparison)
-  const authEndpoints = ["login", "auth/login", "api/login"];
+  const authEndpoints = ["/login", "/register", "/products"];
   const isAuthEndpoint = authEndpoints.includes(cleanEndpoint);
   const accessToken = !isAuthEndpoint ? await getUserSession() : null;
-
-  // Debug: Log the access token to verify it's being set correctly
-  console.log("Access Token:", accessToken);
 
   const defaultOptions: RequestInit = {
     headers: {
@@ -48,9 +45,10 @@ export async function fetcher<T = unknown>(
       }),
       ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     },
-    next: {
-      revalidate: 60,
-    },
+    cache: "no-store", // ✅ disable all caching by default
+    // next: {
+    //   revalidate: 60,
+    // },
   };
 
   const fetchOptions = {

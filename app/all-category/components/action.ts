@@ -1,21 +1,33 @@
+"use server"
+
 import fetcher from "@/lib/fetcher";
 import {
-  TProduct,
+  TProductData,
   TProductDetails,
   TProductResponse,
 } from "@/types/product.type";
+import { revalidatePath } from "next/cache";
 
 // Fetch all products
-export const allProducts = async (): Promise<TProduct[]> => {
+export const allProducts = async ({
+  page = 1,
+}: {
+  page?: number;
+}): Promise<TProductData | []> => {
   try {
-    const response = await fetcher<TProductResponse>("/products");
-    console.log(response);
+    const response = await fetcher<TProductResponse>(
+      `/products?page=${page}&per_page=12`,
+      {
+        cache: "no-store",
+      },
+    );
 
-    if (!response?.data?.results) {
+    if (!response?.data) {
       console.error("No products found");
       return [];
     }
-    return Array.isArray(response?.data?.results) ? response?.data?.results : [response?.data?.results];
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -23,39 +35,34 @@ export const allProducts = async (): Promise<TProduct[]> => {
 };
 
 // Fetch product details by ID
-export const getProductDetails = async (
-  id: string,
-): Promise<TProductDetails | null> => {
+export const getProductDetails = async (id: string) => {
   try {
-    const response = await fetcher<TProductResponse>(`/products/${id}`);
+    const response = await fetcher<TProductDetails>(`/products/${id}`);
 
     if (!response?.data?.product) {
       console.error(`Product with id ${id} not found`);
       return null;
     }
 
-    return {
-      product: response.data.product,
-      recently_viewed_products: response.data.recently_viewed_products ?? [],
-    };
+    // Return the raw product as received from the API
+    return response.data.product;
   } catch (error) {
     console.error(`Error fetching product ${id}:`, error);
     return null;
   }
 };
 
-export const addOrRemoveWishList = async (
-  productId: string,
-): Promise<boolean> => {
+export const addOrRemoveWishList = async (product_id: number) => {
   try {
-    const response = await fetcher<{ message: boolean }>("/favorites", {
+    await fetcher("/favorites", {
       method: "POST",
-      body: JSON.stringify({ productId }),
+      body: JSON.stringify({ product_id }),
     });
 
-    return response.message;
+    revalidatePath("/all-category")
+    return true;
   } catch (error) {
-    console.error(`Error toggling product ${productId} in wishlist:`, error);
+    console.error(`Error toggling product ${product_id} in wishlist:`, error);
     return false;
   }
 };

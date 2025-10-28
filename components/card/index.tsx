@@ -12,10 +12,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
-import defaultImg from "@/assets/images/default.png";
+import defaultImage from "@/assets/images/default.png";
 import { useState } from "react";
 import { addCart } from "../action";
-import { addOrRemoveWishList } from "@/app/all-category/components/action";
 
 export function SkeletonProductCard() {
   return (
@@ -88,7 +87,14 @@ export default function ProductCard({
 }) {
   const [count, setCount] = useState(0);
 
-  const handleAddToCard = async (product_id: string | undefined) => {
+  const [imageError, setImageError] = useState(false);
+
+  // Function to handle image loading errors
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const handleAddToCard = async (product_id: number | undefined) => {
     if (!product_id) {
       console.error("Error: Product ID is required.");
       return;
@@ -102,18 +108,6 @@ export default function ProductCard({
     }
   };
 
-  const handleWishList = async (productId: string | undefined) => {
-    if (!productId) {
-      console.error("Error: Product ID is required for wishlist.");
-      return;
-    }
-    try {
-      const result = await addOrRemoveWishList(productId);
-      console.log(`Wishlist updated: ${result}`);
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
-    }
-  };
 
   return (
     <section className="w-full select-none">
@@ -122,20 +116,22 @@ export default function ProductCard({
           <CardHeader className="relative z-30 p-0">
             <div className="overflow-hidden">
               <Image
-                src={payload?.images ? payload?.images[0] : defaultImg}
-                alt={payload?.title || "Product Image"}
                 width={287}
                 height={428}
+                src={
+                  imageError || !payload?.images || payload?.images.length === 0
+                    ? defaultImage
+                    : payload?.images[0]
+                }
+                alt={payload?.title || "Product Image"}
                 className="h-[15.5rem] w-full object-cover duration-700 group-hover:scale-125"
-                priority={priority}
+                onError={handleImageError}
               />
             </div>
             <div className="absolute top-4 flex w-full items-center justify-between px-4">
               <div>{payload?.badge && <Badge>{payload.badge}</Badge>}</div>
               <CardActionGuard className="justify-end">
-                <button onClick={() => handleWishList(payload?.id)}>
-                  <LikeButton favorite={payload?.isFavorite} />
-                </button>
+                  <LikeButton payload={payload} />
               </CardActionGuard>
             </div>
           </CardHeader>

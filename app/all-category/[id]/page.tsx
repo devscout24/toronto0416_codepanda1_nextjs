@@ -1,7 +1,7 @@
 import RecentlyViewed from "@/components/recently-viewed";
 import DetailsTab from "./components/detailsTab";
 import DetailsView from "./components/detailsView";
-import { TProductDetails } from "@/types/product.type";
+import { TProduct } from "@/types/product.type";
 import { getProductDetails } from "../components/action";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default async function ProductDetailsPage({ params }: Props) {
-  let productDetails: TProductDetails | null = null;
+  let productDetails: TProduct | null = null;
 
   try {
     productDetails = await getProductDetails(params.id);
@@ -27,7 +27,7 @@ export default async function ProductDetailsPage({ params }: Props) {
   return (
     <section className="section-container w-full pt-10">
       <div>
-        <DetailsView payload={productDetails.product} />
+        <DetailsView payload={productDetails} />
       </div>
 
       <div className="my-10">

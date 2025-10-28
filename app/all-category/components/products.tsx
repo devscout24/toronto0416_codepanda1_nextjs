@@ -8,42 +8,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { productData } from "@/consts/product";
-// import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { SlidersHorizontal } from "lucide-react";
 import Filters from "./filters";
 import { Suspense } from "react";
 import FiltersSkeleton from "./filtersSkeleton";
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { allProducts } from "./action";
-import { TProduct } from "@/types/product.type";
+import { TProduct, TProductData } from "@/types/product.type";
 
-export default async function AllProducts() {
-  let productData: TProduct[] = [];
-
-  try {
-    productData = await allProducts();
-  } catch (error) {
-    console.error("Failed to fetch products:", error);
-    productData = [];
-  }
-
+export default async function AllProducts({
+  productData,
+  products,
+}: {
+  productData?: TProductData | [];
+  products?: TProduct[];
+}) {
   return (
-    <section>
-      <div className="mb-7 flex items-center justify-between rounded-2xl bg-white p-4 relative z-50">
+    <>
+      <div className="mb-7 flex justify-between rounded-2xl bg-white p-4">
         <div className="flex items-center gap-4">
           <div className="block lg:hidden">
-            <Drawer
-              direction="left"
-            >
+            <Drawer direction="left">
               <DrawerTrigger asChild>
                 <Button variant="outline">
                   <SlidersHorizontal />
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="!max-w-[275px] bg-white rounded-2xl border">
-                <DrawerClose className='hover:cursor-pointer mt-5 flex justify-end mr-5'>
+              <DrawerContent className="!max-w-[275px] rounded-2xl border bg-white">
+                <DrawerClose className="mt-5 mr-5 flex justify-end hover:cursor-pointer">
                   X
                 </DrawerClose>
                 <ScrollArea className="h-full pb-10">
@@ -54,11 +51,14 @@ export default async function AllProducts() {
               </DrawerContent>
             </Drawer>
           </div>
-          <p className="hidden md:block">Showing 1-12 of 156 products</p>
+          <p className="hidden md:block">
+            Showing {products?.length} of{" "}
+            {Array.isArray(productData) ? 0 : productData?.count} products
+          </p>
         </div>
-        <div>
+        <div className="">
           <Select>
-            <SelectTrigger className="w-[120px] md:w-[180px] bg-neutral-50 py-5 text-black">
+            <SelectTrigger className="w-[120px] bg-neutral-50 py-5 text-black md:w-[180px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -71,18 +71,29 @@ export default async function AllProducts() {
       </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {productData && productData.length > 0 ? (
-          productData.map((product, idx) => (
-            <ProductCard key={idx} payload={product} />
+        {products?.length && products?.length > 0 ? (
+          products?.map((product, idx) => (
+            <ProductCard key={product.id || idx} payload={product} />
           ))
         ) : (
-          <p>No products found.</p>
+          <div className="flex h-full min-h-[300px] w-full items-center justify-center">
+            <p className="text-center text-lg text-gray-500">
+              No products found.
+            </p>
+          </div>
         )}
       </div>
 
-      <div className="mt-10">
-        <AppPagination page={1} total={2} />
-      </div>
-    </section>
+      {!Array.isArray(productData) &&
+        productData?.total_pages &&
+        productData?.total_pages > 1 && (
+          <div className="mt-10">
+            <AppPagination
+              page={productData.current_page}
+              total={productData.total_pages}
+            />
+          </div>
+        )}
+    </>
   );
 }
