@@ -1,8 +1,8 @@
-import { TProduct, TProductDetails } from "@/types/product.type";
+import { TProduct, TProductDetails, TProductDetailsPayload } from "@/types/product.type";
 
 export const productData: TProduct[] = [
   {
-    id: "1",
+    id: 1,
     title: "Fresh Atlantic Salmon",
     description: "Wild-caught sustainable salmon fillet",
     images: [
@@ -20,7 +20,7 @@ export const productData: TProduct[] = [
     isFavorite: true,
   },
   {
-    id: "2",
+    id: 2,
     title: "Organic Cucumbers",
     description:
       "Crisp and refreshing cucumbers sourced from local farms. Perfect for salads, raita, or light snacking.",
@@ -38,7 +38,7 @@ export const productData: TProduct[] = [
     isFavorite: false,
   },
   {
-    id: "3",
+    id: 3,
     title: "Premium Basmati Rice",
     description:
       "ong-grain aromatic basmati rice, aged for perfect fluffiness.",
@@ -57,7 +57,7 @@ export const productData: TProduct[] = [
     isFavorite: true,
   },
   {
-    id: "4",
+    id: 4,
     title: "Golden Mustard Oil",
     description:
       "Pure cold-pressed mustard oil with a rich aroma. Excellent for cooking traditional dishes and pickles.",
@@ -76,7 +76,7 @@ export const productData: TProduct[] = [
     isFavorite: false,
   },
   {
-    id: "5",
+    id: 5,
     title: "Fresh Farm Eggs",
     description:
       "Farm-fresh brown eggs, high in protein and nutrition. Perfect for breakfast, baking, or hearty meals.",
@@ -94,7 +94,7 @@ export const productData: TProduct[] = [
     isFavorite: true,
   },
   {
-    id: "6",
+    id: 6,
     title: "Organic Red Lentils (Masoor Dal)",
     description:
       "Protein-rich split red lentils. Easy to cook, light on digestion, and perfect for everyday dal curry.",
@@ -113,7 +113,7 @@ export const productData: TProduct[] = [
     isFavorite: false,
   },
   {
-    id: "7",
+    id: 7,
     title: "Brown Sugar",
     description:
       "Natural brown sugar with rich caramel flavor. Great for tea, coffee, and desserts.",
@@ -132,7 +132,7 @@ export const productData: TProduct[] = [
     isFavorite: true,
   },
   {
-    id: "8",
+    id: 8,
     title: "Premium Black Tea Leaves",
     description:
       "Strong and flavorful tea leaves handpicked from the finest gardens. Enjoy a refreshing cup any time of day.",
@@ -150,7 +150,7 @@ export const productData: TProduct[] = [
     isFavorite: false,
   },
   {
-    id: "9",
+    id: 9,
     title: "Fresh Green Chili",
     description:
       "Spicy, farm-fresh green chilies to add a kick to your curries and chutneys.",
@@ -170,9 +170,9 @@ export const productData: TProduct[] = [
   },
 ];
 
-export const productDetails: TProductDetails = {
+export const productDetails: TProductDetailsPayload = {
   product: {
-    id: "6",
+    id: 6,
     title: "Organic Red Lentils (Masoor Dal)",
     description:
       "Protein-rich split red lentils. Easy to cook, light on digestion, and perfect for everyday dal curry. Impossible Dead Reckoning Part 1!",
