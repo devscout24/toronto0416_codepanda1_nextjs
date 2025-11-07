@@ -1,13 +1,25 @@
+import { TProduct } from "@/types/product.type";
 import ProductCard from "../card";
 import CarouselBtn from "../shared/carouselBtn";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import { productData } from "@/consts/product";
+import { getRecentlyViews } from "./actions";
 
-export default function RecentlyViewed({
+export default async function RecentlyViewed({
   title = "Recently Viewed",
 }: {
   title?: string;
 }) {
+
+let productData: TProduct[] = [];
+  
+  try {
+    const data = await getRecentlyViews();
+    productData = data ?? [];
+  } catch (error) {
+    console.error("Failed to fetch weekly special products:", error);
+    productData = [];
+  }
+
   return (
     <section>
       <Carousel className="space-y-7">

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { RippleButton } from "../animate-ui/components/buttons/ripple";
 import Search from "./search";
+import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
 
 export default function Hero() {
   return (

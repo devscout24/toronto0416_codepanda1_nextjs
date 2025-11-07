@@ -6,9 +6,9 @@ import Categories3Icon from "@/assets/icons/categories3.svg";
 import Categories4Icon from "@/assets/icons/categories4.svg";
 import Categories5Icon from "@/assets/icons/categories5.svg";
 import { ArrowRight } from "lucide-react";
-import { IconButton } from "../animate-ui/components/buttons/icon";
 import { handleMouseDown } from "@/utils/handleMouseDown";
 import Link from "next/link";
+import { IconButton } from "@/components/animate-ui/components/buttons/icon";
 
 export default function Categories() {
   const categories = [

@@ -1,9 +1,11 @@
+"use server"
+
 import fetcher from "@/lib/fetcher";
 import { SpecialResponse } from "@/types/product.type";
 
-export const getFavoriteList = async () => {
+export const getRecentlyViews = async () => {
   try {
-    const response = await fetcher<SpecialResponse>(`/favorites`);
+    const response = await fetcher<SpecialResponse>(`/recently-viewed-products`);
 
     if (!response?.data) {
       console.error(`Product not found`);

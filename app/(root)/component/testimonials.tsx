@@ -1,7 +1,7 @@
+import CarouselBtn from "@/components/shared/carouselBtn";
+import Rating from "@/components/shared/Rating";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { TTestimonial } from "@/types/testimonials.type";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import Rating from "../shared/Rating";
-import CarouselBtn from "../shared/carouselBtn";
 
 export default function Testimonials() {
   const testimonials: TTestimonial[] = [

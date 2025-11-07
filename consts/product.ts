@@ -1,4 +1,4 @@
-import { TProduct, TProductDetails, TProductDetailsPayload } from "@/types/product.type";
+import { TProduct, TProductDetailsPayload } from "@/types/product.type";
 
 export const productData: TProduct[] = [
   {

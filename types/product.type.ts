@@ -1,3 +1,7 @@
+// =========================
+// Product Types
+// =========================
+
 export type TProduct = {
   id: number;
   title: string;
@@ -16,6 +20,10 @@ export type TProduct = {
   about_product?: string;
 };
 
+// =========================
+// Review Types
+// =========================
+
 export type TProductReviews = {
   id: number;
   rating: number;
@@ -23,6 +31,10 @@ export type TProductReviews = {
   date: string;
   comment: string;
 };
+
+// =========================
+// Product Details Types
+// =========================
 
 export type TProductDetailsPayload = {
   product: TProduct;
@@ -36,6 +48,10 @@ export type TProductDetails = {
   message: string;
   data: TProductDetailsPayload;
 };
+
+// =========================
+// Paginated Product Response
+// =========================
 
 export type TProductData = {
   count: number;
@@ -52,17 +68,31 @@ export type TProductResponse = {
   data: TProductData;
 };
 
+// =========================
+// Weekly Special Products
+// =========================
 
 
-export type TFavoriteItem = {
-  id: number;
-  product: TProduct;
-  created_at: string;
-};
-
-export type TFavoriteResponse = {
+export type SpecialResponse = {
   status: string;
   status_code: number;
   message: string;
-  data: TFavoriteItem[];
+  data: TProduct[];
+};
+
+
+// search type
+export type TSearchData = {
+  count: number;
+  total_pages: number;
+  current_page: number;
+  per_page: number;
+  results: TProduct[];
+};
+
+export type TSearchResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TSearchData;
 };

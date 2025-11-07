@@ -13,48 +13,48 @@ import { useEffect, useState } from "react";
 import { getCart } from "./action";
 
 export default function ProductCart() {
-  const [cartData, setCartData] = useState<TCartProduct[]>([]);
+  // const [cartData, setCartData] = useState<TCartProduct[]>([]);
 
-  useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const response = await getCart();
-        setCartData(response);
-      } catch (error) {
-        console.error("An error occurred while fetching the cart data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchCartData = async () => {
+  //     try {
+  //       const response = await getCart();
+  //       setCartData(response);
+  //     } catch (error) {
+  //       console.error("An error occurred while fetching the cart data:", error);
+  //     }
+  //   };
 
-    fetchCartData();
-  }, []);
+  //   fetchCartData();
+  // }, []);
 
 
-  // const cartData: TCartProduct[] = [
-  //   {
-  //     id: "1",
-  //     image: "/images/card-img.jpg",
-  //     product_name: "Superior Halal Beef Burgers",
-  //     sku: "SPHE •XCCZ",
-  //     price: 49.99,
-  //     quantity: 2,
-  //   },
-  //   {
-  //     id: "2",
-  //     image: "/images/card-img.jpg",
-  //     product_name: "Superior Halal Beef Burgers",
-  //     sku: "SPHE •XCCZ",
-  //     price: 49.99,
-  //     quantity: 1,
-  //   },
-  //   {
-  //     id: "3",
-  //     image: "/images/card-img.jpg",
-  //     product_name: "Superior Halal Beef Burgers",
-  //     sku: "SPHE •XCCZ",
-  //     price: 49.99,
-  //     quantity: 3,
-  //   },
-  // ];
+  const cartData: TCartProduct[] = [
+    {
+      id: "1",
+      image: "/images/card-img.jpg",
+      product_name: "Superior Halal Beef Burgers",
+      sku: "SPHE •XCCZ",
+      price: 49.99,
+      quantity: 2,
+    },
+    {
+      id: "2",
+      image: "/images/card-img.jpg",
+      product_name: "Superior Halal Beef Burgers",
+      sku: "SPHE •XCCZ",
+      price: 49.99,
+      quantity: 1,
+    },
+    {
+      id: "3",
+      image: "/images/card-img.jpg",
+      product_name: "Superior Halal Beef Burgers",
+      sku: "SPHE •XCCZ",
+      price: 49.99,
+      quantity: 3,
+    },
+  ];
 
   const columns: ColumnDef<TCartProduct>[] = [
     {

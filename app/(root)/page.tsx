@@ -1,12 +1,12 @@
-import Banner from "@/components/home/banner";
-import BestSelling from "@/components/home/bestSelling";
-import Categories from "@/components/home/categories";
-import Hero from "@/components/home/hero";
-import Testimonials from "@/components/home/testimonials";
-import WeeklySpecials from "@/components/home/weeklySpecials";
 import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import PaymentIcon from "@/assets/icons/secure-payment.svg";
 import SupportIcon from "@/assets/icons/support.svg";
+import Hero from "./component/hero";
+import Categories from "./component/categories";
+import WeeklySpecials from "./component/weeklySpecials";
+import Banner from "./component/banner";
+import BestSelling from "./component/bestSelling";
+import Testimonials from "./component/testimonials";
 
 export default function HomePage() {
   const benefits = [

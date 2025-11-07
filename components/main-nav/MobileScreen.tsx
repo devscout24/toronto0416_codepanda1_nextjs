@@ -19,6 +19,7 @@ import { Menu } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../animate-ui/components/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import SearchField from "./searchField";
 
 export default function MobileScreen({
   navList,
@@ -46,13 +47,7 @@ export default function MobileScreen({
             <SufisLogo size={10} />
           </SheetHeader>
 
-          <div className="relative mx-auto w-fit">
-            <Input
-              placeholder="Search"
-              className="w-[14rem] rounded-full bg-white pr-8"
-            />
-            <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
-          </div>
+          <SearchField isMobile />
 
           {isUserLoggedIn ? (
             <div className="flex items-center justify-center gap-5">
@@ -85,7 +80,7 @@ export default function MobileScreen({
           )}
 
           <div className="ml-6">
-            <NavigationMenu className="flex-col items-start mt-8">
+            <NavigationMenu className="mt-8 flex-col items-start">
               {navList.map((item) => (
                 <NavItem key={item.name} {...item} />
               ))}

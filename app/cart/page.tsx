@@ -1,47 +1,48 @@
 import RecentlyViewed from "@/components/recently-viewed";
 import ProductCart from "./components/productCart";
 import Checkout from "./components/checkout";
+import { TCart } from "@/types/cart.type";
 
 export default function CartPage() {
-  // const cartData: TCart = {
-  //   checkout: {
-  //     product: 3,
-  //     subtotal: 180.0,
-  //     shipping_fee: 0.0,
-  //     vat: 10.0,
-  //     total: 190.0,
-  //     coupon: {
-  //       code: "",
-  //       is_valid: false,
-  //     },
-  //   },
-  //   cart: [
-  //     {
-  //       id: "1",
-  //       image: "/images/card-img.jpg",
-  //       product_name: "Superior Halal Beef Burgers",
-  //       sku: "SPHE •XCCZ",
-  //       price: 49.99,
-  //       quantity: 2,
-  //     },
-  //     {
-  //       id: "2",
-  //       image: "/images/card-img.jpg",
-  //       product_name: "Superior Halal Beef Burgers",
-  //       sku: "SPHE •XCCZ",
-  //       price: 49.99,
-  //       quantity: 1,
-  //     },
-  //     {
-  //       id: "3",
-  //       image: "/images/card-img.jpg",
-  //       product_name: "Superior Halal Beef Burgers",
-  //       sku: "SPHE •XCCZ",
-  //       price: 49.99,
-  //       quantity: 3,
-  //     },
-  //   ],
-  // };
+  const cartData: TCart = {
+    checkout: {
+      product: 3,
+      subtotal: 180.0,
+      shipping_fee: 0.0,
+      vat: 10.0,
+      total: 190.0,
+      coupon: {
+        code: "",
+        is_valid: false,
+      },
+    },
+    cart: [
+      {
+        id: "1",
+        image: "/images/card-img.jpg",
+        product_name: "Superior Halal Beef Burgers",
+        sku: "SPHE •XCCZ",
+        price: 49.99,
+        quantity: 2,
+      },
+      {
+        id: "2",
+        image: "/images/card-img.jpg",
+        product_name: "Superior Halal Beef Burgers",
+        sku: "SPHE •XCCZ",
+        price: 49.99,
+        quantity: 1,
+      },
+      {
+        id: "3",
+        image: "/images/card-img.jpg",
+        product_name: "Superior Halal Beef Burgers",
+        sku: "SPHE •XCCZ",
+        price: 49.99,
+        quantity: 3,
+      },
+    ],
+  };
 
   return (
     <section className="pt-10 pb-28 mx-4 lg:mx-6">

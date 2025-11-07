@@ -80,12 +80,12 @@ export function SkeletonProductCard() {
 
 export default function ProductCard({
   payload,
-  priority = false,
+  // priority = false,
 }: {
   payload?: TProduct;
   priority?: boolean;
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const [imageError, setImageError] = useState(false);
 

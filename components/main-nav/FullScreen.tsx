@@ -10,6 +10,7 @@ import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
 import { Input } from "../ui/input";
 import { Button } from "../animate-ui/components/buttons/button";
+import SearchField from "./searchField";
 
 export default function FullScreen({
   navList,
@@ -41,13 +42,7 @@ export default function FullScreen({
 
       {isUserLoggedIn ? (
         <div className="flex items-center gap-5">
-          <div className="relative w-full">
-            <Input
-              placeholder="Search"
-              className="w-[15rem] xl:w-[18rem] rounded-full pr-8"
-            />
-            <SearchIcon className="absolute top-1.5 right-2 size-[1.5rem]" />
-          </div>
+          <SearchField/>
 
           <Link href="/account/my-wishlist">
             <IconButton className="bg-primary-700 flex size-11 items-center justify-center rounded-full text-white">

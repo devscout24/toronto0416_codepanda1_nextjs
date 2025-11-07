@@ -1,9 +1,19 @@
-import { productData } from "@/consts/product";
-import { RippleButton } from "../animate-ui/components/buttons/ripple";
-import ProductCard from "../card";
+import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
+import ProductCard from "@/components/card";
+import { TProduct } from "@/types/product.type";
 import Link from "next/link";
+import { getBestSelling } from "./actions";
 
-export default function BestSelling() {
+export default async function BestSelling() {
+  let productData: TProduct[] = [];
+  
+  try {
+    const data = await getBestSelling();
+    productData = data ?? [];
+  } catch (error) {
+    console.error("Failed to fetch weekly special products:", error);
+    productData = [];
+  }
   return (
     <section className="section-container">
       <div className="flex items-center justify-between">

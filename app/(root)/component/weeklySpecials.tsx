@@ -1,11 +1,27 @@
 import Link from "next/link";
-import ProductCard from "../card";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
-import CarouselBtn from "../shared/carouselBtn";
 import { productData } from "@/consts/product";
-import { Button } from "../animate-ui/components/buttons/button";
+import { Button } from "@/components/animate-ui/components/buttons/button";
+import CarouselBtn from "@/components/shared/carouselBtn";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import ProductCard from "@/components/card";
+import { getWeeklySpecial } from "./actions";
+import { TProduct } from "@/types/product.type";
 
-export default function WeeklySpecials() {
+export default async function WeeklySpecials() {
+  let productData: TProduct[] = [];
+
+  try {
+    const data = await getWeeklySpecial();
+    productData = data ?? [];
+  } catch (error) {
+    console.error("Failed to fetch weekly special products:", error);
+    productData = [];
+  }
+
   return (
     <section className="section-container">
       <div className="flex items-center justify-between">

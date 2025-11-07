@@ -1,4 +1,4 @@
-import { RippleButton } from "../animate-ui/components/buttons/ripple";
+import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
 
 export default function Banner() {
   return (
