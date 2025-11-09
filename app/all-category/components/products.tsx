@@ -73,7 +73,7 @@ export default async function AllProducts({
       <div className="grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {products && products.length > 0 ? (
           products.map((product, idx) => (
-            <ProductCard key={product.id || idx} payload={product} />
+            <ProductCard key={product?.id || idx} payload={product} />
           ))
         ) : (
           <div className="col-span-full flex h-full w-full items-center justify-center py-20">

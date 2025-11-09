@@ -77,7 +77,7 @@ export interface User {
 
 
 export type TUserAccount = {
-  id: number;
+  id?: number;
   name: string;
   phone: string;
   country: string;

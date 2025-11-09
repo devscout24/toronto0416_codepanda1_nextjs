@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { getProfileInfo } from "./action";
+import { getProfileInfo, updateProfileInfo } from "./action";
 import { TUserAccount } from "@/types/user.type";
 
 const formSchema = z.object({
@@ -49,12 +49,12 @@ export default function MyProfileEdit() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: userData?.name || "",
-        email: userData?.email || "",
-        phone: userData?.phone || "",
-        country: userData?.country || "",
+      email: userData?.email || "",
+      phone: userData?.phone || "",
+      country: userData?.country || "",
     },
   });
-  
+
   useEffect(() => {
     if (userData) {
       form.reset({
@@ -66,15 +66,28 @@ export default function MyProfileEdit() {
     }
   }, [userData, form]);
 
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    window.history.back();
+  // On submit, call the function to update profile info
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values, "values");
+    try {
+      const response = await updateProfileInfo(values);
+       console.log(response, "response")// Pass the form values to the update function
+      if (response) {
+        console.log("Profile updated successfully", response);
+        window.history.back();  // Go back after successful update
+        console.log(response, "response");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   }
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
+
+  // Your form rendering here
+
 
   return (
     <section>
@@ -140,6 +153,7 @@ export default function MyProfileEdit() {
                       placeholder="email@example.com"
                       className="border-neutral-50"
                       {...field}
+                      readOnly
                     />
                   </FormControl>
                   <FormMessage />
