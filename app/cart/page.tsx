@@ -16,7 +16,7 @@ export default function CartPage() {
         is_valid: false,
       },
     },
-    cart: [
+    data: [
       {
         id: "1",
         image: "/images/card-img.jpg",

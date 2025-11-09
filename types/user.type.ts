@@ -8,6 +8,7 @@ export type TPersonalInfo = {
 };
 
 export type TAddressBookEntry = {
+  image?: string
   id: number;
   city: string;
   area: string;
@@ -110,5 +111,5 @@ export type TAddressBookResponse = {
   status: string;
   status_code: number;
   message: string;
-  data: TAddressBook[];
+  data: TAddressBook;
 };

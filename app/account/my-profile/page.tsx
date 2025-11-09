@@ -5,7 +5,7 @@ import Header from "../components/header";
 import { getProfileInfo } from "../components/action";
 import { TUserAccount } from "@/types/user.type";
 
-const ShowField = ({ title, value }: { title: string; value: string }) => {
+const ShowField = ({ title, value }: { title?: string; value?: string }) => {
   return (
     <div className="space-y-0.5">
       <p className="text-sm text-neutral-300">{title}</p>

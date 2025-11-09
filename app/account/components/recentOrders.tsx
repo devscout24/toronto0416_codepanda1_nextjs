@@ -30,12 +30,12 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
         return (
           <span
             className={cn(
-              row.original.status === "In Shipping" && "text-secondary",
-              row.original.status === "Completed" && "text-primary",
-              row.original.status === "Canceled" && "text-red-500",
+              row?.original?.status === "In Shipping" && "text-secondary",
+              row?.original?.status === "Completed" && "text-primary",
+              row?.original?.status === "Canceled" && "text-red-500",
             )}
           >
-            {row.original.status}
+            {row?.original?.status}
           </span>
         );
       },
@@ -50,7 +50,7 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
         enableColumnVisibility={false}
         enableFiltering={false}
         enablePagination={false}
-        getRowLink={(row) => `/account/my-orders/${row.orderId}`}
+        getRowLink={(row) => `/account/my-orders/${row?.orderId}`}
       />
     </div>
   );

@@ -3,20 +3,18 @@ import AddressBook from "./components/addressBook";
 import RecentOrders from "./components/recentOrders";
 import Header from "./components/header";
 import { getAccountInfo } from "./components/action";
-import { userData as fallbackUserData } from "@/consts/user";
 import { TUserProfile } from "@/types/user.type";
 
 export default async function AccountPage() {
-let accountData = fallbackUserData as TUserProfile;
-
+  let accountData: TUserProfile | null = null;
 
   try {
     const response = await getAccountInfo();
     if (response) {
       accountData = {
-        personal_info: response.personal_info,
-        addresses: response.addresses,
-        orders: response.orders,
+        personal_info: response?.personal_info || [],
+        addresses: response?.addresses || [],
+        orders: response?.orders || [],
       };
     }
   } catch (error) {

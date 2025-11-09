@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import { TCartAddress } from "@/types/cart.type";
+import { addAddress } from "../components/action";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),
@@ -61,9 +62,10 @@ export default function ShippingAddress({
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+     await addAddress({ ...values, addressType: addressSelected,is_default: true })
     if (setAddress) {
-      setAddress({ ...values, addressType: addressSelected });
+      setAddress({ ...values, addressType: addressSelected,is_default: true });
     }
     window.history.back();
   }

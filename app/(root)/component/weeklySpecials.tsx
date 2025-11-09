@@ -39,7 +39,7 @@ export default async function WeeklySpecials() {
         <CarouselContent>
           {productData.map((product) => (
             <CarouselItem
-              key={product.id}
+              key={product?.id}
               className="md:basis-1/2 lg:basis-1/4"
             >
               <ProductCard payload={product} />

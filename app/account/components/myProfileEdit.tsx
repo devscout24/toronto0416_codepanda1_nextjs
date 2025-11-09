@@ -10,11 +10,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userData } from "@/consts/user";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { getProfileInfo } from "./action";
+import { TUserAccount } from "@/types/user.type";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -24,31 +26,66 @@ const formSchema = z.object({
 });
 
 export default function MyProfileEdit() {
+  const [userData, setUserData] = useState<TUserAccount | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getProfileInfo();
+        if (response) {
+          setUserData(response);
+        }
+      } catch (error) {
+        console.error("Error fetching profile info:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: userData.personalInfo.name || "",
-      email: userData.personalInfo.email || "",
-      phone: userData.personalInfo.phone || "",
-      country: userData.personalInfo.country || "",
+      name: userData?.name || "",
+        email: userData?.email || "",
+        phone: userData?.phone || "",
+        country: userData?.country || "",
     },
   });
+  
+  useEffect(() => {
+    if (userData) {
+      form.reset({
+        name: userData.name || "",
+        email: userData.email || "",
+        phone: userData.phone || "",
+        country: userData.country || "",
+      });
+    }
+  }, [userData, form]);
+
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     window.history.back();
   }
 
+  if (loading) {
+    return <div className="text-center">Loading...</div>;
+  }
+
   return (
     <section>
       <div className="mx-auto my-5 w-fit">
-        <Image
-          src={userData.personalInfo.image}
-          width={100}
-          height={100}
-          alt="avatar"
-          className="size-28 rounded-full"
-        />
+        <Avatar className="size-28">
+          <AvatarImage src={userData?.image} />
+          <AvatarFallback className="text-4xl font-semibold">
+            {userData?.name?.split(" ")[0]?.[0]}
+            {userData?.name?.split(" ")[1]?.[0]}
+          </AvatarFallback>
+        </Avatar>
       </div>
 
       <Form {...form}>
@@ -77,7 +114,7 @@ export default function MyProfileEdit() {
               name="country"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Area</FormLabel>
+                  <FormLabel>Country</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Bangladesh"
@@ -97,10 +134,10 @@ export default function MyProfileEdit() {
               name="email"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Name"
+                      placeholder="email@example.com"
                       className="border-neutral-50"
                       {...field}
                     />
@@ -115,10 +152,10 @@ export default function MyProfileEdit() {
               name="phone"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Area</FormLabel>
+                  <FormLabel>Phone</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Bangladesh"
+                      placeholder="+880 1234567890"
                       className="border-neutral-50"
                       {...field}
                     />

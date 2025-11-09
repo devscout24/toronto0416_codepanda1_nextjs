@@ -3,6 +3,7 @@ import { Checkbox } from "@/components/animate-ui/components/radix/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { TPersonalInfo } from "@/types/user.type";
+import Link from "next/link";
 
 export default function PersonalInfo({
   userData,
@@ -13,12 +14,17 @@ export default function PersonalInfo({
     <>
       <div className="mb-5 flex items-center justify-between">
         <h2 className="text-xl font-semibold">Personal Info</h2>
-        <Button
-          variant="ghost"
-          className="text-secondary hover:text-secondary text-xl"
-        >
-          Edit
-        </Button>
+
+        <Link href={"?profile-edit-modal=profile-edit"}>
+          <div className="mt-5 flex justify-end">
+            <Button
+              variant="ghost"
+              className="text-secondary hover:text-secondary text-xl"
+            >
+              Edit
+            </Button>
+          </div>
+        </Link>
       </div>
 
       <div>

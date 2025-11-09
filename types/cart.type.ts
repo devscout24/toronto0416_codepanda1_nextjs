@@ -39,6 +39,7 @@ export type TCartAddress = {
   name: string;
   phone: string;
   deliveryNote?: string;
+ is_default: boolean
 };
 
 
