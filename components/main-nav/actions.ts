@@ -1,19 +1,43 @@
 "use server";
 
 import fetcher from "@/lib/fetcher";
-import { TProduct } from "@/types/product.type";
+import { TCart } from "@/types/cart.type";
+import { SpecialResponse } from "@/types/product.type";
 
-export const getSearchProducts = async (query: string): Promise<TProduct[] | null> => {
+export const getSearchProducts = async (query: string) => {
   try {
-    if (!query || query.trim() === "") return null;
+    if (!query || query.trim() === "") {
+      console.error("Search query is empty");
+      return null;
+    }
 
-    const response = await fetcher<{ data: TProduct[] }>(
-      `/search-by-name/?q=${encodeURIComponent(query)}`
+    const response = await fetcher<SpecialResponse>(
+      `/search-by-name/?q=${encodeURIComponent(query)}`,
     );
 
-    return response?.data ?? [];
+    if (!response?.data) {
+      console.error(`No products found for query: ${query}`);
+      return null;
+    }
+
+    return response.data;
   } catch (error) {
-    console.error("Error fetching search products:", error);
+    console.error(`Error fetching search products for query: ${query}`, error);
     return null;
   }
 };
+
+export async function getCartLength() {
+  try {
+    const response = await fetcher<TCart>("/get-cart-items", {
+      method: "GET",
+    });
+
+    const cartLength = response?.data?.length || 5;
+
+    return cartLength;
+  } catch (error) {
+    console.error("Error fetching cart length:", error);
+    return 0;
+  }
+}

@@ -6,3 +6,11 @@ export type TTestimonial = {
   subtitle: string; // Sub text / tagline
   feedback: string; // Testimonial text
 };
+
+
+export type TestimonialApiResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TTestimonial[];
+};

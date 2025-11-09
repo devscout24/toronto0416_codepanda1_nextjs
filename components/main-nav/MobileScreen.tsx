@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import { IconButton } from "../animate-ui/components/buttons/icon";
 import SufisLogo from "../logo";
@@ -12,14 +14,14 @@ import {
 import { Badge } from "../ui/badge";
 import { NavigationMenu } from "../ui/navigation-menu";
 import { NavItem } from ".";
-import SearchIcon from "@/assets/icons/search.svg";
 import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
 import { Menu } from "lucide-react";
-import { Input } from "../ui/input";
 import { Button } from "../animate-ui/components/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchField from "./searchField";
+import { useEffect, useState } from "react";
+import { getCartLength } from "./actions";
 
 export default function MobileScreen({
   navList,
@@ -28,6 +30,20 @@ export default function MobileScreen({
   navList: { name: string; href: string }[];
   isUserLoggedIn: boolean;
 }) {
+  const [cartLength, setCartLength] = useState(0);
+
+  useEffect(() => {
+    async function fetchCartLength() {
+      try {
+        const length = await getCartLength();
+        setCartLength(length);
+      } catch (error) {
+        console.error("Error fetching cart length:", error);
+      }
+    }
+
+    fetchCartLength();
+  }, []);
   return (
     <nav className="section-container flex items-center justify-between">
       <SufisLogo />
@@ -57,10 +73,12 @@ export default function MobileScreen({
 
               <Link href="/cart">
                 <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
-                  <BagIcon className="size-[1.5rem]" />
-                  <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
-                    9+
-                  </Badge>
+                  <BagIcon className="size-6" />
+                  {cartLength > 0 && (
+                    <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
+                      {cartLength < 10 ? cartLength : "9+"}
+                    </Badge>
+                  )}
                 </IconButton>
               </Link>
 

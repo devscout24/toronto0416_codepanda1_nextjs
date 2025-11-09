@@ -1,17 +1,26 @@
 export type TPersonalInfo = {
-  image: string;
+  id: number;
   name: string;
-  email: string;
   phone: string;
   country: string;
-  receiveMarketingEmail: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TAddressBookEntry = {
+  id: number;
+  city: string;
+  area: string;
+  blockSector: string;
+  streetRoad: string;
+  houseNo: string;
+  flatNo: string;
+  floorNo: string;
   name: string;
   phone: string;
-  address: string;
-  type: "Home" | "Office";
+  deliveryNote: string;
+  addressType: "home" | "office";
+  is_default: boolean;
 };
 
 export type TOrder = {
@@ -23,9 +32,16 @@ export type TOrder = {
 };
 
 export type TUserProfile = {
-  personalInfo: TPersonalInfo;
-  addressBook: TAddressBookEntry[];
-  recentOrders: TOrder[];
+  personal_info: TPersonalInfo;
+  addresses: TAddressBookEntry[];
+  orders: TOrder[];
+};
+
+export type TUserProfileResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TUserProfile;
 };
 
 export type TInvoice = {
@@ -34,9 +50,6 @@ export type TInvoice = {
   amount: string;
   downloadUrl?: string; // Optional since it's an action
 };
-
-
-
 
 // sing in resposne
 // types/apiResponse.ts
@@ -60,3 +73,42 @@ export interface User {
   email: string;
 }
 
+
+
+export type TUserAccount = {
+  id: number;
+  name: string;
+  phone: string;
+  country: string;
+  email?: string; // optional if your API doesn't return email
+  image?: string; // optional
+};
+
+export type TUserResponse = {
+  data : TUserAccount
+}
+
+
+
+export type TAddressBook = {
+  id: number;
+  city: string;
+  area: string;
+  blockSector: string;
+  streetRoad: string;
+  houseNo: string;
+  flatNo: string;
+  floorNo: string;
+  name: string;
+  phone: string;
+  deliveryNote: string;
+  addressType: "home" | "office"; // use literal types if only these values exist
+  is_default: boolean;
+};
+
+export type TAddressBookResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TAddressBook[];
+};

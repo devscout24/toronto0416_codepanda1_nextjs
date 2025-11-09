@@ -1,3 +1,4 @@
+
 export type TCartProduct = {
   id: string;
   image: string;
@@ -23,7 +24,7 @@ export type TCheckoutCart = {
 
 export type TCart = {
   checkout: TCheckoutCart;
-  cart: TCartProduct[];
+  data: TCartProduct[];
 };
 
 export type TCartAddress = {
@@ -38,4 +39,14 @@ export type TCartAddress = {
   name: string;
   phone: string;
   deliveryNote?: string;
+};
+
+
+export type PostalCodeAPIResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: {
+    available: "yes" | "no";
+  };
 };

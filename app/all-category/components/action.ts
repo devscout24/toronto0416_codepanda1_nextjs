@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import fetcher from "@/lib/fetcher";
 import {
@@ -59,10 +59,24 @@ export const addOrRemoveWishList = async (product_id: number) => {
       body: JSON.stringify({ product_id }),
     });
 
-    revalidatePath("/all-category")
+    revalidatePath("/all-category");
     return true;
   } catch (error) {
     console.error(`Error toggling product ${product_id} in wishlist:`, error);
+    return false;
+  }
+};
+
+export const addToCart = async (product_id: number, quantity: number) => {
+  try {
+    await fetcher("/cart", {
+      method: "POST",
+      body: JSON.stringify({ product_id, quantity }),
+    });
+    revalidatePath("/all-category");
+    return true;
+  } catch (error) {
+    console.error(`Error adding product ${product_id} to cart:`, error);
     return false;
   }
 };

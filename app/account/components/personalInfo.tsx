@@ -24,21 +24,21 @@ export default function PersonalInfo({
       <div>
         <div className="flex items-center justify-between">
           <h3>Name</h3>
-          <p>{userData.name}</p>
+          <p>{userData?.name}</p>
         </div>
 
         <Separator className="mt-1.5 mb-2.5" />
 
         <div className="flex items-center justify-between">
           <h3>Email</h3>
-          <p>{userData.email}</p>
+          <p>{userData?.phone}</p>
         </div>
 
         <Separator className="mt-1.5 mb-2.5" />
 
         <div className="flex items-center justify-between">
           <h3>Country</h3>
-          <p>{userData.country}</p>
+          <p>{userData?.country}</p>
         </div>
 
         <div className="mt-5 flex items-center gap-2">

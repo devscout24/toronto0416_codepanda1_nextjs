@@ -40,6 +40,7 @@
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
     "next": "15.5.0",
+    "ordinal": "^1.0.3",
     "query-string": "^9.2.2",
     "radix-ui": "^1.4.3",
     "react": "19.1.0",

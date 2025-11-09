@@ -39,7 +39,7 @@ export default async function AllProducts({
                   <SlidersHorizontal />
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="!max-w-[275px] rounded-2xl border bg-white">
+              <DrawerContent className="max-w-[275px]! rounded-2xl border bg-white">
                 <DrawerClose className="mt-5 mr-5 flex justify-end hover:cursor-pointer">
                   X
                 </DrawerClose>
@@ -70,13 +70,13 @@ export default async function AllProducts({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {products?.length && products?.length > 0 ? (
-          products?.map((product, idx) => (
+      <div className="grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {products && products.length > 0 ? (
+          products.map((product, idx) => (
             <ProductCard key={product.id || idx} payload={product} />
           ))
         ) : (
-          <div className="flex h-full min-h-[300px] w-full items-center justify-center">
+          <div className="col-span-full flex h-full w-full items-center justify-center py-20">
             <p className="text-center text-lg text-gray-500">
               No products found.
             </p>

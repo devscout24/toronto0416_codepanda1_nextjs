@@ -15,6 +15,7 @@ import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
 import { useState } from "react";
 import { addCart } from "../action";
+import { addToCart } from "@/app/all-category/components/action";
 
 export function SkeletonProductCard() {
   return (
@@ -48,7 +49,7 @@ export function SkeletonProductCard() {
           {/* Rating row */}
           <div className="mt-2 flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className="h-5 w-5 rounded-[4px]" />
+              <Skeleton key={i} className="h-5 w-5 rounded-lg" />
             ))}
           </div>
 
@@ -94,19 +95,27 @@ export default function ProductCard({
     setImageError(true);
   };
 
-  const handleAddToCard = async (product_id: number | undefined) => {
-    if (!product_id) {
-      console.error("Error: Product ID is required.");
-      return;
-    }
+ const handleAddToCard = async (product_id: number | undefined) => {
+  if (!product_id) {
+    console.error("Error: Product ID is required.");
+    return;
+  }
 
-    try {
-      const response = await addCart({ product_id, quantity: count });
-      console.log("Product added to cart:", response);
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
+  try {
+    const success = await addToCart(product_id, count);
+    if (success) {
+      console.log("Product added to cart successfully");
+      // Optional: Show success toast/notification
+      // Optional: Reset count to 1 after adding
+      // setCount(1);
+    } else {
+      console.error("Failed to add product to cart");
+      // Optional: Show error toast/notification
     }
-  };
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+  }
+};
 
 
   return (
@@ -124,7 +133,7 @@ export default function ProductCard({
                     : payload?.images[0]
                 }
                 alt={payload?.title || "Product Image"}
-                className="h-[15.5rem] w-full object-cover duration-700 group-hover:scale-125"
+                className="h-62 w-full object-cover duration-700 group-hover:scale-125"
                 onError={handleImageError}
               />
             </div>

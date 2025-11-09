@@ -72,6 +72,10 @@ export default function Modals() {
       <Modal title="" modalId="logout-modal" openId="logout">
         <Logout />
       </Modal>
+
+      <Modal title="" modalId="postcode-modal" openId="available">
+        <div>yes this is work</div>
+      </Modal>
     </>
   );
 }
