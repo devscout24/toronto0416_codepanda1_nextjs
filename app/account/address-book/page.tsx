@@ -29,11 +29,11 @@ export default async function AddressBookPage() {
       header: "Full Name",
     },
     {
-      accessorKey: "city", 
+      accessorKey: "city",
       header: "Address",
     },
     {
-      accessorKey: "addressType",
+      accessorKey: "address_type",
       header: "Address Type",
     },
     {
@@ -67,7 +67,7 @@ export default async function AddressBookPage() {
               <div key={entry.id} className="mb-4 border-b pb-4">
                 <span className="flex items-center justify-between">
                   <h3 className="font-semibold">{entry.name}</h3>
-                  <Badge>{entry.addressType}</Badge>
+                  <Badge>{entry.address_type}</Badge>
                 </span>
                 <p className="my-2">{entry.city}</p>
                 <p className="">{entry.phone}</p>

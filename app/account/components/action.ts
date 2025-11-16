@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 export const getFavoriteList = async () => {
   try {
-    const response = await fetcher<SpecialResponse>(`/favorites`);
+    const response = await fetcher<SpecialResponse>(`/favorites/`);
 
     if (!response?.data) {
       console.error(`Product not found`);

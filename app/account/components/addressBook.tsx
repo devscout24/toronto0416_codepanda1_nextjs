@@ -4,7 +4,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TAddressBookEntry } from "@/types/user.type";
 import Link from "next/link";
-import ordinal from "ordinal";
 
 export default function AddressBook({
   addressBook,
@@ -24,33 +23,39 @@ export default function AddressBook({
       </div>
 
       <ScrollArea className="h-full md:h-40">
-       <div
-  className={`grid w-full items-center gap-2 "md:grid-cols-1"
+        <div
+          className={`grid w-full items-center gap-2 "md:grid-cols-1"
    grid-cols-1`}
->
-  {addressBook?.length > 0 &&
-  addressBook
-    .filter((address) => address?.is_default === true)
-    .map((address, idx) => (
-      <div key={idx} className="w-full rounded-lg border p-2.5">
-        <div className="flex w-full items-center justify-between">
-          <div className="flex w-full items-center justify-between">
-            <p className="font-semibold">{address?.name}</p>
-            <Badge className="rounded-full bg-black">
-              {address?.addressType === "home" ? "Home" : "Office"}
-            </Badge>
-          </div>
+        >
+          {addressBook?.length > 0 &&
+            addressBook
+              .filter((address) => address?.is_default === true)
+              .map((address, idx) => (
+                <div key={idx} className="w-full rounded-lg border p-2.5">
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex w-full items-center justify-between">
+                      <p className="font-semibold">{address?.name}</p>
+                      <Badge className="rounded-full bg-black">
+                        {address?.address_type === "home" ? "Home" : "Office"}
+                      </Badge>
+                    </div>
+                  </div>
+                  <p className="text-sm">{address?.phone}</p>
+                  <Separator className="my-2.5" />
+                  <p className="text-sm">
+                    {address?.flat_no ? `Flat#${address.flat_no}, ` : ""}
+                    {address?.floor_no ? `${address.floor_no} floor, ` : ""}
+                    {address?.house_no ? `${address.house_no}, ` : ""}
+                    {address?.street_road ? `${address.street_road}, ` : ""}
+                    {address?.block_sector ? `${address.block_sector}, ` : ""}
+                    {address?.postal_code ? `Postal Code: ${address.postal_code}, ` : ""}
+                    {address?.area ? `${address.area}, ` : ""}
+                    {address?.city ?? ""}
+                  </p>
+
+                </div>
+              ))}
         </div>
-        <p className="text-sm">{address?.phone}</p>
-        <Separator className="my-2.5" />
-        <p className="text-sm">
-          Flat#{address?.flatNo}, {ordinal(Number(address?.floorNo))} floor,{" "}
-          {address?.houseNo}, {address?.streetRoad}, {address?.blockSector},{" "}
-          {address?.area}, {address?.city}
-        </p>
-      </div>
-    ))}
-</div>
 
       </ScrollArea>
     </>

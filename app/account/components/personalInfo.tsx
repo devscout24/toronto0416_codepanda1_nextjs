@@ -37,7 +37,7 @@ export default function PersonalInfo({
 
         <div className="flex items-center justify-between">
           <h3>Email</h3>
-          <p>{userData?.phone}</p>
+          <p>{userData?.email}</p>
         </div>
 
         <Separator className="mt-1.5 mb-2.5" />

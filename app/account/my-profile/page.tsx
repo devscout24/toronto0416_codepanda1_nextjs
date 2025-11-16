@@ -15,16 +15,16 @@ const ShowField = ({ title, value }: { title?: string; value?: string }) => {
 };
 
 export default async function MyProfilePage() {
- let userData: TUserAccount | null = null;
+  let userData: TUserAccount | null = null;
 
-try {
-  const response = await getProfileInfo(); // returns TUserAccount | null
-  if (response) {
-    userData = response; // assign the single object
+  try {
+    const response = await getProfileInfo(); // returns TUserAccount | null
+    if (response) {
+      userData = response; // assign the single object
+    }
+  } catch (error) {
+    console.error("Error fetching profile info:", error);
   }
-} catch (error) {
-  console.error("Error fetching profile info:", error);
-}
   return (
     <section className="w-full">
       {/* <h2 className="text-xl font-semibold">My Profile</h2> */}
@@ -37,11 +37,13 @@ try {
 
         <Avatar className="mt-5 size-28">
           <AvatarImage src={userData?.image} />
+
           <AvatarFallback className="text-4xl font-semibold">
-            {userData?.name?.split(" ")[0][0]}
-            {userData?.name.split(" ")[1][0]}
+            {userData?.name?.split(" ")[0]?.[0]}
+            {userData?.name?.split(" ")[1]?.[0] ?? ""}
           </AvatarFallback>
         </Avatar>
+
 
         <div className="mt-5 grid grid-cols-2 gap-5">
           <ShowField title="Name" value={userData?.name || ""} />

@@ -4,7 +4,7 @@ export type TCartProduct = {
   image: string;
   product_name: string;
   sku: string;
-  price: number;
+  price: string;
   quantity: number;
 };
 
@@ -22,25 +22,42 @@ export type TCheckoutCart = {
   coupon: TCoupon;
 };
 
-export type TCart = {
-  checkout: TCheckoutCart;
+export type CartMetaData = {
+
+  sub_total: number;
+  shipping_fee: number;
+  vat: number;
+  discount: number;
+}
+
+
+export type TCartAPIResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  metadata: CartMetaData;
   data: TCartProduct[];
 };
 
+
 export type TCartAddress = {
-  addressType: "home" | "office";
+  address_type: "home" | "office";
   city: string;
   area: string;
-  blockSector: string;
-  streetRoad: string;
-  houseNo: string;
-  flatNo: string;
-  floorNo: string;
+  block_sector: string;
+  street_road: string;
+  postal_code: string;
+  house_no: string;
+  flat_no: string;
+  floor_no: string;
   name: string;
   phone: string;
-  deliveryNote?: string;
- is_default: boolean
+  delivery_note?: string;
+  is_default: boolean;
 };
+
+
+
 
 
 export type PostalCodeAPIResponse = {

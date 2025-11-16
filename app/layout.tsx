@@ -6,6 +6,7 @@ import MainNav from "@/components/main-nav";
 import Footer from "@/components/footer";
 import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,22 +29,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="flex min-h-screen flex-col">
-          <MainNav />
-          <Breadcrumbs />
-          {children}
-          <Suspense fallback={null}>
-            <Modals />
-          </Suspense>
-          <div className="mt-auto">
-            <Footer />
-          </div>
+  <html lang="en">
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+      <div className="flex min-h-screen flex-col">
+        <MainNav />
+        <Breadcrumbs />
+        {children}
+
+        <Suspense fallback={null}>
+          <Modals />
+        </Suspense>
+
+        <div className="mt-auto">
+          <Footer />
         </div>
-      </body>
-    </html>
-  );
+      </div>
+
+      {/* Toaster must be inside body, but outside main layout */}
+      <Toaster position="top-right" />
+    </body>
+  </html>
+);
 }

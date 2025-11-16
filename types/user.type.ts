@@ -2,6 +2,7 @@ export type TPersonalInfo = {
   id: number;
   name: string;
   phone: string;
+  email: string;
   country: string;
   created_at: string;
   updated_at: string;
@@ -12,15 +13,16 @@ export type TAddressBookEntry = {
   id: number;
   city: string;
   area: string;
-  blockSector: string;
-  streetRoad: string;
-  houseNo: string;
-  flatNo: string;
-  floorNo: string;
+  postal_code: string;
+  block_sector: string;
+  street_road: string | null;
+  house_no: string | null;
+  flat_no: string | null;
+  floor_no: string | null;
   name: string;
   phone: string;
-  deliveryNote: string;
-  addressType: "home" | "office";
+  delivery_note: string;
+  address_type: "home" | "office"; // literal types
   is_default: boolean;
 };
 
@@ -86,7 +88,7 @@ export type TUserAccount = {
 };
 
 export type TUserResponse = {
-  data : TUserAccount
+  data: TUserAccount
 }
 
 
@@ -95,17 +97,19 @@ export type TAddressBook = {
   id: number;
   city: string;
   area: string;
-  blockSector: string;
-  streetRoad: string;
-  houseNo: string;
-  flatNo: string;
-  floorNo: string;
+  postal_code: string;
+  block_sector: string;
+  street_road: string | null;
+  house_no: string | null;
+  flat_no: string | null;
+  floor_no: string | null;
   name: string;
   phone: string;
-  deliveryNote: string;
-  addressType: "home" | "office"; // use literal types if only these values exist
+  delivery_note: string;
+  address_type: "home" | "office"; // literal types
   is_default: boolean;
 };
+
 
 export type TAddressBookResponse = {
   status: string;

@@ -54,7 +54,7 @@ export const getProductDetails = async (id: string) => {
 
 export const addOrRemoveWishList = async (product_id: number) => {
   try {
-    await fetcher("/favorites", {
+    await fetcher("/favorites/", {
       method: "POST",
       body: JSON.stringify({ product_id }),
     });
@@ -69,14 +69,19 @@ export const addOrRemoveWishList = async (product_id: number) => {
 
 export const addToCart = async (product_id: number, quantity: number) => {
   try {
-    await fetcher("/cart", {
+    await fetcher("/add-to-cart/", {
       method: "POST",
       body: JSON.stringify({ product_id, quantity }),
     });
+
+    // Revalidate pages AFTER successful add
     revalidatePath("/all-category");
+    revalidatePath("/cart");
+    revalidatePath("/", "layout");
     return true;
   } catch (error) {
     console.error(`Error adding product ${product_id} to cart:`, error);
     return false;
   }
 };
+

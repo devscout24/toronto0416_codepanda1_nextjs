@@ -16,6 +16,7 @@ import defaultImage from "@/assets/images/default.png";
 import { useState } from "react";
 import { addCart } from "../action";
 import { addToCart } from "@/app/all-category/components/action";
+import { toast } from "sonner";
 
 export function SkeletonProductCard() {
   return (
@@ -104,10 +105,7 @@ export default function ProductCard({
   try {
     const success = await addToCart(product_id, count);
     if (success) {
-      console.log("Product added to cart successfully");
-      // Optional: Show success toast/notification
-      // Optional: Reset count to 1 after adding
-      // setCount(1);
+      toast.success("Product added to cart successfully!");
     } else {
       console.error("Failed to add product to cart");
       // Optional: Show error toast/notification

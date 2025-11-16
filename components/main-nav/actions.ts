@@ -1,7 +1,7 @@
 "use server";
 
 import fetcher from "@/lib/fetcher";
-import { TCart } from "@/types/cart.type";
+import { TCartAPIResponse } from "@/types/cart.type";
 import { SpecialResponse } from "@/types/product.type";
 
 export const getSearchProducts = async (query: string) => {
@@ -29,11 +29,11 @@ export const getSearchProducts = async (query: string) => {
 
 export async function getCartLength() {
   try {
-    const response = await fetcher<TCart>("/get-cart-items", {
+    const response = await fetcher<TCartAPIResponse>("/get-cart-items", {
       method: "GET",
     });
 
-    const cartLength = response?.data?.length || 5;
+    const cartLength = response?.data?.length;
 
     return cartLength;
   } catch (error) {

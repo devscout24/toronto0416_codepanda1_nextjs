@@ -9,52 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import { TCartProduct } from "@/types/cart.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { getCart } from "./action";
 
-export default function ProductCart() {
-  // const [cartData, setCartData] = useState<TCartProduct[]>([]);
-
-  // useEffect(() => {
-  //   const fetchCartData = async () => {
-  //     try {
-  //       const response = await getCart();
-  //       setCartData(response);
-  //     } catch (error) {
-  //       console.error("An error occurred while fetching the cart data:", error);
-  //     }
-  //   };
-
-  //   fetchCartData();
-  // }, []);
-
-
-  const cartData: TCartProduct[] = [
-    {
-      id: "1",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 2,
-    },
-    {
-      id: "2",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 1,
-    },
-    {
-      id: "3",
-      image: "/images/card-img.jpg",
-      product_name: "Superior Halal Beef Burgers",
-      sku: "SPHE •XCCZ",
-      price: 49.99,
-      quantity: 3,
-    },
-  ];
+export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
 
   const columns: ColumnDef<TCartProduct>[] = [
     {
@@ -109,7 +65,7 @@ export default function ProductCart() {
       accessorKey: "total",
       cell: ({ row }) => (
         <div className="font-semibold text-sm md:text-base">
-          ${row.original.price * row.original.quantity}
+          ${(Number(row.original.price) * Number(row.original.quantity)).toFixed(3)}
         </div>
       ),
     },

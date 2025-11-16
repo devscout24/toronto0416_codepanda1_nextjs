@@ -1,9 +1,9 @@
 import fetcher from "@/lib/fetcher";
-import { TCartAddress, TCartProduct } from "@/types/cart.type";
+import { TCartAddress, TCartAPIResponse } from "@/types/cart.type";
 
 export async function addAddress(values: TCartAddress) {
     try {
-        await fetcher<{ message: string }>("/addresses", {
+        await fetcher<{ message: string }>("/add-address/", {
             method: "POST",
             body: JSON.stringify(values),
         });
@@ -19,12 +19,12 @@ export async function addAddress(values: TCartAddress) {
 
 export async function getCart() {
     try {
-        const response = await fetcher<{ cartProducts: TCartProduct[] }>("/cart", {
+        const response = await fetcher<TCartAPIResponse>("/get-cart-items/", {
             method: "GET",
         });
-        return response.cartProducts;
+        return response;
     } catch (error) {
         console.error("Error fetching Cart:", error);
-        return [];
+        return null;
     }
 }
