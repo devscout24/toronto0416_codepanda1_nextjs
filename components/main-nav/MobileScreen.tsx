@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { IconButton } from "../animate-ui/components/buttons/icon";
@@ -22,6 +22,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchField from "./searchField";
 import { useEffect, useState } from "react";
 import { getCartLength } from "./actions";
+import { TUserAccount } from "@/types/user.type";
+import { getProfileInfo } from "@/app/account/components/action";
 
 export default function MobileScreen({
   navList,
@@ -31,6 +33,7 @@ export default function MobileScreen({
   isUserLoggedIn: boolean;
 }) {
   const [cartLength, setCartLength] = useState(0);
+  const [profileUser, setProfileUser] = useState<TUserAccount | null>(null);
 
   useEffect(() => {
     async function fetchCartLength() {
@@ -44,6 +47,27 @@ export default function MobileScreen({
 
     fetchCartLength();
   }, []);
+
+  useEffect(() => {
+    async function fetchProfileInfo() {
+      if (!isUserLoggedIn) return;
+
+      try {
+        const response = await getProfileInfo();
+        if (response) {
+          // Set the profile image from the response
+          if (response.profile_image) {
+            setProfileUser(response);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching profile info:", error);
+      }
+    }
+
+    fetchProfileInfo();
+  }, [isUserLoggedIn]);
+
   return (
     <nav className="section-container flex items-center justify-between">
       <SufisLogo />
@@ -84,8 +108,13 @@ export default function MobileScreen({
 
               <Link href={"/account"}>
                 <Avatar className="size-11">
-                  <AvatarImage src="/images/images.png" />
-                  <AvatarFallback>KA</AvatarFallback>
+                  <AvatarImage
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileUser?.profile_image}`}
+                  />
+                  <AvatarFallback>
+                    {profileUser?.name?.split(" ")[0]?.[0]}
+                    {profileUser?.name?.split(" ")[1]?.[0]}
+                  </AvatarFallback>
                 </Avatar>
               </Link>
             </div>

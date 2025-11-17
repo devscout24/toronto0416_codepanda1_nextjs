@@ -1,6 +1,6 @@
 
 export type TCartProduct = {
-  id: string;
+  id: number;
   image: string;
   product_name: string;
   sku: string;

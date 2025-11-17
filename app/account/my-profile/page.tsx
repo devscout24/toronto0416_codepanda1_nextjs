@@ -36,7 +36,7 @@ export default async function MyProfilePage() {
         <h2 className="text-xl font-semibold">Personal Info</h2>
 
         <Avatar className="mt-5 size-28">
-          <AvatarImage src={userData?.image} />
+          <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_URL}${userData?.profile_image}`} />
 
           <AvatarFallback className="text-4xl font-semibold">
             {userData?.name?.split(" ")[0]?.[0]}
@@ -45,7 +45,7 @@ export default async function MyProfilePage() {
         </Avatar>
 
 
-        <div className="mt-5 grid grid-cols-2 gap-5">
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
           <ShowField title="Name" value={userData?.name || ""} />
           <ShowField title="Email" value={userData?.email || ""} />
           <ShowField title="Phone" value={userData?.phone || ""} />

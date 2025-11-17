@@ -1,3 +1,6 @@
+// ============================================
+// Component: MyProfileEdit.tsx
+// ============================================
 "use client";
 
 import { Button } from "@/components/animate-ui/components/buttons/button";
@@ -12,11 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { getProfileInfo, updateProfileInfo } from "./action";
 import { TUserAccount } from "@/types/user.type";
+import { Camera } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -28,6 +32,9 @@ const formSchema = z.object({
 export default function MyProfileEdit() {
   const [userData, setUserData] = useState<TUserAccount | null>(null);
   const [loading, setLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -35,6 +42,9 @@ export default function MyProfileEdit() {
         const response = await getProfileInfo();
         if (response) {
           setUserData(response);
+          if (response.profile_image) {
+            setPreviewUrl(`${process.env.NEXT_PUBLIC_BASE_URL}${response.profile_image}`);
+          }
         }
       } catch (error) {
         console.error("Error fetching profile info:", error);
@@ -66,16 +76,31 @@ export default function MyProfileEdit() {
     }
   }, [userData, form]);
 
-  // On submit, call the function to update profile info
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values, "values");
     try {
-      const response = await updateProfileInfo(values);
-       console.log(response, "response")// Pass the form values to the update function
+      const response = await updateProfileInfo(values, profileImage);
+      console.log(response, "response");
+      
       if (response) {
         console.log("Profile updated successfully", response);
-        window.history.back();  // Go back after successful update
-        console.log(response, "response");
+        window.history.back();
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -86,19 +111,30 @@ export default function MyProfileEdit() {
     return <div className="text-center">Loading...</div>;
   }
 
-  // Your form rendering here
-
-
   return (
     <section>
-      <div className="mx-auto my-5 w-fit">
-        <Avatar className="size-28">
-          <AvatarImage src={userData?.image} />
+      <div className="mx-auto my-5 w-fit relative">
+        <Avatar className="size-28 cursor-pointer" onClick={handleAvatarClick}>
+          <AvatarImage src={previewUrl} />
           <AvatarFallback className="text-4xl font-semibold">
             {userData?.name?.split(" ")[0]?.[0]}
             {userData?.name?.split(" ")[1]?.[0]}
           </AvatarFallback>
         </Avatar>
+        <button
+          type="button"
+          onClick={handleAvatarClick}
+          className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full hover:bg-primary/90 transition-colors"
+        >
+          <Camera className="size-4" />
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="hidden"
+        />
       </div>
 
       <Form {...form}>

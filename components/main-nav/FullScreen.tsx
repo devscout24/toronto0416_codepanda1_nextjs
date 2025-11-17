@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { NavItem } from ".";
@@ -13,6 +13,8 @@ import { Button } from "../animate-ui/components/buttons/button";
 import SearchField from "./searchField";
 import { useEffect, useState } from "react";
 import { getCartLength } from "./actions";
+import { getProfileInfo } from "@/app/account/components/action";
+import { TUserAccount } from "@/types/user.type";
 
 export default function FullScreen({
   navList,
@@ -21,7 +23,8 @@ export default function FullScreen({
   navList: { name: string; href: string }[];
   isUserLoggedIn: boolean;
 }) {
-   const [cartLength, setCartLength] = useState(0);
+  const [cartLength, setCartLength] = useState(0);
+  const [profileUser, setProfileUser] = useState<TUserAccount | null>(null);
 
   useEffect(() => {
     async function fetchCartLength() {
@@ -35,6 +38,26 @@ export default function FullScreen({
 
     fetchCartLength();
   }, []);
+
+  useEffect(() => {
+    async function fetchProfileInfo() {
+      if (!isUserLoggedIn) return;
+
+      try {
+        const response = await getProfileInfo();
+        if (response) {
+          // Set the profile image from the response
+          if (response.profile_image) {
+            setProfileUser(response);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching profile info:", error);
+      }
+    }
+
+    fetchProfileInfo();
+  }, [isUserLoggedIn]);
 
   return (
     <nav className="section-container flex w-full items-center justify-between py-2">
@@ -80,8 +103,13 @@ export default function FullScreen({
 
           <Link href={"/account"}>
             <Avatar className="size-11">
-              <AvatarImage src="/images/images.png" />
-              <AvatarFallback>KA</AvatarFallback>
+              <AvatarImage
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileUser?.profile_image}`}
+              />
+              <AvatarFallback>
+                {profileUser?.name?.split(" ")[0]?.[0]}
+                {profileUser?.name?.split(" ")[1]?.[0]}
+              </AvatarFallback>
             </Avatar>
           </Link>
           {/* <NavCart/> */}

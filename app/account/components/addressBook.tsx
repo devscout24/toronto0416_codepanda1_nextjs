@@ -1,6 +1,5 @@
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { TAddressBookEntry } from "@/types/user.type";
 import Link from "next/link";
@@ -22,7 +21,6 @@ export default function AddressBook({
         </Button></Link>
       </div>
 
-      <ScrollArea className="h-full md:h-40">
         <div
           className={`grid w-full items-center gap-2 "md:grid-cols-1"
    grid-cols-1`}
@@ -56,8 +54,6 @@ export default function AddressBook({
                 </div>
               ))}
         </div>
-
-      </ScrollArea>
     </>
   );
 }

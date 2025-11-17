@@ -9,8 +9,54 @@ import { Separator } from "@/components/ui/separator";
 import { TCartProduct } from "@/types/cart.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import { useState } from "react";
+import { removeCartItem } from "./action";
+import { toast } from "sonner";
 
-export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
+export default function ProductCart({
+  cartData,
+}: {
+  cartData: TCartProduct[];
+}) {
+  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+
+  const handleProductSelect = (productId: number, isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedProducts((prev) => [...prev, productId]);
+    } else {
+      setSelectedProducts((prev) => prev.filter((id) => id !== productId));
+    }
+  };
+
+  const handleSelectAll = (isChecked: boolean) => {
+    if (isChecked) {
+      setSelectedProducts(cartData.map((product) => product.id));
+    } else {
+      setSelectedProducts([]);
+    }
+  };
+
+  const handleRemoveSelected = async () => {
+    if (selectedProducts.length > 0) {
+      try {
+        await removeCartItem(selectedProducts);
+        toast.success("Selected products removed successfully!");
+        setSelectedProducts([]); // Clear selection
+      } catch (error) {
+        toast.error("Failed to remove selected products.");
+      }
+    }
+  };
+
+  const handleSingleRemove = async (productId: number) => {
+    try {
+      await removeCartItem([productId]);
+      toast.success("Product removed successfully!");
+      setSelectedProducts((prev) => prev.filter((id) => id !== productId));
+    } catch (error) {
+      toast.error("Failed to remove product.");
+    }
+  };
 
   const columns: ColumnDef<TCartProduct>[] = [
     {
@@ -18,21 +64,35 @@ export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
       accessorKey: "product_name",
       cell: ({ row }) => (
         <div className="flex items-center gap-5">
-          <Checkbox id={row.original.id} />
+          <Checkbox
+            id={String(row.original.id)}
+            checked={selectedProducts.includes(row.original.id)}
+            onCheckedChange={(checked) =>
+              handleProductSelect(row.original.id, checked as boolean)
+            }
+          />
           <div className="flex items-center gap-5">
             <Image
               src={row.original.image}
               alt={row.original.product_name}
               width={100}
               height={100}
-              className="size-16 rounded-xl object-cover hidden md:block"
+              className="hidden size-16 rounded-xl border object-cover md:block"
             />
             <div>
-              <Label htmlFor={row.original.id} className="text-sm md:text-base">
+              <Label
+                htmlFor={String(row.original.id)}
+                className="text-sm md:text-base"
+              >
                 {row.original.product_name}
               </Label>
               <p className="text-xs md:text-sm">{row.original.sku}</p>
-              <div className="mt-2 md:mt-4 text-red-600 hover:text-red-600">Remove</div>
+              <div
+                className="mt-2 cursor-pointer text-red-600 hover:text-red-600 md:mt-4"
+                onClick={() => handleSingleRemove(row.original.id)}
+              >
+                Remove
+              </div>
             </div>
           </div>
         </div>
@@ -42,7 +102,9 @@ export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
       header: "Price",
       accessorKey: "price",
       cell: ({ row }) => (
-        <div className="text-sm md:text-base font-semibold">${row.original.price}</div>
+        <div className="text-sm font-semibold md:text-base">
+          ${row.original.price}
+        </div>
       ),
     },
     {
@@ -54,7 +116,9 @@ export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
             value={row.original.quantity}
             onChange={(newValue) => {
               // TODO: Implement quantity update logic
-              console.log(`Update quantity for ${row.original.id} to ${newValue}`);
+              console.log(
+                `Update quantity for ${row.original.id} to ${newValue}`,
+              );
             }}
           />
         </div>
@@ -64,8 +128,11 @@ export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
       header: "Total",
       accessorKey: "total",
       cell: ({ row }) => (
-        <div className="font-semibold text-sm md:text-base">
-          ${(Number(row.original.price) * Number(row.original.quantity)).toFixed(3)}
+        <div className="text-sm font-semibold md:text-base">
+          $
+          {(Number(row.original.price) * Number(row.original.quantity)).toFixed(
+            3,
+          )}
         </div>
       ),
     },
@@ -75,12 +142,23 @@ export default function ProductCart({cartData}: {cartData: TCartProduct[]}) {
     <section className="rounded-2xl bg-white py-5">
       <div className="flex items-center justify-between px-5">
         <div className="flex items-center gap-2.5">
-          <Checkbox id="all-selected" />
+          <Checkbox
+            id="all-selected"
+            checked={
+              selectedProducts.length === cartData.length && cartData.length > 0
+            }
+            onCheckedChange={(checked) => handleSelectAll(checked as boolean)}
+          />
           <Label htmlFor="all-selected" className="text-base">
             Select all Product
           </Label>
         </div>
-        <Button variant="ghost" className="text-red-600 hover:text-red-600">
+        <Button
+          variant="ghost"
+          className="text-red-600 hover:text-red-600"
+          onClick={handleRemoveSelected}
+          disabled={selectedProducts.length === 0}
+        >
           Remove
         </Button>
       </div>

@@ -84,11 +84,18 @@ export type TUserAccount = {
   phone: string;
   country: string;
   email?: string; // optional if your API doesn't return email
-  image?: string; // optional
+  profile_image?: FormDataEntryValue | string; // optional
 };
 
 export type TUserResponse = {
-  data: TUserAccount
+  data: {
+  id?: number;
+  name: string;
+  phone: string;
+  country: string;
+  email?: string; // optional if your API doesn't return email
+  profile_image?: string; // optional
+};
 }
 
 
