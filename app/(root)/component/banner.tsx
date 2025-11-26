@@ -1,4 +1,5 @@
 import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -10,12 +11,14 @@ export default function Banner() {
         <p className="mt-2 text-sm md:text-base">
           Place your order by 8 PM for guaranteed delivery tomorrow
         </p>
-        <RippleButton
-          variant="secondary"
-          className="mx-auto mt-10 w-fit px-8 py-6"
-        >
-          Shop Now
-        </RippleButton>
+        <Link href={"/all-category"}>
+          <RippleButton
+            variant="secondary"
+            className="mx-auto mt-10 w-fit px-8 py-6"
+          >
+            Shop Now
+          </RippleButton>
+        </Link>
       </div>
     </section>
   );

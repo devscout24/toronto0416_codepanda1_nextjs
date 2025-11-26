@@ -23,11 +23,12 @@ export async function fetcher<T = unknown>(
   // Normalize base URL: ensure it includes a protocol and no trailing slash
   const rawBase = process.env.NEXT_PUBLIC_BASE_API ?? "";
   let base = rawBase.trim();
+
   if (!base) {
     throw new Error("NEXT_PUBLIC_BASE_API is not set");
   }
   if (!/^https?:\/\//i.test(base)) {
-    base = `http://${base}`; // assume http for local IPs; change to https if needed
+    base = `http://${base}`;
   }
   base = base.replace(/\/+$/, ""); // remove trailing slashes
   const url = `${base}/${cleanEndpoint}`;
@@ -59,8 +60,9 @@ export async function fetcher<T = unknown>(
       ...options?.headers,
     },
   };
-
+  
   const response = await fetch(url, fetchOptions);
+
 
   // Check if response has content
   const contentType = response.headers.get("content-type");

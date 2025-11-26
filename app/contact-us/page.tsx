@@ -1,3 +1,9 @@
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import LocationIcon from "@/assets/icons/location.svg";
 import PhoneIcon from "@/assets/icons/phone.svg";
 import EmailIcon from "@/assets/icons/email.svg";
@@ -9,8 +15,47 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import Image from "next/image";
+import { submitContactForm } from "./component/action";
+import { toast } from "sonner";
+
+// Form validation schema
+const formSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  subject: z.string().min(1, "Subject is required"),
+  message: z.string().min(1, "Message is required"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 export default function ContactUsPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    
+    try {
+      await submitContactForm(data);
+      toast.success("Message sent successfully!");
+      form.reset(); // Reset form after successful submission
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section>
       <div className="bg-[url('/images/bg-image1.png')] bg-cover bg-center py-[3.7rem]">
@@ -67,34 +112,73 @@ export default function ContactUsPage() {
         </div>
 
         <div className="w-full rounded-3xl bg-white p-8 lg:w-[70%]">
-          <div className="space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <div className="flex flex-col lg:flex-row items-center gap-5">
               <div className="w-full lg:w-1/2 space-y-2.5">
-                <Label>Name</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
+                  id="name"
                   type="text"
                   placeholder="Enter your name"
                   className="w-full"
+                  {...form.register("name")}
                 />
+                {form.formState.errors.name && (
+                  <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                )}
               </div>
 
               <div className="w-full lg:w-1/2 space-y-2.5">
-                <Label>Email</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  type="text"
+                  id="email"
+                  type="email"
                   placeholder="Enter your email"
                   className="w-full"
+                  {...form.register("email")}
                 />
+                {form.formState.errors.email && (
+                  <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+                )}
               </div>
             </div>
 
-            <div className="space-y-2.5">
-              <Label>Description</Label>
-              <Textarea placeholder="Type here..." rows={10} className="h-40" />
+            <div className="w-full space-y-2.5">
+              <Label htmlFor="subject">Subject</Label>
+              <Input
+                id="subject"
+                type="text"
+                placeholder="Enter subject here ..."
+                className="w-full"
+                {...form.register("subject")}
+              />
+              {form.formState.errors.subject && (
+                <p className="text-sm text-red-500">{form.formState.errors.subject.message}</p>
+              )}
             </div>
 
-            <Button className="w-full">Submit</Button>
-          </div>
+            <div className="space-y-2.5">
+              <Label htmlFor="message">Description</Label>
+              <Textarea 
+                id="message"
+                placeholder="Write your message here ..." 
+                rows={10} 
+                className="h-40" 
+                {...form.register("message")}
+              />
+              {form.formState.errors.message && (
+                <p className="text-sm text-red-500">{form.formState.errors.message.message}</p>
+              )}
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Submit"}
+            </Button>
+          </form>
         </div>
       </div>
 

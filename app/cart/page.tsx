@@ -13,6 +13,8 @@ export default async function CartPage() {
     console.error("Error fetching cart data:", error);
   }
 
+  
+
   return (
     <section className="pt-10 pb-28 mx-4 lg:mx-6">
       <div className="max-w-[1200px] mx-auto space-y-28">

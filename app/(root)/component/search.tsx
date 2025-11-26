@@ -94,7 +94,7 @@ export default function Search() {
             <DialogTitle>
               {availability ? "✅ Delivery Available" : "❌ Delivery Not Available"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription asChild> 
               {availability ? (
                 <div className="space-y-3">
                   <p className="text-green-600 font-medium">

@@ -35,7 +35,7 @@ export default async function MyProfilePage() {
       <div className="col-span-2 mt-5 rounded-xl bg-white p-5">
         <h2 className="text-xl font-semibold">Personal Info</h2>
 
-        <Avatar className="mt-5 size-28">
+        <Avatar className="mt-5 size-28 bg-gray-100">
           <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_URL}${userData?.profile_image}`} />
 
           <AvatarFallback className="text-4xl font-semibold">

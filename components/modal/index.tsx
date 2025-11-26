@@ -9,6 +9,9 @@ import CancelOrder from "@/app/account/components/cancelOrder";
 import MyProfileEdit from "@/app/account/components/myProfileEdit";
 import { LoginForm } from "../auth";
 import Logout from "../auth/logout";
+import { Sign } from "crypto";
+import { SignUpForm } from "../auth/signup";
+import { ForgotPasswordForm } from "../auth/resetPassword";
 
 export default function Modals() {
   return (
@@ -21,6 +24,14 @@ export default function Modals() {
         title="Add new shipping address"
         modalId="shipping-address"
         openId="shipping-modal"
+      >
+        <ShippingAddress />
+      </Modal>
+
+       <Modal
+        title="Update shipping address"
+        modalId="update-shipping-address"
+        openId="update-shipping-modal"
       >
         <ShippingAddress />
       </Modal>
@@ -73,8 +84,11 @@ export default function Modals() {
         <Logout />
       </Modal>
 
-      <Modal title="" modalId="postcode-modal" openId="available">
-        <div>yes this is work</div>
+       <Modal title="" modalId="signup-modal" openId="signup">
+        <SignUpForm />
+      </Modal>
+       <Modal title="" modalId="resetpassword-modal" openId="resetpassword">
+        <ForgotPasswordForm />
       </Modal>
     </>
   );

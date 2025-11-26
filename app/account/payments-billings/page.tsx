@@ -63,7 +63,7 @@ export default function PaymentsBillingsPage() {
     },
     {
       accessorKey: "downloadUrl",
-      header: "",
+      header: "Action",
       cell: ({ row }) => {
         return (
           <a href={row.original.downloadUrl} target="_blank" rel="noreferrer">

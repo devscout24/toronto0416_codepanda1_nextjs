@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { removeCartItem } from "./action";
 import { toast } from "sonner";
+import defaultImg from "@/assets/images/default.png";
 
 export default function ProductCart({
   cartData,
@@ -19,6 +20,12 @@ export default function ProductCart({
   cartData: TCartProduct[];
 }) {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+  const [imageError, setImageError] = useState(false);
+
+  // Function to handle image loading errors
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const handleProductSelect = (productId: number, isChecked: boolean) => {
     if (isChecked) {
@@ -73,11 +80,18 @@ export default function ProductCart({
           />
           <div className="flex items-center gap-5">
             <Image
-              src={row.original.image}
-              alt={row.original.product_name}
+              src={
+                imageError ||
+                !row?.original?.image ||
+                row?.original?.image.length === 0
+                  ? defaultImg
+                  : row?.original?.image[0]
+              }
+              alt={row?.original?.product_name || "Product Image"}
               width={100}
               height={100}
               className="hidden size-16 rounded-xl border object-cover md:block"
+              onError={handleImageError}
             />
             <div>
               <Label

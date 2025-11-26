@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Search from "./search";
 import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -16,9 +17,9 @@ export default function Hero() {
               up to 4% off grocery.
             </p>
 
-            <RippleButton variant="secondary" className="mt-10 px-8 py-6">
+            <Link href="/all-category"><RippleButton variant="secondary" className="mt-10 px-8 py-6">
               Shop Now
-            </RippleButton>
+            </RippleButton></Link>
           </div>
 
           <div>
@@ -27,7 +28,7 @@ export default function Hero() {
               src="/images/hero-image.png"
               width={500}
               height={500}
-              className="w-full lg:w-[27.5rem]"
+              className="w-full lg:w-110"
             />
           </div>
         </div>

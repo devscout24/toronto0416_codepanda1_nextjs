@@ -115,3 +115,22 @@ export const addAddress = async ({ body }: { body: TAddressBook }) => {
     console.error(error);
   }
 };
+
+
+export const updateAddress = async ({ 
+  addressId, 
+  body 
+}: { 
+  addressId: number; 
+  body: Partial<TAddressBook>;
+}) => {
+  try {
+    const res = await fetcher<TAddressBookResponse>(`/update-address/${addressId}/`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

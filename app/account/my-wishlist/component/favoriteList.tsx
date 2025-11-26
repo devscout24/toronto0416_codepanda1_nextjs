@@ -8,7 +8,7 @@ import LikeButton from "@/components/card/components/LikeButton";
 import { TProduct } from "@/types/product.type";
 import Rating from "@/components/shared/Rating";
 import { cn } from "@/lib/utils";
-import defaultImg from "@/assets/images/card-img.jpg";
+import defaultImg from "@/assets/images/default.png";
 import { useState } from "react";
 
 type FavoriteListProps = {

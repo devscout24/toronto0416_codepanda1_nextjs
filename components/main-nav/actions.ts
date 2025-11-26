@@ -3,6 +3,7 @@
 import fetcher from "@/lib/fetcher";
 import { TCartAPIResponse } from "@/types/cart.type";
 import { SpecialResponse } from "@/types/product.type";
+import { cookies } from "next/headers";
 
 export const getSearchProducts = async (query: string) => {
   try {
@@ -29,7 +30,7 @@ export const getSearchProducts = async (query: string) => {
 
 export async function getCartLength() {
   try {
-    const response = await fetcher<TCartAPIResponse>("/get-cart-items", {
+    const response = await fetcher<TCartAPIResponse>("/get-cart-items/", {
       method: "GET",
     });
 
@@ -40,4 +41,11 @@ export async function getCartLength() {
     console.error("Error fetching cart length:", error);
     return 0;
   }
+}
+
+
+export const isUser = async () => {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access_token")?.value;
+    return !accessToken || accessToken?.length === 0 ? false : true;
 }

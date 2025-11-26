@@ -102,17 +102,19 @@ export default function FullScreen({
           </Link>
 
           <Link href={"/account"}>
-            <Avatar className="size-11">
+            <Avatar className="size-11 bg-gray-100">
               <AvatarImage
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileUser?.profile_image}`}
               />
               <AvatarFallback>
-                {profileUser?.name?.split(" ")[0]?.[0]}
-                {profileUser?.name?.split(" ")[1]?.[0]}
+                {profileUser?.name
+                  ? `${profileUser.name.split(" ")[0]?.[0] || ""}${
+                      profileUser.name.split(" ")[1]?.[0] || ""
+                    }`
+                  : "U"}
               </AvatarFallback>
             </Avatar>
           </Link>
-          {/* <NavCart/> */}
         </div>
       ) : (
         <div className="flex items-center gap-5">

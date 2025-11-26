@@ -1,7 +1,7 @@
 "use client";
 
+import { isUser } from "@/components/main-nav/actions";
 import { useEffect, useState } from "react";
-import { isUser } from "@/utils/isUser";
 
 export const useUserAuth = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
