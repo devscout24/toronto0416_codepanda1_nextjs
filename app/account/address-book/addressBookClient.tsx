@@ -6,17 +6,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TAddressBook } from "@/types/user.type";
 import { Badge } from "@/components/ui/badge";
 import { SquarePen, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 interface AddressBookClientProps {
   addressBook: TAddressBook[];
 }
 
 export function AddressBookClient({ addressBook }: AddressBookClientProps) {
-  const handleEdit = (id: number) => {
-    console.log("Edit ID:", id);
-    // Add your edit logic here
-  };
-
   const handleDelete = (id: number) => {
     console.log("Delete ID:", id);
     // Add your delete logic here
@@ -45,16 +41,17 @@ export function AddressBookClient({ addressBook }: AddressBookClientProps) {
       cell: ({ row }) => {
         const address = row.original;
         return (
-          <div className="flex justify-end items-center gap-3">
-            <button
-              onClick={() => handleEdit(address?.id)}
-              className="text-secondary transition-colors cursor-pointer hover:scale-105 duration-300"
+          <div className="flex items-center justify-end gap-3">
+            <Link
+              href={`?update-shipping-address=update-shipping-modal&id=${address.id}`}
             >
-              <SquarePen className="h-4 w-4" />
-            </button>
+              <button className="text-secondary cursor-pointer transition-colors duration-300 hover:scale-105">
+                <SquarePen className="h-4 w-4" />
+              </button>
+            </Link>
             <button
               onClick={() => handleDelete(address.id)}
-              className="text-red-600 transition-colors cursor-pointer hover:scale-105 duration-300"
+              className="cursor-pointer text-red-600 transition-colors duration-300 hover:scale-105"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -92,7 +89,7 @@ export function AddressBookClient({ addressBook }: AddressBookClientProps) {
               {/* Mobile Actions */}
               <div className="mt-3 flex items-center gap-3">
                 <button
-                  onClick={() => handleEdit(entry.id)}
+                  // onClick={() => handleEdit(entry.id)}
                   className="text-blue-600 transition-colors hover:text-blue-700"
                 >
                   <SquarePen className="h-5 w-5" />

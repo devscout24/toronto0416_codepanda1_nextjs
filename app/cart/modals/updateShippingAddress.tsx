@@ -19,6 +19,7 @@ import { Button } from "@/components/animate-ui/components/buttons/button";
 import { TCartAddress } from "@/types/cart.type";
 import { TAddressBook } from "@/types/user.type";
 import { updateAddress } from "@/app/account/components/action";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),
@@ -45,10 +46,14 @@ export default function UpdateShippingAddress({
     address?.address_type || "home",
   );
 
+  const searchParams = useSearchParams();
+  const addressId = searchParams.get("id");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      city: address?.city || "",
+      city: addressId || "",
+      // city: address?.city || "",
       area: address?.area || "",
       postal_code: address?.postal_code || "",
       block_sector: address?.block_sector || "",
@@ -57,7 +62,6 @@ export default function UpdateShippingAddress({
       flat_no: address?.flat_no || "",
       floor_no: address?.floor_no || "",
 
-      
       name: address?.name || "",
       phone: address?.phone || "",
       delivery_note: address?.delivery_note || "",
@@ -87,17 +91,21 @@ export default function UpdateShippingAddress({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!address?.id) return;
 
-    await updateAddress({ 
-      addressId: address.id, 
-      body: { 
-        ...values, 
-        address_type: addressSelected, 
-        is_default: address.is_default 
-      } 
+    await updateAddress({
+      addressId: address.id,
+      body: {
+        ...values,
+        address_type: addressSelected,
+        is_default: address.is_default,
+      },
     });
-    
+
     if (setAddress) {
-      setAddress({ ...values, address_type: addressSelected, is_default: address.is_default } as TCartAddress);
+      setAddress({
+        ...values,
+        address_type: addressSelected,
+        is_default: address.is_default,
+      } as TCartAddress);
     }
     window.history.back();
   }
@@ -112,7 +120,7 @@ export default function UpdateShippingAddress({
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "home" &&
-              "bg-black text-white hover:bg-black/80 hover:text-white",
+                "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
             onClick={() => setAddressSelected("home")}
           >
@@ -123,7 +131,7 @@ export default function UpdateShippingAddress({
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "office" &&
-              "bg-black text-white hover:bg-black/80 hover:text-white",
+                "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
             onClick={() => setAddressSelected("office")}
           >
@@ -142,7 +150,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="City" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="City"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,7 +167,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Area</FormLabel>
                   <FormControl>
-                    <Input placeholder="Area" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Area"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -171,7 +187,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Postal Code" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Postal Code"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,7 +204,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Block/Sector</FormLabel>
                   <FormControl>
-                    <Input placeholder="Block/Sector" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Block/Sector"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -200,7 +224,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Street/Road</FormLabel>
                   <FormControl>
-                    <Input placeholder="Street/Road" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Street/Road"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -213,7 +241,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>House No</FormLabel>
                   <FormControl>
-                    <Input placeholder="House No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="House No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -229,7 +261,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Flat No</FormLabel>
                   <FormControl>
-                    <Input placeholder="Flat No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Flat No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -242,7 +278,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Floor No</FormLabel>
                   <FormControl>
-                    <Input placeholder="Floor No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Floor No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -258,7 +298,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter name" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter name"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -271,7 +315,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter phone" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter phone"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -287,7 +335,11 @@ export default function UpdateShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Delivery Note</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Note" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter Note"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
