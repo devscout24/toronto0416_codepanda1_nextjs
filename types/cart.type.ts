@@ -23,13 +23,12 @@ export type TCheckoutCart = {
 };
 
 export type CartMetaData = {
-
   sub_total: number;
   shipping_fee: number;
   vat: number;
   discount: number;
-}
-
+  total_price: number;
+};
 
 export type TCartAPIResponse = {
   status: string;
@@ -38,7 +37,6 @@ export type TCartAPIResponse = {
   metadata: CartMetaData;
   data: TCartProduct[];
 };
-
 
 export type TCartAddress = {
   address_type: "home" | "office";
@@ -56,10 +54,6 @@ export type TCartAddress = {
   is_default: boolean;
 };
 
-
-
-
-
 export type PostalCodeAPIResponse = {
   status: string;
   status_code: number;
@@ -67,4 +61,18 @@ export type PostalCodeAPIResponse = {
   data: {
     available: "yes" | "no";
   };
+};
+
+export type TDeliveryOption = {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+};
+
+export type TDeliveryResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TDeliveryOption[];
 };

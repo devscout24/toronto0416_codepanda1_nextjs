@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "../components/header";
 import { getProfileInfo } from "../components/action";
 import { TUserAccount } from "@/types/user.type";
+import { getImageUrl } from "@/lib/image-utils";
 
 const ShowField = ({ title, value }: { title?: string; value?: string }) => {
   return (
@@ -36,7 +37,7 @@ export default async function MyProfilePage() {
         <h2 className="text-xl font-semibold">Personal Info</h2>
 
         <Avatar className="mt-5 size-28 bg-gray-100">
-          <AvatarImage src={`${process.env.NEXT_PUBLIC_BASE_URL}${userData?.profile_image}`} />
+          <AvatarImage src={getImageUrl(userData?.profile_image)} />
 
           <AvatarFallback className="text-4xl font-semibold">
             {userData?.name?.split(" ")[0]?.[0]}
@@ -44,8 +45,7 @@ export default async function MyProfilePage() {
           </AvatarFallback>
         </Avatar>
 
-
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
           <ShowField title="Name" value={userData?.name || ""} />
           <ShowField title="Email" value={userData?.email || ""} />
           <ShowField title="Phone" value={userData?.phone || ""} />

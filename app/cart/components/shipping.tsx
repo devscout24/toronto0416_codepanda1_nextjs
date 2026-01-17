@@ -6,8 +6,7 @@ import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import Link from "next/link";
 import Modal from "@/components/modal/Modal";
 import ShippingAddress from "../modals/shippingAddress";
-import { Dispatch, SetStateAction, Suspense, useEffect, useState } from "react";
-import { TCartAddress } from "@/types/cart.type";
+import { Suspense, useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
@@ -18,18 +17,9 @@ import { TAddressBook } from "@/types/user.type";
 import { getAddressBook } from "@/app/account/components/action";
 
 export default function Shipping() {
-  //   {
-  //   address,
-  //   setAddress,
-  // }: {
-  //   address: TCartAddress | null;
-  //   setAddress: Dispatch<SetStateAction<TCartAddress | null>>;
-  // }
-  const [deliveryOption, setDeliveryOption] = useState<string>("standard");
   const [btnClose, setBtnClose] = useState<boolean>(false);
   const [addressBtnOpen, setAddressBtnOpen] = useState<boolean>(false);
   const [addressBook, setAddressBook] = useState<TAddressBook[]>([]);
-  const [address, setAddress] = useState<TCartAddress | null>(null); // Added this since you're using it
 
   useEffect(() => {
     async function fetchAddressBook() {
@@ -91,16 +81,6 @@ export default function Shipping() {
                       {address.address_type === "home" ? "Home" : "Office"}
                     </Badge>
                   </div>
-
-                  {/* <div className="flex items-center gap-5">
-                    <Button
-                      onClick={() => setAddress(null)}
-                      variant="ghost"
-                      className="text-red-500 hover:text-red-500"
-                    >
-                      Remove
-                    </Button>
-                  </div> */}
                 </div>
                 <p>{address.phone}</p>
 
@@ -134,7 +114,7 @@ export default function Shipping() {
             modalId="shipping"
             openId="shipping"
           >
-            <ShippingAddress setAddress={setAddress} />
+            <ShippingAddress />
           </Modal>
         </Suspense>
       </div>
@@ -153,15 +133,12 @@ export default function Shipping() {
               </Button>
             </DrawerTrigger>
             <DrawerContent className="max-w-[500px]! bg-white">
-              <DeliveryOptionPage
-                setBtnClose={setBtnClose}
-                setDeliveryOption={setDeliveryOption}
-              />
+              <DeliveryOptionPage setBtnClose={setBtnClose} />
             </DrawerContent>
           </Drawer>
         </div>
 
-        <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
+        {/* <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
           <div className="flex items-center gap-5">
             <ShippingIcon className="hidden md:block" />
             <div>
@@ -176,7 +153,7 @@ export default function Shipping() {
           <p className="text-lg font-semibold">
             {deliveryOption === "premium" ? "$30" : "$20"}
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

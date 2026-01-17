@@ -14,9 +14,9 @@ import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
 import { useState } from "react";
-import { addCart } from "../action";
 import { addToCart } from "@/app/all-category/components/action";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 
 export function SkeletonProductCard() {
   return (
@@ -88,7 +88,7 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   const [count, setCount] = useState(1);
-
+  const [cartLoading, setCartLoading] = useState<boolean>(false);
   const [imageError, setImageError] = useState(false);
 
   // Function to handle image loading errors
@@ -96,25 +96,21 @@ export default function ProductCard({
     setImageError(true);
   };
 
- const handleAddToCard = async (product_id: number | undefined) => {
-  if (!product_id) {
-    console.error("Error: Product ID is required.");
-    return;
-  }
-
-  try {
-    const success = await addToCart(product_id, count);
-    if (success) {
-      toast.success("Product added to cart successfully!");
-    } else {
-      console.error("Failed to add product to cart");
-      // Optional: Show error toast/notification
+  const handleAddToCard = async (product_id: number | undefined) => {
+    setCartLoading(true);
+    if (!product_id) {
+      console.error("Error: Product ID is required.");
+      return;
     }
-  } catch (error) {
-    console.error("Error adding product to cart:", error);
-  }
-};
 
+    try {
+      const res = await addToCart(product_id, count);
+      toast.success(res?.message || "Product added to cart successfully!");
+      setCartLoading(false);
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
 
   return (
     <section className="w-full select-none">
@@ -138,7 +134,7 @@ export default function ProductCard({
             <div className="absolute top-4 flex w-full items-center justify-between px-4">
               <div>{payload?.badge && <Badge>{payload.badge}</Badge>}</div>
               <CardActionGuard className="justify-end">
-                  <LikeButton payload={payload} />
+                <LikeButton payload={payload} />
               </CardActionGuard>
             </div>
           </CardHeader>
@@ -199,11 +195,19 @@ export default function ProductCard({
                 }
               />
               <Button
+                disabled={cartLoading}
                 onClick={() => handleAddToCard(payload?.id)}
                 variant="secondary"
                 className="flex-1"
               >
-                Add to Cart
+                {cartLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Spinner className="size-4" />
+                    <span>Adding...</span>
+                  </div>
+                ) : (
+                  "Add to Cart"
+                )}
               </Button>
             </CardActionGuard>
           </CardFooter>

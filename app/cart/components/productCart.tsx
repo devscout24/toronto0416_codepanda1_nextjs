@@ -13,6 +13,7 @@ import { useState } from "react";
 import { removeCartItem } from "./action";
 import { toast } from "sonner";
 import defaultImg from "@/assets/images/default.png";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ProductCart({
   cartData,
@@ -21,11 +22,9 @@ export default function ProductCart({
 }) {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [imageError, setImageError] = useState(false);
+  const [removingIds, setRemovingIds] = useState<number[]>([]); // Track which products are being removed
 
-  // Function to handle image loading errors
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  const handleImageError = () => setImageError(true);
 
   const handleProductSelect = (productId: number, isChecked: boolean) => {
     if (isChecked) {
@@ -43,25 +42,35 @@ export default function ProductCart({
     }
   };
 
+  // ✅ Remove multiple selected products
   const handleRemoveSelected = async () => {
-    if (selectedProducts.length > 0) {
-      try {
-        await removeCartItem(selectedProducts);
-        toast.success("Selected products removed successfully!");
-        setSelectedProducts([]); // Clear selection
-      } catch (error) {
-        toast.error("Failed to remove selected products.");
-      }
+    if (selectedProducts.length === 0) return;
+
+    try {
+      setRemovingIds(selectedProducts); // Show loading for selected
+      await removeCartItem(selectedProducts);
+      toast.success("Selected products removed successfully!");
+      setSelectedProducts([]);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to remove selected products.");
+    } finally {
+      setRemovingIds([]);
     }
   };
 
+  // ✅ Remove a single product
   const handleSingleRemove = async (productId: number) => {
     try {
+      setRemovingIds((prev) => [...prev, productId]); // Add loading for this product
       await removeCartItem([productId]);
       toast.success("Product removed successfully!");
       setSelectedProducts((prev) => prev.filter((id) => id !== productId));
     } catch (error) {
+      console.error(error);
       toast.error("Failed to remove product.");
+    } finally {
+      setRemovingIds((prev) => prev.filter((id) => id !== productId));
     }
   };
 
@@ -82,12 +91,12 @@ export default function ProductCart({
             <Image
               src={
                 imageError ||
-                !row?.original?.image ||
-                row?.original?.image.length === 0
+                !row.original.image ||
+                row.original.image.length === 0
                   ? defaultImg
-                  : row?.original?.image[0]
+                  : row.original.image[0]
               }
-              alt={row?.original?.product_name || "Product Image"}
+              alt={row.original.product_name || "Product Image"}
               width={100}
               height={100}
               className="hidden size-16 rounded-xl border object-cover md:block"
@@ -101,11 +110,22 @@ export default function ProductCart({
                 {row.original.product_name}
               </Label>
               <p className="text-xs md:text-sm">{row.original.sku}</p>
-              <div
-                className="mt-2 cursor-pointer text-red-600 hover:text-red-600 md:mt-4"
-                onClick={() => handleSingleRemove(row.original.id)}
-              >
-                Remove
+              <div className="mt-2 md:mt-4">
+                <Button
+                  variant="ghost"
+                  className="text-red-600 hover:text-red-600"
+                  onClick={() => handleSingleRemove(row.original.id)}
+                  disabled={removingIds.includes(row.original.id)}
+                >
+                  {removingIds.includes(row.original.id) ? (
+                    <div className="flex items-center gap-2">
+                      <Spinner className="size-4" />
+                      <span>Removing...</span>
+                    </div>
+                  ) : (
+                    "Remove"
+                  )}
+                </Button>
               </div>
             </div>
           </div>
@@ -171,9 +191,19 @@ export default function ProductCart({
           variant="ghost"
           className="text-red-600 hover:text-red-600"
           onClick={handleRemoveSelected}
-          disabled={selectedProducts.length === 0}
+          disabled={
+            selectedProducts.length === 0 ||
+            selectedProducts.some((id) => removingIds.includes(id))
+          }
         >
-          Remove
+          {selectedProducts.some((id) => removingIds.includes(id)) ? (
+            <div className="flex items-center gap-2">
+              <Spinner className="size-4" />
+              <span>Removing...</span>
+            </div>
+          ) : (
+            "Remove"
+          )}
         </Button>
       </div>
       <Separator className="mt-5" />

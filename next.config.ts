@@ -62,8 +62,16 @@ const nextConfig: NextConfig = {
   // Add the image domain configuration here
   images: {
     domains: [
+      "api.sufismarket.com",
+      "cdn.dummyjson.com",
       "shadeful-yun-filamentous.ngrok-free.dev", // Add your ngrok domain
       // You can add more domains as needed here
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
 };

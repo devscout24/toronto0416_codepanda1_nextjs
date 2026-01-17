@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DrawerHeader,
@@ -5,27 +7,53 @@ import {
   DrawerTitle,
   DrawerDescription,
 } from "@/components/ui/drawer";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ShippingIcon from "@/assets/icons/free-shipping.svg";
 import LeftIcon from "@/assets/icons/chevron-down.svg";
 import { Checkbox } from "@/components/animate-ui/components/radix/checkbox";
+import { getDeliveryOptions, setDefaultOptions } from "./action";
+import { TDeliveryOption } from "@/types/cart.type";
+import { toast } from "sonner";
 
 export default function DeliveryOptionPage({
-  setDeliveryOption,
   setBtnClose,
 }: {
-  setDeliveryOption: (option: string) => void;
   setBtnClose: (value: boolean) => void;
 }) {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
-  const handleSelect = (option: string) => {
+  const [deliveryOptions, setDeliveryOptions] = useState<TDeliveryOption[]>([]);
+
+  useEffect(() => {
+    async function fetchDeliveryOptions() {
+      try {
+        const response = await getDeliveryOptions();
+        setDeliveryOptions(response || []);
+      } catch (error) {
+        console.error("Error fetching address book:", error);
+      }
+    }
+
+    fetchDeliveryOptions();
+  }, []);
+  const handleSelect = (option: number) => {
     setSelectedOption(option);
   };
 
-  const handleSave = () => {
-    setDeliveryOption(selectedOption || "standard");
-    setBtnClose(false);
+  const handleSave = async () => {
+    if (selectedOption === null) return;
+    try {
+      const res = await setDefaultOptions(selectedOption);
+      toast.success(res);
+      setBtnClose(false);
+    } catch (error: unknown) {
+      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to set delivery option.",
+      );
+    }
   };
 
   return (
@@ -44,43 +72,30 @@ export default function DeliveryOptionPage({
         </DrawerDescription>
 
         <div className="my-10 space-y-5">
-          {/* Standard delivery */}
-          <div
-            className="flex cursor-pointer items-center gap-3 md:gap-5 rounded-xl border border-neutral-100 p-3 md:p-5"
-            onClick={() => handleSelect("standard")} // click anywhere on card
-          >
-            <Checkbox
-              className="size-5 md:size-6 rounded-full"
-              checked={selectedOption === "standard"}
-              onCheckedChange={() => handleSelect("standard")}
-            />
-            <div className="flex items-center gap-5">
-              <ShippingIcon className="hidden md:block" />
-              <div>
-                <h3 className="text-base md:text-lg font-semibold">Standard delivery</h3>
-                <p className="text-sm md:text-base text-neutral-500">Guaranteed by 18-19 Aug</p>
+          {deliveryOptions.map((option) => (
+            <div
+              key={option.id}
+              className="flex cursor-pointer items-center gap-3 rounded-xl border border-neutral-100 p-3 md:gap-5 md:p-5"
+              onClick={() => handleSelect(option.id)} // click anywhere on card
+            >
+              <Checkbox
+                className="size-5 rounded-full md:size-6"
+                checked={selectedOption === option.id}
+                onCheckedChange={() => handleSelect(option.id)}
+              />
+              <div className="flex items-center gap-5">
+                <ShippingIcon className="hidden md:block" />
+                <div>
+                  <h3 className="text-base font-semibold md:text-lg">
+                    {option.name}
+                  </h3>
+                  <p className="text-sm text-neutral-500 md:text-base">
+                    {option.description}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Premium delivery */}
-          <div
-            className="flex cursor-pointer items-center gap-5 rounded-xl border border-neutral-100 p-3 md:p-5"
-            onClick={() => handleSelect("premium")} // click anywhere on card
-          >
-            <Checkbox
-              className="size-6 rounded-full"
-              checked={selectedOption === "premium"}
-              onCheckedChange={() => handleSelect("premium")}
-            />
-            <div className="flex items-center gap-5">
-              <ShippingIcon className="hidden md:block" />
-              <div>
-                <h3 className="text-base md:text-lg font-semibold">Premium delivery</h3>
-                <p className="text-sm md:text-base text-neutral-500">Guaranteed by 18-19 Aug</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </DrawerHeader>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import { SearchIcon, X } from "lucide-react";
 import { getSearchProducts } from "./actions";
@@ -23,10 +23,7 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
   const router = useRouter();
   const [imageError, setImageError] = useState(false);
 
-  // Function to handle image loading errors
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  const handleImageError = () => setImageError(true);
 
   useEffect(() => {
     const delayDebounce = setTimeout(async () => {
@@ -34,11 +31,10 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
         setLoading(true);
         try {
           const response = await getSearchProducts(query);
-          const products = response || [];
-          setResults(products);
+          setResults(response || []);
           setShowDropdown(true);
         } catch (error) {
-          console.error("Error searching products:", error);
+          console.error(error);
           setResults([]);
         } finally {
           setLoading(false);
@@ -68,7 +64,6 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
   }, []);
 
   const handleCloseDropdown = () => setShowDropdown(false);
-
   const handleProductClick = (productId: number) => {
     setShowDropdown(false);
     setQuery("");
@@ -86,9 +81,7 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search ..."
-          className={`rounded-full pr-8 ${
-            isMobile ? "w-56 bg-white" : "w-60 xl:w-[18rem]"
-          }`}
+          className={`rounded-full pr-8 ${isMobile ? "w-56 bg-white" : "w-60 xl:w-[18rem]"}`}
         />
         <div className="pointer-events-none absolute top-1.5 right-2">
           <SearchIcon className="size-6 text-gray-400" />
@@ -117,9 +110,7 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
 
           <div className="max-h-[400px] overflow-y-auto">
             {loading ? (
-              <div className="py-8 text-center">
-                <p className="text-gray-500">Searching...</p>
-              </div>
+              <div className="py-8 text-center text-gray-500">Searching...</div>
             ) : results.length > 0 ? (
               <div className="divide-y">
                 {results.map((product) => (
@@ -128,34 +119,32 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
                     onClick={() => handleProductClick(product.id)}
                     className="flex cursor-pointer items-center justify-between gap-3 px-4 py-2 transition-colors hover:bg-gray-50"
                   >
-                    {product.images && product.images.length > 0 && (
-                      <div className="flex items-center gap-3">
-                        <Image
-                          src={
-                            imageError ||
-                            !product?.images ||
-                            product?.images.length === 0
-                              ? defaultImage
-                              : product?.images[0]
-                          }
-                          alt={product.title}
-                          width={60}
-                          height={60}
-                          className="rounded-md border object-cover"
-                          onError={handleImageError}
-                        />
-                        <div className="">
-                          <h3 className="text-base font-semibold">
-                            {product.title}
-                          </h3>
-                          {product.rating && (
-                            <p className="ml-auto text-sm text-orange-500">
-                              ⭐ {product.rating}
-                            </p>
-                          )}
-                        </div>
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={
+                          imageError ||
+                          !product.images ||
+                          product.images.length === 0
+                            ? defaultImage
+                            : product.images[0]
+                        }
+                        alt={product.title}
+                        width={60}
+                        height={60}
+                        className="rounded-md border object-cover"
+                        onError={handleImageError}
+                      />
+                      <div>
+                        <h3 className="text-base font-semibold">
+                          {product.title}
+                        </h3>
+                        {product.rating && (
+                          <p className="ml-auto text-sm text-orange-500">
+                            ⭐ {product.rating}
+                          </p>
+                        )}
                       </div>
-                    )}
+                    </div>
 
                     <div className="mt-2 flex items-center gap-2">
                       {product.price && (
@@ -173,8 +162,8 @@ export default function SearchField({ isMobile = false }: SearchFieldProps) {
                 ))}
               </div>
             ) : (
-              <div className="py-8 text-center">
-                <p className="text-gray-500">No results found</p>
+              <div className="py-8 text-center text-gray-500">
+                No results found
               </div>
             )}
           </div>

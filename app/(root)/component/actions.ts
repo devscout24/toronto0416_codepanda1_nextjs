@@ -1,8 +1,7 @@
 import fetcher from "@/lib/fetcher";
 import { PostalCodeAPIResponse } from "@/types/cart.type";
 import { SpecialResponse } from "@/types/product.type";
-import { TestimonialApiResponse, TTestimonial } from "@/types/testimonials.type";
-
+import { TestimonialApiResponse } from "@/types/testimonials.type";
 
 export const getWeeklySpecial = async () => {
   try {
@@ -34,7 +33,6 @@ export const getBestSelling = async () => {
   }
 };
 
-
 export type PostalCodeResponse = {
   data: {
     postalCode: string;
@@ -42,12 +40,12 @@ export type PostalCodeResponse = {
   }[];
 };
 
-
-
-export const isPostalCodeAvailable = async (postalCode: string): Promise<boolean> => {
+export const isPostalCodeAvailable = async (
+  postalCode: string,
+): Promise<boolean> => {
   try {
     const response = await fetcher<PostalCodeAPIResponse>(
-      `/availability-postal-codes/?q=${encodeURIComponent(postalCode)}`
+      `/availability-postal-codes/?q=${encodeURIComponent(postalCode)}`,
     );
 
     if (!response?.data?.available) {
@@ -62,10 +60,14 @@ export const isPostalCodeAvailable = async (postalCode: string): Promise<boolean
   }
 };
 
-
 export const getReview = async () => {
   try {
-    const response = await fetcher<TestimonialApiResponse>(`/recently-viewed-reviews`);
+    // Note: The /recently-viewed-reviews endpoint does not exist on the backend
+    // You need to create this endpoint in your Django API
+    // For now, returning null as fallback
+    const response = await fetcher<TestimonialApiResponse>(
+      `/recently-viewed-reviews`,
+    );
 
     if (!response?.data) {
       console.error(`No Review here`);
@@ -73,7 +75,12 @@ export const getReview = async () => {
     }
     return response.data;
   } catch (error) {
-    console.error(`Error fetching data`, error);
+    // Log the error but don't crash the app
+    console.error(
+      `Error fetching reviews - endpoint may not exist on backend:`,
+      error,
+    );
+    // Return null to allow the app to continue without reviews
     return null;
   }
 };

@@ -1,73 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { IconButton } from "../animate-ui/components/buttons/icon";
+import { NavItem } from "./NavItem";
 import SufisLogo from "../logo";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "../ui/sheet";
+import { IconButton } from "../animate-ui/components/buttons/icon";
 import { Badge } from "../ui/badge";
-import { NavigationMenu } from "../ui/navigation-menu";
-import { NavItem } from ".";
 import LoveIcon from "@/assets/icons/love.svg";
 import BagIcon from "@/assets/icons/bag.svg";
-import { Menu } from "lucide-react";
 import { Button } from "../animate-ui/components/buttons/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import SearchField from "./searchField";
-import { useEffect, useState } from "react";
-import { getCartLength } from "./actions";
+import { Menu } from "lucide-react";
 import { TUserAccount } from "@/types/user.type";
-import { getProfileInfo } from "@/app/account/components/action";
+import SearchField from "./searchField";
+import { NavigationMenu } from "../ui/navigation-menu";
 
 export default function MobileScreen({
   navList,
   isUserLoggedIn,
+  cartLength,
+  profileUser,
 }: {
   navList: { name: string; href: string }[];
   isUserLoggedIn: boolean;
+  cartLength: number;
+  profileUser: TUserAccount | null;
 }) {
-  const [cartLength, setCartLength] = useState(0);
-  const [profileUser, setProfileUser] = useState<TUserAccount | null>(null);
-
-  useEffect(() => {
-    async function fetchCartLength() {
-      try {
-        const length = await getCartLength();
-        setCartLength(length);
-      } catch (error) {
-        console.error("Error fetching cart length:", error);
-      }
-    }
-
-    fetchCartLength();
-  }, []);
-
-  useEffect(() => {
-    async function fetchProfileInfo() {
-      if (!isUserLoggedIn) return;
-
-      try {
-        const response = await getProfileInfo();
-        if (response) {
-          // Set the profile image from the response
-          if (response.profile_image) {
-            setProfileUser(response);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching profile info:", error);
-      }
-    }
-
-    fetchProfileInfo();
-  }, [isUserLoggedIn]);
-
   return (
     <nav className="section-container flex items-center justify-between">
       <SufisLogo />

@@ -46,7 +46,7 @@ export async function fetcher<T = unknown>(
       }),
       ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     },
-    cache: "no-store", // ✅ disable all caching by default
+    cache: "no-cache", // ✅ disable all caching by default
     // next: {
     //   revalidate: 60,
     // },

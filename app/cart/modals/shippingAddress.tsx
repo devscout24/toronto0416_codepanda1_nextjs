@@ -33,11 +33,7 @@ const formSchema = z.object({
   delivery_note: z.string().optional(),
 });
 
-export default function ShippingAddress({
-  setAddress,
-}: {
-  setAddress?: Dispatch<SetStateAction<TCartAddress | null>>;
-}) {
+export default function ShippingAddress() {
   const [addressSelected, setAddressSelected] = useState<"home" | "office">(
     "home",
   );
@@ -60,11 +56,15 @@ export default function ShippingAddress({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await addAddress({ ...values, address_type: addressSelected, is_default: true });
-    if (setAddress) {
-      setAddress({ ...values, address_type: addressSelected, is_default: true });
+    try {
+      await addAddress({
+        ...values,
+        address_type: addressSelected,
+      } as TCartAddress);
+      window.history.back();
+    } catch (error) {
+      console.error("Error adding address:", error);
     }
-    window.history.back();
   }
 
   return (
@@ -76,7 +76,7 @@ export default function ShippingAddress({
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "home" &&
-              "bg-black text-white hover:bg-black/80 hover:text-white",
+                "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
             onClick={() => setAddressSelected("home")}
           >
@@ -86,7 +86,7 @@ export default function ShippingAddress({
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "office" &&
-              "bg-black text-white hover:bg-black/80 hover:text-white",
+                "bg-black text-white hover:bg-black/80 hover:text-white",
             )}
             onClick={() => setAddressSelected("office")}
           >
@@ -105,7 +105,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="City" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="City"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,7 +122,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Area</FormLabel>
                   <FormControl>
-                    <Input placeholder="Area" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Area"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,7 +142,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Postal Code" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Postal Code"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,7 +159,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Block/Sector</FormLabel>
                   <FormControl>
-                    <Input placeholder="Block/Sector" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Block/Sector"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -163,7 +179,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Street/Road</FormLabel>
                   <FormControl>
-                    <Input placeholder="Street/Road" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Street/Road"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,7 +196,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>House No</FormLabel>
                   <FormControl>
-                    <Input placeholder="House No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="House No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,7 +216,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Flat No</FormLabel>
                   <FormControl>
-                    <Input placeholder="Flat No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Flat No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -205,7 +233,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Floor No</FormLabel>
                   <FormControl>
-                    <Input placeholder="Floor No" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Floor No"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -221,7 +253,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter name" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter name"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -234,7 +270,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter phone" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter phone"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -250,7 +290,11 @@ export default function ShippingAddress({
                 <FormItem className="w-full">
                   <FormLabel>Delivery Note</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Note" className="border-neutral-50" {...field} />
+                    <Input
+                      placeholder="Enter Note"
+                      className="border-neutral-50"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

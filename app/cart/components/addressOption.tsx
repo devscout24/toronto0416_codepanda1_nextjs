@@ -36,14 +36,9 @@ export default function AddressOptionPage({
   }, [addressBook]);
 
 
-  // const handleSave = () => {
-  //   if (selectedIndex !== null) {
-  //     setAddress(addresses[selectedIndex] as TCartAddress);
-  //     setAddressBtnOpen(false);
-  //   } else {
-  //     console.log("No address selected");
-  //   }
-  // }
+  const handleSave = () => {
+    if (selectedIndex === null) return;
+  };
 
   return (
     <div className="p-3">
@@ -104,9 +99,7 @@ export default function AddressOptionPage({
         <DrawerClose className="h-10 rounded-lg border border-neutral-200 font-medium hover:cursor-pointer">
           Close
         </DrawerClose>
-        <Button className="h-10" 
-        // onClick={handleSave}
-        >
+        <Button className="h-10" onClick={handleSave}>
           Save
         </Button>
       </div>
