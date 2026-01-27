@@ -106,7 +106,9 @@ export default function Footer() {
               <VisaIcon />
             </div>
           </div>
-          <p className="text-nowrap">© Copyright 2025 By Sufis</p>
+          <p className="text-nowrap">
+            © Copyright {new Date().getFullYear()} By Sufis
+          </p>
         </div>
       </section>
     </footer>

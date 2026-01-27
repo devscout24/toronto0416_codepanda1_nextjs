@@ -30,6 +30,7 @@ import Link from "next/link";
 import { sendResetEmail, verifyResetCode, resetPassword } from "@/lib/action";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 // Step 1 Schema - Email
 const step1Schema = z.object({
@@ -42,13 +43,15 @@ const step2Schema = z.object({
 });
 
 // Step 3 Schema - New Password
-const step3Schema = z.object({
-  new_password: z.string().min(8, "Password must be at least 8 characters"),
-  confirm_password: z.string().min(1, "Please confirm your password"),
-}).refine((data) => data.new_password === data.confirm_password, {
-  message: "Passwords don't match",
-  path: ["confirm_password"],
-});
+const step3Schema = z
+  .object({
+    new_password: z.string().min(8, "Password must be at least 8 characters"),
+    confirm_password: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.new_password === data.confirm_password, {
+    message: "Passwords don't match",
+    path: ["confirm_password"],
+  });
 
 export function ForgotPasswordForm({
   className,
@@ -90,10 +93,10 @@ export function ForgotPasswordForm({
   const onStep1Submit = async (values: z.infer<typeof step1Schema>) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const result = await sendResetEmail(values.email);
-      
+
       if (result.error) {
         setError(result.error);
       } else {
@@ -112,10 +115,10 @@ export function ForgotPasswordForm({
   const onStep2Submit = async (values: z.infer<typeof step2Schema>) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const result = await verifyResetCode(email, values.otp);
-      
+
       if (result.error) {
         setError(result.error);
       } else if (result.token) {
@@ -136,18 +139,19 @@ export function ForgotPasswordForm({
   const onStep3Submit = async (values: z.infer<typeof step3Schema>) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const result = await resetPassword(
-        values.new_password, 
-        values.confirm_password, 
-        resetToken
+        values.new_password,
+        values.confirm_password,
+        resetToken,
       );
-      
+
       if (result.error) {
         setError(result.error);
       } else {
-        router.push('?login-modal=login');
+        toast.success("Password reset successfully!");
+        router.push("?login-modal=login");
       }
     } catch (error) {
       console.error("Failed to reset password", error);
@@ -160,10 +164,10 @@ export function ForgotPasswordForm({
   const handleResendCode = async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const result = await sendResetEmail(email);
-      
+
       if (result.error) {
         setError(result.error);
       } else {
@@ -232,17 +236,17 @@ export function ForgotPasswordForm({
         <CardHeader className="text-center">
           <CardTitle className="text-xl">{getStepTitle()}</CardTitle>
           <CardDescription>{getStepDescription()}</CardDescription>
-          
+
           {/* Progress Steps */}
-          <div className="flex justify-center items-center mt-4">
+          <div className="mt-4 flex items-center justify-center">
             {[1, 2, 3].map((stepNumber) => (
               <div key={stepNumber} className="flex items-center">
                 <div
                   className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
+                    "flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium",
                     step >= stepNumber
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
+                      : "bg-muted text-muted-foreground",
                   )}
                 >
                   {stepNumber}
@@ -250,8 +254,8 @@ export function ForgotPasswordForm({
                 {stepNumber < 3 && (
                   <div
                     className={cn(
-                      "w-12 h-1 mx-2",
-                      step > stepNumber ? "bg-primary" : "bg-muted"
+                      "mx-2 h-1 w-12",
+                      step > stepNumber ? "bg-primary" : "bg-muted",
                     )}
                   />
                 )}
@@ -259,12 +263,12 @@ export function ForgotPasswordForm({
             ))}
           </div>
         </CardHeader>
-        
+
         <CardContent className="mt-2.5">
           <FieldGroup>
             {/* Error Message */}
             {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/15 border border-destructive/20 rounded-md">
+              <div className="text-destructive bg-destructive/15 border-destructive/20 rounded-md border p-3 text-sm">
                 {error}
               </div>
             )}
@@ -307,8 +311,8 @@ export function ForgotPasswordForm({
                       >
                         Cancel
                       </Button>
-                      <Button 
-                        type="submit" 
+                      <Button
+                        type="submit"
                         className="w-full flex-1"
                         disabled={isLoading}
                       >
@@ -316,7 +320,8 @@ export function ForgotPasswordForm({
                       </Button>
                     </div>
                     <FieldDescription className="text-center">
-                      Remember your password? <Link href="?login-modal=login">Log in</Link>
+                      Remember your password?{" "}
+                      <Link href="?login-modal=login">Log in</Link>
                     </FieldDescription>
                   </Field>
                 </form>
@@ -362,8 +367,8 @@ export function ForgotPasswordForm({
                       >
                         Back
                       </Button>
-                      <Button 
-                        type="submit" 
+                      <Button
+                        type="submit"
                         className="w-full flex-1"
                         disabled={isLoading}
                       >
@@ -372,9 +377,9 @@ export function ForgotPasswordForm({
                     </div>
                     <FieldDescription className="text-center">
                       Didn&apos;t receive code?{" "}
-                      <Button 
-                        variant="link" 
-                        className="p-0 h-auto" 
+                      <Button
+                        variant="link"
+                        className="h-auto p-0"
                         onClick={handleResendCode}
                         disabled={isLoading}
                       >
@@ -446,8 +451,8 @@ export function ForgotPasswordForm({
                       >
                         Back
                       </Button>
-                      <Button 
-                        type="submit" 
+                      <Button
+                        type="submit"
                         className="w-full flex-1"
                         disabled={isLoading}
                       >

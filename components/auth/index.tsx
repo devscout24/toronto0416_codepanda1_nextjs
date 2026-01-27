@@ -32,6 +32,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { loginUser } from "@/lib/action";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().min(1, "Email is required"),
@@ -51,17 +53,21 @@ export function LoginForm({
   });
 
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     loginUser({ email: values.email, password: values.password })
       .then(() => {
-        router.push('/');
+        toast.success("Login successful!");
+        router.push("/");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Login failed", error);
+        setIsLoading(false);
       });
   }
-
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -121,7 +127,7 @@ export function LoginForm({
                         <div className="flex items-center">
                           <FormLabel>Password</FormLabel>
                           <Link
-                             href="?resetpassword-modal=resetpassword"
+                            href="?resetpassword-modal=resetpassword"
                             className="ml-auto text-sm underline-offset-4 hover:underline"
                           >
                             Forgot your password?
@@ -149,12 +155,17 @@ export function LoginForm({
                     >
                       Cancel
                     </Button>
-                    <Button type="submit" className="w-full flex-1">
-                      Login
+                    <Button
+                      disabled={isLoading}
+                      type="submit"
+                      className="w-full flex-1"
+                    >
+                      {isLoading ? "Loading..." : "Login"}
                     </Button>
                   </div>
                   <FieldDescription className="text-center">
-                    Don&apos;t have an account? <Link href="?signup-modal=signup">Sign up</Link>
+                    Don&apos;t have an account?{" "}
+                    <Link href="?signup-modal=signup">Sign up</Link>
                   </FieldDescription>
                 </Field>
               </form>
