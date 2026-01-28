@@ -2,10 +2,10 @@ import RecentlyViewed from "@/components/recently-viewed";
 import ProductCart from "./components/productCart";
 import Checkout from "./components/checkout";
 import { getCart } from "./components/action";
-import { TCartAPIResponse } from "@/types/cart.type";
+import { TCartItems } from "@/types/cart.type";
 
 export default async function CartPage() {
-  let cartData: TCartAPIResponse | null = null;
+  let cartData: TCartItems | null = null;
 
   try {
     cartData = await getCart();
@@ -13,21 +13,19 @@ export default async function CartPage() {
     console.error("Error fetching cart data:", error);
   }
 
-  
-
   return (
-    <section className="pt-10 pb-28 mx-4 lg:mx-6">
-      <div className="max-w-[1200px] mx-auto space-y-28">
+    <section className="mx-4 pt-10 pb-28 lg:mx-6">
+      <div className="mx-auto max-w-[1200px] space-y-28">
         <div className="flex w-full flex-col items-start gap-10 lg:flex-row">
           <div className="w-full lg:w-[70%]">
-            <ProductCart cartData={cartData?.data ?? []} />
+            <ProductCart cartData={cartData?.items ?? []} />
           </div>
 
           <div className="w-full lg:w-[30%]">
             <Checkout
               title="Proceed to Checkout"
               redirectTo="/cart/checkout"
-            metadata={cartData?.metadata}
+              metadata={cartData ?? null}
             />
           </div>
         </div>

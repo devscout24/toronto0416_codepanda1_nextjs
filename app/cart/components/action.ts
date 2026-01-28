@@ -28,7 +28,7 @@ export async function getCart() {
     const response = await fetcher<TCartAPIResponse>("/get-cart-items/", {
       method: "GET",
     });
-    return response;
+    return response?.data;
   } catch (error) {
     console.error("Error fetching Cart:", error);
     return null;

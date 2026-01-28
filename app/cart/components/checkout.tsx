@@ -4,7 +4,7 @@ import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import { CartMetaData } from "@/types/cart.type";
+import { CartMetaData, TCartItems } from "@/types/cart.type";
 import Link from "next/link";
 import { useState } from "react";
 import { applyCoupon } from "./action";
@@ -20,7 +20,7 @@ export default function Checkout({
   title: string;
   redirectTo: string;
   isDisabled?: boolean;
-  metadata?: CartMetaData;
+  metadata?: TCartItems;
 }) {
   const [couponCode, setCouponCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);

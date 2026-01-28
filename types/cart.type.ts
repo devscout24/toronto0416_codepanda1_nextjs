@@ -30,12 +30,21 @@ export type CartMetaData = {
   total_price: number;
 };
 
+export type TCartItems = {
+  items: TCartProduct[];
+  sub_total: number;
+  shipping_fee: number;
+  vat: number;
+  discount: number;
+  total_price: number;
+};
+
 export type TCartAPIResponse = {
   status: string;
   status_code: number;
   message: string;
   metadata: CartMetaData;
-  data: TCartProduct[];
+  data: TCartItems;
 };
 
 export type TCartAddress = {
