@@ -22,11 +22,14 @@ export type TCheckoutCart = {
   coupon: TCoupon;
 };
 
+
+
+// the metadata
 export type CartMetaData = {
   sub_total: number;
   shipping_fee: number;
   vat: number;
-  discount: number;
+  discount?: number;
   total_price: number;
 };
 
@@ -39,11 +42,12 @@ export type TCartItems = {
   total_price: number;
 };
 
+
+// cart response
 export type TCartAPIResponse = {
   status: string;
   status_code: number;
   message: string;
-  metadata: CartMetaData;
   data: TCartItems;
 };
 

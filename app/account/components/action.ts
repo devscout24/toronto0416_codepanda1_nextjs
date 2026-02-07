@@ -92,7 +92,7 @@ export const updateProfileInfo = async (
 
 export const getAddressBook = async () => {
   try {
-    const response = await fetcher<TUserResponse>("/add-address/");
+    const response = await fetcher<TUserResponse>("/address-list/");
     if (!response?.data) {
       console.error(`Account Info not found`);
       return null;

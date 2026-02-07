@@ -25,7 +25,13 @@ export default async function CartPage() {
             <Checkout
               title="Proceed to Checkout"
               redirectTo="/cart/checkout"
-              metadata={cartData ?? null}
+              metadata={{
+                sub_total: cartData?.sub_total ?? 0.0,
+                shipping_fee: cartData?.shipping_fee ?? 0.0,
+                vat: cartData?.vat ?? 0.0,
+                discount: cartData?.discount ?? 0.0,
+                total_price: cartData?.total_price ?? 0.0,
+              }}
             />
           </div>
         </div>

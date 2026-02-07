@@ -4,7 +4,7 @@ import { Button } from "@/components/animate-ui/components/buttons/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import { CartMetaData, TCartItems } from "@/types/cart.type";
+import { CartMetaData } from "@/types/cart.type";
 import Link from "next/link";
 import { useState } from "react";
 import { applyCoupon } from "./action";
@@ -20,7 +20,7 @@ export default function Checkout({
   title: string;
   redirectTo: string;
   isDisabled?: boolean;
-  metadata?: TCartItems;
+  metadata?: CartMetaData;
 }) {
   const [couponCode, setCouponCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
@@ -116,12 +116,21 @@ export default function Checkout({
           )}
         </div>
 
-        {metadata?.discount && metadata?.discount > 0 && (
+        <div className="text-primary flex items-center justify-between">
+          <p>Discount</p>
+          <span className="float-right">
+            {metadata?.discount && metadata?.discount > 0
+              ? `-${metadata?.discount}`
+              : 0}
+          </span>
+        </div>
+
+        {/* {metadata?.discount && (
           <div className="text-primary flex items-center justify-between">
             <p>Discount</p>
             <span className="float-right">- ${metadata?.discount}</span>
           </div>
-        )}
+        )} */}
 
         <div className="flex items-center justify-between font-semibold">
           <p>Total</p>
