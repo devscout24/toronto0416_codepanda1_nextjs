@@ -55,7 +55,7 @@ export const allFilters: TFilterDefinition[] = [
   {
     title: "Availability",
     type: "toggle",
-    label: "Show only in-stock items",
+    label: "Only in-stock items",
     queryKey: "in_stock",
   },
 ];

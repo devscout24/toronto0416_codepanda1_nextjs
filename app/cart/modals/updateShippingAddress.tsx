@@ -2,7 +2,7 @@
 
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,15 +16,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/animate-ui/components/buttons/button";
-import { TCartAddress } from "@/types/cart.type";
 import { TAddressBook } from "@/types/user.type";
-import { updateAddress } from "@/app/account/components/action";
-import { useSearchParams } from "next/navigation";
+import {
+  getSingleAddress,
+  updateAddress,
+} from "@/app/account/components/action";
+import { Textarea } from "@/components/ui/textarea";
+import { useParams, useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),
   area: z.string().min(1, "Area is required"),
-  block_sector: z.string().min(1, "Block/Sector is required"),
+  block_Sector: z.string().min(1, "Block/Sector is required"),
   street_road: z.string().min(1, "Street/Road is required"),
   postal_code: z.string().min(1, "Postal code is required"),
   house_no: z.string().min(1, "House No is required"),
@@ -35,47 +38,56 @@ const formSchema = z.object({
   delivery_note: z.string().optional(),
 });
 
-export default function UpdateShippingAddress({
-  address,
-  setAddress,
-}: {
-  address: TAddressBook;
-  setAddress?: Dispatch<SetStateAction<TCartAddress | null>>;
-}) {
-  const [addressSelected, setAddressSelected] = useState<"home" | "office">(
-    address?.address_type || "home",
-  );
-
+export default function UpdateShippingAddress() {
   const searchParams = useSearchParams();
   const addressId = searchParams.get("id");
+
+  const [addressSelected, setAddressSelected] = useState<"home" | "office">(
+    "home",
+  );
+  const [loading, setLoading] = useState(true);
+  const [address, setAddressData] = useState<TAddressBook | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      city: addressId || "",
-      // city: address?.city || "",
-      area: address?.area || "",
-      postal_code: address?.postal_code || "",
-      block_sector: address?.block_sector || "",
-      street_road: address?.street_road || "",
-      house_no: address?.house_no || "",
-      flat_no: address?.flat_no || "",
-      floor_no: address?.floor_no || "",
-
-      name: address?.name || "",
-      phone: address?.phone || "",
-      delivery_note: address?.delivery_note || "",
+      city: "",
+      area: "",
+      postal_code: "",
+      block_Sector: "",
+      street_road: "",
+      house_no: "",
+      flat_no: "",
+      floor_no: "",
+      name: "",
+      phone: "",
+      delivery_note: "",
     },
   });
 
-  // Set form values when address changes
+  useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const response = await getSingleAddress(Number(addressId));
+        setAddressData(response);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching address:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchAddress();
+  }, [addressId]);
+
+  // Set form values when address data is loaded
   useEffect(() => {
     if (address) {
       form.reset({
         city: address.city || "",
         area: address.area || "",
-        postal_code: address.postal_code || "",
-        block_sector: address.block_sector || "",
+        postal_code: String(address.postal_code || ""),
+        block_Sector: address.block_sector || "",
         street_road: address.street_road || "",
         house_no: address.house_no || "",
         flat_no: address.flat_no || "",
@@ -84,284 +96,270 @@ export default function UpdateShippingAddress({
         phone: address.phone || "",
         delivery_note: address.delivery_note || "",
       });
-      setAddressSelected(address.address_type || "home");
+      setAddressSelected(address.addressType || "home");
     }
   }, [address, form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!address?.id) return;
+    if (!addressId) return;
 
-    await updateAddress({
-      addressId: address.id,
-      body: {
-        ...values,
-        address_type: addressSelected,
-        is_default: address.is_default,
-      },
-    });
+    try {
+      await updateAddress({
+        addressId: Number(addressId),
+        body: {
+          ...values,
+          addressType: addressSelected,
+          is_default: address?.is_default || false,
+        },
+      });
 
-    if (setAddress) {
-      setAddress({
-        ...values,
-        address_type: addressSelected,
-        is_default: address.is_default,
-      } as TCartAddress);
+      window.history.back();
+    } catch (error) {
+      console.error("Error updating address:", error);
     }
-    window.history.back();
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <div className="border-t-primary h-8 w-8 animate-spin rounded-full border-4 border-gray-300"></div>
+          <p className="mt-4 text-sm text-gray-500">Loading address...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!address) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <p className="text-red-500">Address not found</p>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => window.history.back()}
+          >
+            Go Back
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <section>
-      <div className="mb-5">
-        <Label>Select a label</Label>
-        <div className="gap mt-2.5 flex items-center gap-5">
-          <button
-            type="button"
-            className={cn(
-              "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
-              addressSelected === "home" &&
-                "bg-black text-white hover:bg-black/80 hover:text-white",
-            )}
-            onClick={() => setAddressSelected("home")}
-          >
-            Home Address
-          </button>
-          <button
-            type="button"
-            className={cn(
-              "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
-              addressSelected === "office" &&
-                "bg-black text-white hover:bg-black/80 hover:text-white",
-            )}
-            onClick={() => setAddressSelected("office")}
-          >
-            Office Address
-          </button>
-        </div>
-      </div>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          <div className="flex gap-5">
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="City"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="space-y-3">
+          <Label className="text-sm font-medium">Select a label</Label>
+          <div className="flex gap-3">
+            <div
+              className={cn(
+                "flex-1 cursor-pointer rounded-lg border-2 p-4 text-center transition-all",
+                addressSelected === "home"
+                  ? "border-primary bg-primary/5"
+                  : "border-gray-200 hover:border-gray-300",
               )}
-            />
-            <FormField
-              control={form.control}
-              name="area"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Area</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Area"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="flex gap-5">
-            <FormField
-              control={form.control}
-              name="postal_code"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Postal Code</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Postal Code"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="block_sector"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Block/Sector</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Block/Sector"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="flex gap-5">
-            <FormField
-              control={form.control}
-              name="street_road"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Street/Road</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Street/Road"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="house_no"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>House No</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="House No"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="flex gap-5">
-            <FormField
-              control={form.control}
-              name="flat_no"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Flat No</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Flat No"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="floor_no"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Floor No</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Floor No"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="flex gap-5">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter name"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter phone"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div>
-            <FormField
-              control={form.control}
-              name="delivery_note"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel>Delivery Note</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter Note"
-                      className="border-neutral-50"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="flex gap-5">
-            <Button
-              variant="outline"
-              type="button"
-              className="flex-1"
-              onClick={() => window.history.back()}
+              onClick={() => setAddressSelected("home")}
             >
-              Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              Update Address
-            </Button>
+              Home Address
+            </div>
+            <div
+              className={cn(
+                "flex-1 cursor-pointer rounded-lg border-2 p-4 text-center transition-all",
+                addressSelected === "office"
+                  ? "border-primary bg-primary/5"
+                  : "border-gray-200 hover:border-gray-300",
+              )}
+              onClick={() => setAddressSelected("office")}
+            >
+              Office Address
+            </div>
           </div>
-        </form>
-      </Form>
-    </section>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>City</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter city" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="area"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Area</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter area" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="postal_code"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postal Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter postal code" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="block_Sector"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Block/Sector</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter block/sector" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="street_road"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Street/Road</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter street/road" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="house_no"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>House No</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter house number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="flat_no"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Flat No</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter flat number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="floor_no"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Floor No</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter floor number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter recipient name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter phone number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="delivery_note"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Delivery Note (Optional)</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Add delivery instructions..."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            className="flex-1"
+            onClick={() => window.history.back()}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" className="flex-1">
+            Update Address
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }

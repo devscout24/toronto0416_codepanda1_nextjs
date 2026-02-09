@@ -50,7 +50,7 @@ export default async function AccountPage() {
 
           {/* Recent Orders */}
           <div className="col-span-1 rounded-xl bg-white p-5 lg:col-span-2">
-            <h2 className="text-xl font-semibold mb-4">Recent Orders</h2>
+            <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
             <RecentOrders payload={accountData?.orders} />
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/animate-ui/components/buttons/button";
-import { TCartAddress } from "@/types/cart.type";
 import { addAddress } from "../components/action";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),
@@ -37,6 +37,7 @@ export default function ShippingAddress() {
   const [addressSelected, setAddressSelected] = useState<"home" | "office">(
     "home",
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,14 +57,35 @@ export default function ShippingAddress() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
     try {
-      await addAddress({
-        ...values,
+      const result = await addAddress({
+        city: values.city,
+        area: values.area,
+        postal_code: String(values.postal_code || ""),
+        block_sector: values.block_sector,
+        street_road: values.street_road,
+        house_no: values.house_no,
+        flat_no: values.flat_no,
+        floor_no: values.floor_no,
+        name: values.name,
+        phone: values.phone,
+        delivery_note: values.delivery_note,
         address_type: addressSelected,
-      } as TCartAddress);
-      window.history.back();
+        is_default: true,
+      });
+
+      if (result && "error" in result) {
+        toast.error(result.error);
+      } else {
+        toast.success("Address added successfully");
+        window.history.back();
+      }
     } catch (error) {
       console.error("Error adding address:", error);
+      toast.error("Failed to add address");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -73,6 +95,7 @@ export default function ShippingAddress() {
         <Label>Select a label</Label>
         <div className="gap mt-2.5 flex items-center gap-5">
           <button
+            type="button"
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "home" &&
@@ -83,6 +106,7 @@ export default function ShippingAddress() {
             Home Address
           </button>
           <button
+            type="button"
             className={cn(
               "w-full rounded-lg px-5 py-2.5 duration-500 hover:bg-black/5 hover:text-black",
               addressSelected === "office" &&
@@ -308,11 +332,12 @@ export default function ShippingAddress() {
               type="button"
               className="flex-1"
               onClick={() => window.history.back()}
+              disabled={isSubmitting}
             >
               Cancel
             </Button>
-            <Button type="submit" className="flex-1">
-              Save
+            <Button type="submit" className="flex-1" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
           </div>
         </form>

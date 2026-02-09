@@ -9,11 +9,14 @@ import { Separator } from "@/components/ui/separator";
 import { TCartProduct } from "@/types/cart.type";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { removeCartItem } from "./action";
 import { toast } from "sonner";
 import defaultImg from "@/assets/images/default.png";
 import { Spinner } from "@/components/ui/spinner";
+import debounce from "lodash/debounce";
+import { useRef } from "react";
+import { addToCart } from "@/app/all-category/components/action";
 
 export default function ProductCart({
   cartData,
@@ -25,6 +28,17 @@ export default function ProductCart({
   const [removingIds, setRemovingIds] = useState<number[]>([]); // Track which products are being removed
 
   const handleImageError = () => setImageError(true);
+  const debouncedUpdateRef = useRef(
+    debounce((value: { productId: number; quantity: number }) => {
+      handleOnChangeQuantity(value);
+    }, 500),
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedUpdateRef.current.cancel();
+    };
+  }, []);
 
   const handleProductSelect = (productId: number, isChecked: boolean) => {
     if (isChecked) {
@@ -71,6 +85,20 @@ export default function ProductCart({
       toast.error("Failed to remove product.");
     } finally {
       setRemovingIds((prev) => prev.filter((id) => id !== productId));
+    }
+  };
+
+  const handleOnChangeQuantity = async (newValue: {
+    productId: number;
+    quantity: number;
+  }) => {
+    if (newValue.quantity < 1) return;
+
+    try {
+      const res = await addToCart(newValue.productId, newValue.quantity);
+      console.log(res);
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
     }
   };
 
@@ -149,10 +177,14 @@ export default function ProductCart({
           <Counter
             value={row.original.quantity}
             onChange={(newValue) => {
-              // TODO: Implement quantity update logic
-              console.log(
-                `Update quantity for ${row.original.id} to ${newValue}`,
-              );
+              // // UI update first
+              // setQuantity(newValue as number);
+
+              // API update debounced
+              debouncedUpdateRef.current({
+                productId: row.original.product_id,
+                quantity: newValue as number,
+              });
             }}
           />
         </div>

@@ -17,10 +17,16 @@ import { toast } from "sonner";
 
 export default function DeliveryOptionPage({
   setBtnClose,
+  fetchDefaultDeliveryOption,
+  defaultDeliveryOptionId,
 }: {
   setBtnClose: (value: boolean) => void;
+  fetchDefaultDeliveryOption: () => void;
+  defaultDeliveryOptionId?: number;
 }) {
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedOption, setSelectedOption] = useState<number | null>(
+    defaultDeliveryOptionId || null,
+  );
 
   const [deliveryOptions, setDeliveryOptions] = useState<TDeliveryOption[]>([]);
 
@@ -45,6 +51,7 @@ export default function DeliveryOptionPage({
     try {
       const res = await setDefaultOptions(selectedOption);
       toast.success(res);
+      fetchDefaultDeliveryOption();
       setBtnClose(false);
     } catch (error: unknown) {
       console.error(error);

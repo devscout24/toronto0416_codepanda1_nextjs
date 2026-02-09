@@ -12,6 +12,7 @@ import Logout from "../auth/logout";
 import { Sign } from "crypto";
 import { SignUpForm } from "../auth/signup";
 import { ForgotPasswordForm } from "../auth/resetPassword";
+import UpdateShippingAddress from "@/app/cart/modals/updateShippingAddress";
 
 export default function Modals() {
   return (
@@ -28,12 +29,12 @@ export default function Modals() {
         <ShippingAddress />
       </Modal>
 
-       <Modal
+      <Modal
         title="Update shipping address"
         modalId="update-shipping-address"
         openId="update-shipping-modal"
       >
-        <ShippingAddress />
+        <UpdateShippingAddress />
       </Modal>
 
       <Modal title="" modalId="place-order-modal" openId="place-order">
@@ -84,10 +85,10 @@ export default function Modals() {
         <Logout />
       </Modal>
 
-       <Modal title="" modalId="signup-modal" openId="signup">
+      <Modal title="" modalId="signup-modal" openId="signup">
         <SignUpForm />
       </Modal>
-       <Modal title="" modalId="resetpassword-modal" openId="resetpassword">
+      <Modal title="" modalId="resetpassword-modal" openId="resetpassword">
         <ForgotPasswordForm />
       </Modal>
     </>

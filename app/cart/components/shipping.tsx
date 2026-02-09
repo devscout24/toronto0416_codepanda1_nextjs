@@ -13,31 +13,46 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import DeliveryOptionPage from "./deliveryOption";
 import AddressOptionPage from "./addressOption";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TAddressBook } from "@/types/user.type";
-import { getAddressBook } from "@/app/account/components/action";
+import { TAddressBook, TDeliveryOption } from "@/types/user.type";
+import {
+  getDefaultAddress,
+  getDefaultDeliveryOption,
+} from "@/app/account/components/action";
 
 export default function Shipping() {
   const [btnClose, setBtnClose] = useState<boolean>(false);
   const [addressBtnOpen, setAddressBtnOpen] = useState<boolean>(false);
-  const [addressBook, setAddressBook] = useState<TAddressBook[]>([]);
+  const [defaultAddress, setDefaultAddress] = useState<TAddressBook | null>(
+    null,
+  );
+
+  const [defaultDeliveryOption, setDefaultDeliveryOption] =
+    useState<TDeliveryOption | null>(null);
+
+  const fetchDefaultAddress = async () => {
+    try {
+      const response = await getDefaultAddress();
+      setDefaultAddress(response);
+    } catch (error) {
+      console.error("Error fetching address book:", error);
+    }
+  };
 
   useEffect(() => {
-    async function fetchAddressBook() {
-      try {
-        const response = await getAddressBook();
+    fetchDefaultAddress();
+  }, []);
 
-        // ✅ getAddressBook already returns the array
-        if (Array.isArray(response)) {
-          setAddressBook(response);
-        } else {
-          console.error("Invalid address book response:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching address book:", error);
-      }
+  const fetchDefaultDeliveryOption = async () => {
+    try {
+      const response = await getDefaultDeliveryOption();
+      setDefaultDeliveryOption(response);
+    } catch (error) {
+      console.error("Error fetching delivery option", error);
     }
+  };
 
-    fetchAddressBook();
+  useEffect(() => {
+    fetchDefaultDeliveryOption();
   }, []);
 
   return (
@@ -61,43 +76,52 @@ export default function Shipping() {
             <DrawerContent className="max-w-[500px]! bg-white">
               <ScrollArea className="h-full">
                 <AddressOptionPage
-                  addressBook={addressBook}
+                  defaultAddressId={defaultAddress?.id}
                   setAddressBtnOpen={setAddressBtnOpen}
+                  fetchDefaultAddress={fetchDefaultAddress}
                 />
               </ScrollArea>
             </DrawerContent>
           </Drawer>
         </div>
 
-        {addressBook?.length > 0 ? (
-          addressBook
-            .filter((address) => address?.is_default === true)
-            .map((address) => (
-              <div key={address?.id} className="rounded-lg border p-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-5">
-                    <p className="text-xl font-semibold">{address.name}</p>
-                    <Badge className="rounded-full bg-black">
-                      {address.address_type === "home" ? "Home" : "Office"}
-                    </Badge>
-                  </div>
-                </div>
-                <p>{address.phone}</p>
-
-                <Separator className="my-2.5" />
-
-                <p>
-                  {address?.flat_no ? `Flat ${address.flat_no}, ` : ""}
-                  {address?.floor_no ? `Floor ${address.floor_no}, ` : ""}
-                  {address?.house_no ? `House ${address.house_no}, ` : ""}
-                  {address?.street_road ? `${address.street_road}, ` : ""}
-                  {address?.block_sector ? `${address.block_sector}, ` : ""}
-                  {address?.area ? `${address.area}, ` : ""}
-                  {address?.city ? `${address.city}, ` : ""}
-                  {address?.postal_code ? `${address.postal_code}` : ""}
-                </p>
+        {defaultAddress ? (
+          <div key={defaultAddress?.id} className="rounded-lg border p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-5">
+                <p className="text-xl font-semibold">{defaultAddress.name}</p>
+                <Badge className="rounded-full bg-black">
+                  {defaultAddress.address_type === "home" ? "Home" : "Office"}
+                </Badge>
               </div>
-            ))
+            </div>
+            <p>{defaultAddress.phone}</p>
+
+            <Separator className="my-2.5" />
+
+            <p>
+              {defaultAddress?.flat_no
+                ? `Flat ${defaultAddress.flat_no}, `
+                : ""}
+              {defaultAddress?.floor_no
+                ? `Floor ${defaultAddress.floor_no}, `
+                : ""}
+              {defaultAddress?.house_no
+                ? `House ${defaultAddress.house_no}, `
+                : ""}
+              {defaultAddress?.street_road
+                ? `${defaultAddress.street_road}, `
+                : ""}
+              {defaultAddress?.block_sector
+                ? `${defaultAddress.block_sector}, `
+                : ""}
+              {defaultAddress?.area ? `${defaultAddress.area}, ` : ""}
+              {defaultAddress?.city ? `${defaultAddress.city}, ` : ""}
+              {defaultAddress?.postal_code
+                ? `${defaultAddress.postal_code}`
+                : ""}
+            </p>
+          </div>
         ) : (
           <></>
         )}
@@ -133,27 +157,31 @@ export default function Shipping() {
               </Button>
             </DrawerTrigger>
             <DrawerContent className="max-w-[500px]! bg-white">
-              <DeliveryOptionPage setBtnClose={setBtnClose} />
+              <DeliveryOptionPage
+                fetchDefaultDeliveryOption={fetchDefaultDeliveryOption}
+                defaultDeliveryOptionId={defaultDeliveryOption?.id}
+                setBtnClose={setBtnClose}
+              />
             </DrawerContent>
           </Drawer>
         </div>
 
-        {/* <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
+        <div className="mt-5 flex w-full items-center justify-between rounded-lg bg-white p-5">
           <div className="flex items-center gap-5">
             <ShippingIcon className="hidden md:block" />
             <div>
               <h3 className="text-lg font-semibold">
-                {deliveryOption === "premium"
-                  ? "Premium Delivery"
-                  : "Standard Delivery"}
+                {defaultDeliveryOption?.name}
               </h3>
-              <p className="text-neutral-500">Guaranteed by 18-19 Aug</p>
+              <p className="text-neutral-500">
+                {defaultDeliveryOption?.description}
+              </p>
             </div>
           </div>
           <p className="text-lg font-semibold">
-            {deliveryOption === "premium" ? "$30" : "$20"}
+            ${defaultDeliveryOption?.shipping_charge}
           </p>
-        </div> */}
+        </div>
       </div>
     </section>
   );

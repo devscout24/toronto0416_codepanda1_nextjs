@@ -100,7 +100,6 @@ export type TUserResponse = {
 }
 
 
-
 export type TAddressBook = {
   id: number;
   city: string;
@@ -114,14 +113,31 @@ export type TAddressBook = {
   name: string;
   phone: string;
   delivery_note: string;
-  address_type: "home" | "office"; // literal types
   is_default: boolean;
+  block_Sector: string;
+  addressType: "home" | "office";
+  address_type: "home" | "office";
 };
-
 
 export type TAddressBookResponse = {
   status: string;
   status_code: number;
   message: string;
   data: TAddressBook;
+};
+
+// Single delivery option
+export type TDeliveryOption = {
+  id: number;
+  name: string;
+  description: string;
+  shipping_charge: string; // keep as string (API returns string)
+};
+
+// Full API response
+export type TDeliveryOptionResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TDeliveryOption;
 };

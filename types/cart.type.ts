@@ -2,6 +2,7 @@
 export type TCartProduct = {
   id: number;
   image: string;
+  product_id: number;
   product_name: string;
   sku: string;
   price: string;

@@ -14,12 +14,30 @@ export async function addAddress(values: TCartAddress) {
       method: "POST",
       body: JSON.stringify(values),
     });
+    revalidatePath("/account/address-book");
+    revalidatePath("/cart/checkout");
   } catch (error) {
     console.log(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }
     return { error: "Adding address failed. Please try again." };
+  }
+}
+
+export async function removeAddress({ address_id }: { address_id: number }) {
+  try {
+    await fetcher<{ message: string }>(`/update-address/${address_id}/`, {
+      method: "DELETE",
+    });
+    revalidatePath("/account/address-book");
+    revalidatePath("/cart/checkout");
+  } catch (error) {
+    console.log(error);
+    if (error && typeof error === "object" && "message" in error) {
+      return { error: (error as { message: string }).message };
+    }
+    return { error: "Deleting address failed. Please try again." };
   }
 }
 
@@ -111,9 +129,7 @@ export async function setAddressDefault(address_id: number) {
 
 export async function getDeliveryOptions() {
   try {
-    const response = await fetcher<TDeliveryResponse>(
-      "/delivery-options-list/",
-    );
+    const response = await fetcher<TDeliveryResponse>("/delivery-charge-list/");
     return response.data;
   } catch (error) {
     console.error("Error clearing cart:", error);

@@ -1,45 +1,34 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { TCartItems } from "@/types/cart.type";
 import Checkout from "../components/checkout";
 import Shipping from "../components/shipping";
-import { TCartAddress } from "@/types/cart.type";
-import { addAddress } from "../components/action";
+import { getCart } from "../components/action";
 
-export default function CheckoutPage() {
-  const [address, setAddress] = useState<TCartAddress | null>(null);
+export default async function CheckoutPage() {
+  let cartData: TCartItems | null = null;
 
-  useEffect(() => {
-    if (address) {
-      const saveAddress = async () => {
-        try {
-          const response = await addAddress(address);
-          if (response && response.error) {
-            console.error("Error adding address:", response.error);
-          } else {
-            console.log("Address added successfully");
-          }
-        } catch (error) {
-          console.error("An error occurred while adding the address:", error);
-        }
-      };
-
-      saveAddress();
-    }
-  }, [address]);
-
+  try {
+    cartData = await getCart();
+  } catch (error) {
+    console.error("Error fetching cart data:", error);
+  }
   return (
     <section className="section-container w-full space-y-28 pt-10 pb-28">
-      <div className="flex flex-col items-start gap-5 lg:gap-10 md:flex-row">
+      <div className="flex flex-col items-start gap-5 md:flex-row lg:gap-10">
         <div className="w-full md:w-[60%] lg:w-[70%]">
-          <Shipping/>
+          <Shipping />
           {/* <Shipping address={address} setAddress={setAddress} /> */}
         </div>
         <div className="w-full md:w-[40%] lg:w-[30%]">
           <Checkout
-            isDisabled={!address || address === null ? true : false}
             title="Proceed to Pay"
             redirectTo="/cart/checkout/payment"
+            metadata={{
+              sub_total: cartData?.sub_total ?? 0.0,
+              shipping_fee: cartData?.shipping_fee ?? 0.0,
+              vat: cartData?.vat ?? 0.0,
+              discount: cartData?.discount ?? 0.0,
+              total_price: cartData?.total_price ?? 0.0,
+            }}
           />
         </div>
       </div>

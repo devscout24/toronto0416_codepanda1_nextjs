@@ -84,3 +84,21 @@ export const addToCart = async (product_id: number, quantity: number) => {
   }
 };
 
+// Add this to your ./action file
+export async function updateCartQuantity(productId: number, quantity: number) {
+  // Implement your API call to update cart quantity here
+  // This should be similar to your addToCart function
+  const response = await fetch('/api/cart/update-quantity', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ productId, quantity }),
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to update quantity');
+  }
+  
+  return response.json();
+}

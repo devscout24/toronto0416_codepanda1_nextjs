@@ -5,6 +5,7 @@ import { SpecialResponse } from "@/types/product.type";
 import {
   TAddressBook,
   TAddressBookResponse,
+  TDeliveryOptionResponse,
   TUserAccount,
   TUserProfileResponse,
   TUserResponse,
@@ -92,7 +93,7 @@ export const updateProfileInfo = async (
 
 export const getAddressBook = async () => {
   try {
-    const response = await fetcher<TUserResponse>("/address-list/");
+    const response = await fetcher<TAddressBookResponse>("/address-list/");
     if (!response?.data) {
       console.error(`Account Info not found`);
       return null;
@@ -100,6 +101,52 @@ export const getAddressBook = async () => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
+
+export const getDefaultAddress = async () => {
+  try {
+    const response = await fetcher<TAddressBookResponse>(
+      "/get-default-address/",
+    );
+    if (!response?.data) {
+      console.error(`default address not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
+
+export const getDefaultDeliveryOption = async () => {
+  try {
+    const response = await fetcher<TDeliveryOptionResponse>( // Fix: use TDeliveryOptionResponse, not TDeliveryResponse
+      "/get-selected-delivery-option/",
+    );
+    if (!response?.data) {
+      console.error(`default delivery option not found`);
+      return null;
+    }
+    return response.data; // This is already a single TDeliveryOption
+  } catch (error) {
+    console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
+
+export const setDefaultAddress = async (addressId: number) => {
+  try {
+    const response = await fetcher<{ status: string; message: string }>(
+      `/address/${addressId}/set-default/`,
+      { method: "PUT" }, // Explicitly specify PUT method
+    );
+    revalidatePath("/cart/checkout");
+    return response.message;
+  } catch (error) {
+    console.error("Error setting default address:", error);
     return null;
   }
 };
@@ -116,19 +163,38 @@ export const addAddress = async ({ body }: { body: TAddressBook }) => {
   }
 };
 
+export const getSingleAddress = async (addressId: number) => {
+  try {
+    const response = await fetcher<TAddressBookResponse>(
+      `/get-address-by-id/${addressId}/`,
+    );
+    if (!response?.data) {
+      console.error(`default address not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
 
-export const updateAddress = async ({ 
-  addressId, 
-  body 
-}: { 
-  addressId: number; 
+export const updateAddress = async ({
+  addressId,
+  body,
+}: {
+  addressId: number;
   body: Partial<TAddressBook>;
 }) => {
   try {
-    const res = await fetcher<TAddressBookResponse>(`/update-address/${addressId}/`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    });
+    const res = await fetcher<TAddressBookResponse>(
+      `/update-address/${addressId}/`,
+      {
+        method: "PUT",
+        body: JSON.stringify(body),
+      },
+    );
+    revalidatePath("/account/address-book");
     return res.data;
   } catch (error) {
     console.error(error);

@@ -10,34 +10,68 @@ import LeftIcon from "@/assets/icons/chevron-down.svg";
 import { Checkbox } from "@/components/animate-ui/components/radix/checkbox";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { TCartAddress } from "@/types/cart.type";
 import { TAddressBook } from "@/types/user.type";
+import {
+  getAddressBook,
+  setDefaultAddress,
+} from "@/app/account/components/action";
+import { toast } from "sonner";
 
 export default function AddressOptionPage({
-  addressBook,
   setAddressBtnOpen,
+  fetchDefaultAddress,
+  defaultAddressId,
 }: {
-  addressBook: TAddressBook[];
-  // setAddress: Dispatch<SetStateAction<TCartAddress | null>>;
+  fetchDefaultAddress: () => Promise<void>;
   setAddressBtnOpen: (value: boolean) => void;
+  defaultAddressId?: number;
 }) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    defaultAddressId || null,
+  );
+
+  const [addressBook, setAddressBook] = useState<TAddressBook[]>([]);
+  const fetchAddressBook = async () => {
+    try {
+      const response = await getAddressBook();
+
+      if (Array.isArray(response)) {
+        setAddressBook(response);
+      } else {
+        console.error("Invalid address book response:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching address book:", error);
+    }
+  };
 
   useEffect(() => {
-    if (addressBook?.length > 0) {
-      const defaultAddress = addressBook.find(address => address.is_default === true);
-      if (defaultAddress) {
-        setSelectedIndex(defaultAddress.id);
-      } else if (addressBook.length > 0) {
-        // If no default address, select the first one
-        setSelectedIndex(addressBook[0].id);
-      }
+    fetchAddressBook();
+  }, []);
+
+  useEffect(() => {
+    if (defaultAddressId) {
+      setSelectedIndex(defaultAddressId);
+    } else if (addressBook.length > 0) {
+      setSelectedIndex(addressBook[0].id);
     }
-  }, [addressBook]);
+  }, [defaultAddressId, addressBook]);
 
-
-  const handleSave = () => {
+  const handleSave = async () => {
     if (selectedIndex === null) return;
+    try {
+      const res = await setDefaultAddress(selectedIndex);
+      fetchDefaultAddress();
+      toast.success(res);
+      setAddressBtnOpen(false);
+    } catch (error: unknown) {
+      console.error(error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to set delivery option.",
+      );
+    }
   };
 
   return (
@@ -47,7 +81,7 @@ export default function AddressOptionPage({
           <DrawerClose className="mt-0.5">
             <LeftIcon className="rotate-90 hover:cursor-pointer" />
           </DrawerClose>
-          <DrawerTitle className="text-lg font-medium">
+          <DrawerTitle className="text-lg font-medium md:text-2xl">
             Shipping Address
           </DrawerTitle>
         </div>
@@ -115,32 +149,3 @@ export default function AddressOptionPage({
     </div>
   );
 }
-
-const addresses = [
-  {
-    city: "Dhaka",
-    area: "Gulshan",
-    blockSector: "B",
-    streetRoad: "Road 12",
-    houseNo: "10",
-    flatNo: "5A",
-    floorNo: "3",
-    name: "John Doe",
-    phone: "01712345678",
-    deliveryNote: "Leave at door",
-    addressType: "office",
-  },
-  {
-    city: "Chittagong",
-    area: "Pahartali",
-    blockSector: "C",
-    streetRoad: "Road 7",
-    houseNo: "22",
-    flatNo: "2B",
-    floorNo: "1",
-    name: "Jane Doe",
-    phone: "01887654321",
-    deliveryNote: "",
-    addressType: "home",
-  },
-];
