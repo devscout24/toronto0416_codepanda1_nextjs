@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { productData } from "@/consts/product";
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import CarouselBtn from "@/components/shared/carouselBtn";
 import {

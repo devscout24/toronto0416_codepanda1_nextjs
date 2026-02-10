@@ -22,7 +22,7 @@ import {
   updateAddress,
 } from "@/app/account/components/action";
 import { Textarea } from "@/components/ui/textarea";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   city: z.string().min(1, "City is required"),

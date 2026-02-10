@@ -25,7 +25,7 @@ export default function ProductCart({
 }) {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [imageError, setImageError] = useState(false);
-  const [removingIds, setRemovingIds] = useState<number[]>([]); // Track which products are being removed
+  const [removingIds, setRemovingIds] = useState<number[]>([]); 
 
   const handleImageError = () => setImageError(true);
   const debouncedUpdateRef = useRef(

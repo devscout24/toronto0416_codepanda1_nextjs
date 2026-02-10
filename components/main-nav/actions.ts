@@ -34,7 +34,7 @@ export async function getCartLength() {
       method: "GET",
     });
 
-    const cartLength = response?.data?.length;
+    const cartLength = response?.data?.items?.length;
 
     return cartLength;
   } catch (error) {
