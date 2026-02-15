@@ -7,9 +7,10 @@ import { Spinner } from "@/components/ui/spinner";
 import { CartMetaData } from "@/types/cart.type";
 import Link from "next/link";
 import { useState } from "react";
-import { applyCoupon } from "./action";
+import { applyCoupon, createPayment, postAddressId } from "./action";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Checkout({
   title,
@@ -25,8 +26,51 @@ export default function Checkout({
   const [couponCode, setCouponCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const addressId = searchParams.get("address_id");
+  const order_id = searchParams.get("orderId");
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  console.log(couponCode, "couponCode");
+  const handlePostAddressId = async () => {
+    if (!addressId) {
+      toast.error("Please select an address");
+      return;
+    }
+
+    try {
+      const id = await postAddressId(Number(addressId));
+
+      if (id) {
+        router.push(`?orderId=${id}`);
+      }
+    } catch (error) {
+      console.error("Error posting address id:", error);
+      toast.error("Failed to proceed");
+    }
+  };
+
+  const handleCreatePayment = async () => {
+    setLoading(true);
+    if (!order_id) {
+      toast.error("Order ID is missing");
+      return;
+    }
+
+    try {
+      const redirectTo = await createPayment(order_id);
+      if (redirectTo) {
+        window.location.href = redirectTo;
+      } else {
+        toast.error("Failed to create payment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating payment:", error);
+      toast.error("Something went wrong while creating payment");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleApplyCoupon = async () => {
     console.log(couponCode, "couponCode");
@@ -137,17 +181,51 @@ export default function Checkout({
           <span className="float-right">${metadata?.total_price}</span>
         </div>
 
-        {!isDisabled ? (
-          <Link href={redirectTo}>
-            <Button disabled={isDisabled} className="w-full">
-              {title}
+        {title === "Proceed to Pay" &&
+          (!isDisabled ? (
+            <Link href={redirectTo}>
+              <Button
+                onClick={handlePostAddressId}
+                disabled={isDisabled}
+                className="w-full"
+              >
+                {title}
+              </Button>
+            </Link>
+          ) : (
+            <Button className="w-full" disabled>
+              Need to Add Address
             </Button>
-          </Link>
-        ) : (
-          <Button className="w-full" disabled>
-            Need to Add Address
-          </Button>
-        )}
+          ))}
+
+        {title === "Place Order" &&
+          (!isDisabled ? (
+            // <Link href={redirectTo}>
+            <Button
+              onClick={handleCreatePayment}
+              disabled={isDisabled || loading}
+              className="w-full"
+            >
+              {title} {loading && <Spinner className="size-4" />}
+            </Button>
+          ) : (
+            // </Link>
+            <Button className="w-full" disabled>
+              Need to Add Address
+            </Button>
+          ))}
+        {title === "Proceed to Checkout" &&
+          (!isDisabled ? (
+            <Link href={redirectTo}>
+              <Button disabled={isDisabled} className="w-full">
+                {title}
+              </Button>
+            </Link>
+          ) : (
+            <Button className="w-full" disabled>
+              Need to Add Address
+            </Button>
+          ))}
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import {
   TCartAPIResponse,
   TDeliveryResponse,
 } from "@/types/cart.type";
+import { OrderResponse } from "@/types/orders.type";
 import { revalidatePath } from "next/cache";
 
 export async function addAddress(values: TCartAddress) {
@@ -147,6 +148,32 @@ export async function setDefaultOptions(select_id: number) {
     );
     revalidatePath("/cart");
     return response.message;
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+  }
+}
+
+export async function postAddressId(address_id: number) {
+  try {
+    const res = await fetcher<OrderResponse>("/proceed-to-pay/", {
+      method: "POST",
+      body: JSON.stringify({ address_id }),
+    });
+    revalidatePath("/cart");
+    return res?.data?.order_id;
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+  }
+}
+
+export async function createPayment(order_id: string) {
+  try {
+    const res = await fetcher<{ checkout_url: string }>("/place-order/", {
+      method: "POST",
+      body: JSON.stringify({ order_id }),
+    });
+    revalidatePath("/cart");
+    return res.checkout_url;
   } catch (error) {
     console.error("Error clearing cart:", error);
   }

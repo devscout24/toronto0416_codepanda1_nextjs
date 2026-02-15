@@ -11,8 +11,8 @@ import { getCart } from "../../components/action";
 
 const cards = [
   { id: 2, name: "Stripe", icon: Stripe },
-  { id: 3, name: "PayPal", icon: Paypal },
-  { id: 4, name: "Cash on Delivery", icon: Cash },
+  // { id: 3, name: "PayPal", icon: Paypal },
+  // { id: 4, name: "Cash on Delivery", icon: Cash },
 ];
 
 export default async function PaymentPage() {
@@ -28,9 +28,9 @@ export default async function PaymentPage() {
       <div className="flex flex-col items-start gap-5 md:flex-row lg:gap-10">
         <div className="w-full md:w-[60%] lg:w-[70%]">
           <section className="rounded-2xl bg-white p-5 text-xl font-medium">
-            <h1 className="border-b pb-5 text-xl">Select Payment Method</h1>
+            <h1 className="border-b pb-5 text-xl">Your Payment Method</h1>
             <div className="mt-5">
-              <h1 className="text-xl">Recommended methods</h1>
+              {/* <h1 className="text-xl">Recommended methods</h1>
               <div className="border-primary/0 hover:border-primary bg-primary/10 mt-2.5 cursor-pointer gap-5 rounded-xl border p-5">
                 <div className="flex flex-col justify-between gap-3 md:flex-row">
                   <div className="flex items-center gap-5">
@@ -47,15 +47,16 @@ export default async function PaymentPage() {
                     <Visa />
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-5">
-                <h1 className="text-xl">Other payment methods</h1>
+                {/* <h1 className="text-xl">Other payment methods</h1> */}
                 <div>
                   {cards.map((card) => (
                     <div
                       key={card.id}
-                      className="bg-accent hover:bg-primary/10 border-accent hover:border-primary mt-2.5 flex cursor-pointer items-center gap-5 rounded-xl border p-5"
+                      // className="bg-accent hover:bg-primary/10 border-accent hover:border-primary mt-2.5 flex cursor-pointer items-center gap-5 rounded-xl border p-5"
+                      className="bg-primary/10 border-primary mt-2.5 flex items-center gap-5 rounded-xl border p-5"
                     >
                       <div className="flex items-center gap-5">
                         <card.icon />

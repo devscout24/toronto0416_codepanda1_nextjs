@@ -27,11 +27,12 @@ export type TAddressBookEntry = {
 };
 
 export type TOrder = {
+  order_id: string;
   orderId: string;
-  placedOn: string;
+  placed_on: string;
   item: string;
-  total: string;
-  status: "In Shipping" | "Completed" | "Canceled";
+  total_price: string;
+  status: "In Shipping" | "Completed" | "Canceled" | "processing";
 };
 
 export type TUserProfile = {

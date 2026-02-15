@@ -18,6 +18,7 @@ import {
   getDefaultAddress,
   getDefaultDeliveryOption,
 } from "@/app/account/components/action";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Shipping() {
   const [btnClose, setBtnClose] = useState<boolean>(false);
@@ -25,6 +26,17 @@ export default function Shipping() {
   const [defaultAddress, setDefaultAddress] = useState<TAddressBook | null>(
     null,
   );
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (defaultAddress?.id) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("address_id", String(defaultAddress.id));
+
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
+  }, [defaultAddress]);
 
   const [defaultDeliveryOption, setDefaultDeliveryOption] =
     useState<TDeliveryOption | null>(null);
