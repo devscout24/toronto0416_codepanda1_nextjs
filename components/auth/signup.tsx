@@ -94,20 +94,18 @@ export function SignUpForm({
       <Card className="shadow-none">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create Account</CardTitle>
-          <CardDescription>
-            Sign up with your Apple or Google account
-          </CardDescription>
+          <CardDescription>Sign up with your Google account</CardDescription>
         </CardHeader>
         <CardContent className="mt-2.5">
           <FieldGroup>
             <Field className="flex gap-2 md:flex-row">
-              <Button variant="outline" type="button" className="flex-1">
+              {/* <Button variant="outline" type="button" className="flex-1">
                 <AppleIcon />
-                Sign up with Apple
-              </Button>
+                Login with Apple
+              </Button> */}
               <Button variant="outline" type="button" className="flex-1">
                 <GoogleIcon />
-                Sign up with Google
+                Login with Google
               </Button>
             </Field>
             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
@@ -184,7 +182,7 @@ export function SignUpForm({
 
                 {/* Error Message */}
                 {error && (
-                  <div className="p-3 text-sm text-destructive bg-destructive/15 border border-destructive/20 rounded-md">
+                  <div className="text-destructive bg-destructive/15 border-destructive/20 rounded-md border p-3 text-sm">
                     {error}
                   </div>
                 )}
@@ -200,8 +198,8 @@ export function SignUpForm({
                     >
                       Cancel
                     </Button>
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       className="w-full flex-1"
                       disabled={isLoading}
                     >
@@ -209,7 +207,8 @@ export function SignUpForm({
                     </Button>
                   </div>
                   <FieldDescription className="text-center">
-                    Already have an account? <Link href="?login-modal=login">Log in</Link>
+                    Already have an account?{" "}
+                    <Link href="?login-modal=login">Log in</Link>
                   </FieldDescription>
                 </Field>
               </form>

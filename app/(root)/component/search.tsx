@@ -64,7 +64,7 @@ export default function Search() {
             <div className="relative flex h-16 items-center overflow-hidden rounded-lg bg-white">
               <LocationIcon className="absolute left-3 text-neutral-200" />
               <input
-                type="text"
+                type="number"
                 placeholder="Enter your postal code"
                 className="h-16 w-full pl-10 md:w-100 md:pl-12"
                 value={postalCode}
@@ -92,25 +92,31 @@ export default function Search() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {availability ? "✅ Delivery Available" : "❌ Delivery Not Available"}
+              {availability
+                ? "✅ Delivery Available"
+                : "❌ Delivery Not Available"}
             </DialogTitle>
-            <DialogDescription asChild> 
+            <DialogDescription asChild>
               {availability ? (
                 <div className="space-y-3">
-                  <p className="text-green-600 font-medium">
-                    Great news! We deliver to postal code <strong>{postalCode}</strong>.
+                  <p className="font-medium text-green-600">
+                    Great news! We deliver to postal code{" "}
+                    <strong>{postalCode}</strong>.
                   </p>
                   <p>
-                   You can now place your order and we&apos;ll deliver it right to your doorstep!
+                    You can now place your order and we&apos;ll deliver it right
+                    to your doorstep!
                   </p>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-red-600 font-medium">
-                    Sorry, we currently don&apos;t deliver to postal code <strong>{postalCode}</strong>.
+                  <p className="font-medium text-red-600">
+                    Sorry, we currently don&apos;t deliver to postal code{" "}
+                    <strong>{postalCode}</strong>.
                   </p>
                   <p>
-                    We&apos;re constantly expanding our delivery areas. Please check back soon or contact us for more information.
+                    We&apos;re constantly expanding our delivery areas. Please
+                    check back soon or contact us for more information.
                   </p>
                 </div>
               )}

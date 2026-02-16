@@ -54,7 +54,7 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
           <span
             className={cn(
               "font-medium capitalize",
-              row?.original?.status === "In Shipping" && "text-secondary",
+              row?.original?.status === "pending" && "text-secondary",
               row?.original?.status === "processing" && "text-blue-500",
               row?.original?.status === "Completed" && "text-primary",
               row?.original?.status === "Canceled" && "text-red-500",

@@ -29,7 +29,7 @@ const formSchema = z.object({
   area: z.string().min(1, "Area is required"),
   block_Sector: z.string().min(1, "Block/Sector is required"),
   street_road: z.string().min(1, "Street/Road is required"),
-  postal_code: z.string().min(1, "Postal code is required"),
+  postal_code: z.string().length(5, "Postal code will 5 characters long"),
   house_no: z.string().min(1, "House No is required"),
   flat_no: z.string().min(1, "Flat No is required"),
   floor_no: z.string().min(1, "Floor No is required"),
@@ -216,7 +216,11 @@ export default function UpdateShippingAddress() {
               <FormItem>
                 <FormLabel>Postal Code</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter postal code" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="Enter postal code"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

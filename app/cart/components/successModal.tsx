@@ -14,7 +14,7 @@ export default function SuccessModal() {
           Successfully your order placed
         </p>
       </div>
-      <Link className="w-full" href={"/"}>
+      <Link className="w-full" href={"/all-category"}>
         <Button className="w-full">Continue Browsing</Button>
       </Link>
     </div>

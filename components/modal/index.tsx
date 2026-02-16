@@ -12,6 +12,7 @@ import Logout from "../auth/logout";
 import { SignUpForm } from "../auth/signup";
 import { ForgotPasswordForm } from "../auth/resetPassword";
 import UpdateShippingAddress from "@/app/cart/modals/updateShippingAddress";
+import FailedModal from "@/app/cart/components/FailedModal";
 
 export default function Modals() {
   return (
@@ -38,6 +39,9 @@ export default function Modals() {
 
       <Modal title="" modalId="place-order-modal" openId="place-order">
         <SuccessModal />
+      </Modal>
+      <Modal title="" modalId="place-error-modal" openId="place-error">
+        <FailedModal />
       </Modal>
 
       <Modal

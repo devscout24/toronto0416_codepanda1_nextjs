@@ -32,7 +32,7 @@ export type TOrder = {
   placed_on: string;
   item: string;
   total_price: string;
-  status: "In Shipping" | "Completed" | "Canceled" | "processing";
+  status: string;
 };
 
 export type TUserProfile = {

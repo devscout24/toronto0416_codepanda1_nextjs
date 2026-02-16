@@ -24,7 +24,7 @@ const formSchema = z.object({
   area: z.string().min(1, "Area is required"),
   block_sector: z.string().min(1, "Block/Sector is required"),
   street_road: z.string().min(1, "Street/Road is required"),
-  postal_code: z.string().min(1, "Postal code is required"),
+  postal_code: z.string().length(5, "Postal code will 5 characters long"),
   house_no: z.string().min(1, "House No is required"),
   flat_no: z.string().min(1, "Flat No is required"),
   floor_no: z.string().min(1, "Floor No is required"),
@@ -167,6 +167,7 @@ export default function ShippingAddress() {
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
                     <Input
+                      type="number"
                       placeholder="Postal Code"
                       className="border-neutral-50"
                       {...field}

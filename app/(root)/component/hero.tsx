@@ -17,9 +17,11 @@ export default function Hero() {
               up to 4% off grocery.
             </p>
 
-            <Link href="/all-category"><RippleButton variant="secondary" className="mt-10 px-8 py-6">
-              Shop Now
-            </RippleButton></Link>
+            <Link href="/all-category">
+              <RippleButton variant="secondary" className="mt-10 px-8 py-6">
+                Shop Now
+              </RippleButton>
+            </Link>
           </div>
 
           <div>

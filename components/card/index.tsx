@@ -140,7 +140,7 @@ export default function ProductCard({
           </CardHeader>
 
           <CardContent className="mt-1.5">
-            <div>
+            <div className="line-clamp-1 h-5">
               {payload?.tags && payload?.tags?.length > 0 && (
                 <div className="flex gap-2">
                   {payload?.tags.map((tag) => (
@@ -165,15 +165,16 @@ export default function ProductCard({
 
             <div className="mb-2.5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <p className="text-neutral-300 line-through">
+                <p className="text-sm text-neutral-300 line-through">
                   ${payload?.oldPrice}
                 </p>
-                <p className="text-primary-600 text-lg">
+                <p className="text-primary-600">
                   ${payload?.price}/{payload?.unit}
                 </p>
               </div>
               <div
                 className={cn(
+                  "text-sm",
                   payload?.stockStatus === "out-of-stock"
                     ? "text-red-600"
                     : "text-primary-700",

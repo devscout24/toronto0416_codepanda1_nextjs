@@ -74,17 +74,15 @@ export function LoginForm({
       <Card className="shadow-none">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome</CardTitle>
-          <CardDescription>
-            Login with your Apple or Google account
-          </CardDescription>
+          <CardDescription>Login with your Google account</CardDescription>
         </CardHeader>
         <CardContent className="mt-2.5">
           <FieldGroup>
             <Field className="flex gap-2 md:flex-row">
-              <Button variant="outline" type="button" className="flex-1">
+              {/* <Button variant="outline" type="button" className="flex-1">
                 <AppleIcon />
                 Login with Apple
-              </Button>
+              </Button> */}
               <Button variant="outline" type="button" className="flex-1">
                 <GoogleIcon />
                 Login with Google

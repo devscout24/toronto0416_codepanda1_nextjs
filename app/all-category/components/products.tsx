@@ -8,7 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SlidersHorizontal } from "lucide-react";
+import {
+  ArrowLeftRight,
+  ArrowRightLeft,
+  SlidersHorizontal,
+} from "lucide-react";
 import Filters from "./filters";
 import { Suspense } from "react";
 import FiltersSkeleton from "./filtersSkeleton";
@@ -59,12 +63,16 @@ export default async function AllProducts({
         <div className="">
           <Select>
             <SelectTrigger className="w-[120px] bg-neutral-50 py-5 text-black md:w-[180px]">
-              <SelectValue placeholder="Sort by" />
+              <SelectValue placeholder="Price" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="default">Default</SelectItem>
+              <SelectItem value="low">
+                Low <ArrowRightLeft /> High
+              </SelectItem>
+              <SelectItem value="high">
+                High <ArrowLeftRight /> Low
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>

@@ -33,44 +33,52 @@ export default function Checkout({
   const [loading, setLoading] = useState(false);
 
   const handlePostAddressId = async () => {
+    setLoading(true);
     if (!addressId) {
       toast.error("Please select an address");
       return;
     }
 
     try {
-      const id = await postAddressId(Number(addressId));
+      const order_id = await postAddressId(Number(addressId));
 
-      if (id) {
-        router.push(`?orderId=${id}`);
+      if (order_id) {
+        const redirectTo = await createPayment(order_id);
+        if (redirectTo) {
+          window.location.href = redirectTo;
+        } else {
+          toast.error("Failed to create payment. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Error posting address id:", error);
       toast.error("Failed to proceed");
-    }
-  };
-
-  const handleCreatePayment = async () => {
-    setLoading(true);
-    if (!order_id) {
-      toast.error("Order ID is missing");
-      return;
-    }
-
-    try {
-      const redirectTo = await createPayment(order_id);
-      if (redirectTo) {
-        window.location.href = redirectTo;
-      } else {
-        toast.error("Failed to create payment. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error creating payment:", error);
-      toast.error("Something went wrong while creating payment");
     } finally {
       setLoading(false);
     }
   };
+
+  // const handleCreatePayment = async () => {
+  //   setLoading(true);
+  //   if (!order_id) {
+  //     toast.error("Order ID is missing");
+  //     return;
+  //   }
+
+  //   try {
+  //     const redirectTo = await createPayment(order_id);
+  //     if (redirectTo) {
+  //       window.location.href = redirectTo;
+  //     } else {
+  //       toast.error("Failed to create payment. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating payment:", error);
+  //     toast.error("Something went wrong while creating payment");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleApplyCoupon = async () => {
     console.log(couponCode, "couponCode");
@@ -116,46 +124,48 @@ export default function Checkout({
           </div>
 
           <div className="flex items-center justify-between">
-            <p>VAT(15%)</p>
+            <p>VAT</p>
             <span className="float-right">${metadata?.vat}</span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="coupon-input">Add Coupon</Label>
-
-          <div className="flex h-12 items-center overflow-hidden rounded-lg border">
-            <input
-              id="coupon-input"
-              type="text"
-              placeholder="Enter the Coupon"
-              className="h-12 w-full px-4 outline-none"
-              value={couponCode}
-              onChange={(e) => setCouponCode(e.target.value)}
-              onKeyPress={handleKeyPress}
-              disabled={isVerifying}
-            />
-            <Button
-              variant="secondary"
-              className="h-16 rounded-none bg-black text-white hover:bg-black disabled:opacity-50"
-              onClick={handleApplyCoupon}
-              disabled={isVerifying || !couponCode.trim()}
-            >
-              {isVerifying ? (
-                <div className="flex items-center gap-2 px-2">
-                  <Spinner className="size-4" />
-                  <span>Verifying...</span>
-                </div>
-              ) : (
-                "Verify"
-              )}
-            </Button>
-          </div>
-
-          {appliedCoupon && (
-            <div className="text-primary flex items-center gap-2 text-xs">
+        <div className="h-16">
+          {metadata?.discount && metadata?.discount > 0 ? (
+            <div className="text-primary border-primary bg-primary/10 flex h-12 items-center gap-2 rounded-lg border px-4 text-sm font-medium">
               <Check size={16} />
               <span>Coupon {appliedCoupon} applied</span>
+            </div>
+          ) : (
+            <div>
+              <Label htmlFor="coupon-input">Add Coupon</Label>
+
+              <div className="mt-2 flex items-center overflow-hidden rounded-lg border">
+                <input
+                  id="coupon-input"
+                  type="text"
+                  placeholder="Enter the Coupon"
+                  className="h-10 w-full px-4 outline-none"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={isVerifying}
+                />
+                <Button
+                  variant="secondary"
+                  className="h-10 rounded-none bg-black text-white hover:bg-black disabled:opacity-50"
+                  onClick={handleApplyCoupon}
+                  disabled={isVerifying || !couponCode.trim()}
+                >
+                  {isVerifying ? (
+                    <div className="flex items-center gap-2 px-2">
+                      <Spinner className="size-4" />
+                      <span>Verifying...</span>
+                    </div>
+                  ) : (
+                    "Verify"
+                  )}
+                </Button>
+              </div>
             </div>
           )}
         </div>
@@ -183,22 +193,22 @@ export default function Checkout({
 
         {title === "Proceed to Pay" &&
           (!isDisabled ? (
-            <Link href={redirectTo}>
-              <Button
-                onClick={handlePostAddressId}
-                disabled={isDisabled}
-                className="w-full"
-              >
-                {title}
-              </Button>
-            </Link>
+            // <Link href={redirectTo}>
+            <Button
+              onClick={handlePostAddressId}
+              disabled={isDisabled}
+              className="w-full"
+            >
+              {title} {loading && <Spinner className="size-4" />}
+            </Button>
           ) : (
+            // </Link>
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>
           ))}
 
-        {title === "Place Order" &&
+        {/* {title === "Place Order" &&
           (!isDisabled ? (
             // <Link href={redirectTo}>
             <Button
@@ -213,7 +223,7 @@ export default function Checkout({
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>
-          ))}
+          ))} */}
         {title === "Proceed to Checkout" &&
           (!isDisabled ? (
             <Link href={redirectTo}>

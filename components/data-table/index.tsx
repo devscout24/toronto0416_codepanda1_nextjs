@@ -52,6 +52,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "../ui/scroll-area";
 
 // Enhanced Column Header Component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -329,6 +330,7 @@ export function DataTable<TData, TValue>({
       )}
 
       {/* Table */}
+      {/* <ScrollArea className="w-full p-5 md:h-[75vh]"> */}
       <div>
         <Table>
           <TableHeader>
@@ -397,26 +399,26 @@ export function DataTable<TData, TValue>({
                       }
                     }}
                   >
-                  {row.getVisibleCells().map((cell, cellIndex) => {
-                    const isFirstCell = cellIndex === 0;
-                    const isLastCell =
-                      cellIndex === row.getVisibleCells().length - 1;
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        className={cn(
-                          "px-5 py-5",
-                          !isFirstCell && !isLastCell && "text-center",
-                          isLastCell && "text-right",
-                        )}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    );
-                  })}
+                    {row.getVisibleCells().map((cell, cellIndex) => {
+                      const isFirstCell = cellIndex === 0;
+                      const isLastCell =
+                        cellIndex === row.getVisibleCells().length - 1;
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          className={cn(
+                            "px-5 py-5",
+                            !isFirstCell && !isLastCell && "text-center",
+                            isLastCell && "text-right",
+                          )}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      );
+                    })}
                   </TableRow>
                 );
               })
@@ -433,6 +435,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      {/* </ScrollArea> */}
 
       {/* Pagination */}
       {enablePagination && <DataTablePagination table={table} />}

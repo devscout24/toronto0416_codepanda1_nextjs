@@ -64,7 +64,7 @@ export default function ContactUsPage() {
         </h2>
       </div>
 
-      <div className="section-container my-10 flex flex-col items-start gap-5 px-5 md:px-8 lg:px-5 lg:flex-row">
+      <div className="section-container my-10 flex flex-col items-start gap-5 px-5 md:px-8 lg:flex-row lg:px-5">
         <div className="w-full space-y-8 lg:w-[40%]">
           <div className="space-y-2.5">
             <h3 className="text-xl font-semibold">Address</h3>
@@ -113,8 +113,8 @@ export default function ContactUsPage() {
 
         <div className="w-full rounded-3xl bg-white p-8 lg:w-[70%]">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            <div className="flex flex-col lg:flex-row items-center gap-5">
-              <div className="w-full lg:w-1/2 space-y-2.5">
+            <div className="flex flex-col items-center gap-5 lg:flex-row">
+              <div className="w-full space-y-2.5 lg:w-1/2">
                 <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
@@ -124,11 +124,13 @@ export default function ContactUsPage() {
                   {...form.register("name")}
                 />
                 {form.formState.errors.name && (
-                  <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                  <p className="text-sm text-red-500">
+                    {form.formState.errors.name.message}
+                  </p>
                 )}
               </div>
 
-              <div className="w-full lg:w-1/2 space-y-2.5">
+              <div className="w-full space-y-2.5 lg:w-1/2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -138,7 +140,9 @@ export default function ContactUsPage() {
                   {...form.register("email")}
                 />
                 {form.formState.errors.email && (
-                  <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+                  <p className="text-sm text-red-500">
+                    {form.formState.errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -153,29 +157,29 @@ export default function ContactUsPage() {
                 {...form.register("subject")}
               />
               {form.formState.errors.subject && (
-                <p className="text-sm text-red-500">{form.formState.errors.subject.message}</p>
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.subject.message}
+                </p>
               )}
             </div>
 
             <div className="space-y-2.5">
               <Label htmlFor="message">Description</Label>
-              <Textarea 
+              <Textarea
                 id="message"
-                placeholder="Write your message here ..." 
-                rows={10} 
-                className="h-40" 
+                placeholder="Write your message here ..."
+                rows={10}
+                className="h-40"
                 {...form.register("message")}
               />
               {form.formState.errors.message && (
-                <p className="text-sm text-red-500">{form.formState.errors.message.message}</p>
+                <p className="text-sm text-red-500">
+                  {form.formState.errors.message.message}
+                </p>
               )}
             </div>
 
-            <Button 
-              type="submit" 
-              className="w-full"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Submit"}
             </Button>
           </form>
@@ -185,13 +189,19 @@ export default function ContactUsPage() {
       <div className="section-container my-14">
         <h3 className="pb-10 text-2xl font-semibold">Find us in map</h3>
 
-        <Image
-          src="/images/Map.png"
-          alt="map"
-          width={1000}
-          height={500}
-          className="w-full rounded-xl"
-        />
+        <div
+          className="relative w-full overflow-hidden rounded-xl"
+          style={{ paddingBottom: "50%" }}
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.0986462230617!2d-121.26032332363705!3d37.95807380157939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80906d4de83b1675%3A0x7ffc00f74bcdd9ef!2sSufi%20Market!5e1!3m2!1sen!2sbd!4v1771195397167!5m2!1sen!2sbd"
+            className="absolute top-0 left-0 h-full w-full rounded-xl"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
       </div>
     </section>
   );
