@@ -90,42 +90,48 @@ export default function AddressOptionPage({
         </DrawerDescription>
 
         <div className="my-3 space-y-2 md:my-8 md:space-y-5">
-          {addressBook?.map((address) => (
-            <div
-              key={address?.id}
-              className="cursor-pointer gap-5 rounded-xl border p-5"
-              onClick={() => setSelectedIndex(address?.id)}
-            >
-              <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 md:flex-row">
-                <div className="flex items-start gap-3 md:gap-5">
-                  <Checkbox
-                    className="mt-1 size-5 rounded-full md:size-6"
-                    checked={selectedIndex === address?.id}
-                    onCheckedChange={() => setSelectedIndex(address?.id)}
-                  />
-                  <span>
-                    <h1 className="text-lg font-medium md:text-xl">
-                      {address?.name}
-                    </h1>
-                    <p className="">{address?.phone}</p>
-                  </span>
+          {addressBook.length > 0 ? (
+            addressBook?.map((address) => (
+              <div
+                key={address?.id}
+                className="cursor-pointer gap-5 rounded-xl border p-5"
+                onClick={() => setSelectedIndex(address?.id)}
+              >
+                <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 md:flex-row">
+                  <div className="flex items-start gap-3 md:gap-5">
+                    <Checkbox
+                      className="mt-1 size-5 rounded-full md:size-6"
+                      checked={selectedIndex === address?.id}
+                      onCheckedChange={() => setSelectedIndex(address?.id)}
+                    />
+                    <span>
+                      <h1 className="text-lg font-medium md:text-xl">
+                        {address?.name}
+                      </h1>
+                      <p className="">{address?.phone}</p>
+                    </span>
+                  </div>
+                  <Badge className="mt-1 rounded-full bg-black/90 px-3 py-1 text-xs capitalize md:text-sm">
+                    {address?.address_type}
+                  </Badge>
                 </div>
-                <Badge className="mt-1 rounded-full bg-black/90 px-3 py-1 text-xs capitalize md:text-sm">
-                  {address?.address_type}
-                </Badge>
+                <p className="mt-5">
+                  {address?.flat_no ? `Flat ${address.flat_no}, ` : ""}
+                  {address?.floor_no ? `Floor ${address.floor_no}, ` : ""}
+                  {address?.house_no ? `House ${address.house_no}, ` : ""}
+                  {address?.street_road ? `${address.street_road}, ` : ""}
+                  {address?.block_sector ? `${address.block_sector}, ` : ""}
+                  {address?.area ? `${address.area}, ` : ""}
+                  {address?.city ? `${address.city}, ` : ""}
+                  {address?.postal_code ? `${address.postal_code}` : ""}
+                </p>
               </div>
-              <p className="mt-5">
-                {address?.flat_no ? `Flat ${address.flat_no}, ` : ""}
-                {address?.floor_no ? `Floor ${address.floor_no}, ` : ""}
-                {address?.house_no ? `House ${address.house_no}, ` : ""}
-                {address?.street_road ? `${address.street_road}, ` : ""}
-                {address?.block_sector ? `${address.block_sector}, ` : ""}
-                {address?.area ? `${address.area}, ` : ""}
-                {address?.city ? `${address.city}, ` : ""}
-                {address?.postal_code ? `${address.postal_code}` : ""}
-              </p>
+            ))
+          ) : (
+            <div className="flex h-full w-full items-center justify-center py-20">
+              <p className="text-center text-gray-500">No address found...</p>
             </div>
-          ))}
+          )}
         </div>
       </DrawerHeader>
 

@@ -79,30 +79,36 @@ export default function DeliveryOptionPage({
         </DrawerDescription>
 
         <div className="my-10 space-y-5">
-          {deliveryOptions.map((option) => (
-            <div
-              key={option.id}
-              className="flex cursor-pointer items-center gap-3 rounded-xl border border-neutral-100 p-3 md:gap-5 md:p-5"
-              onClick={() => handleSelect(option.id)} // click anywhere on card
-            >
-              <Checkbox
-                className="size-5 rounded-full md:size-6"
-                checked={selectedOption === option.id}
-                onCheckedChange={() => handleSelect(option.id)}
-              />
-              <div className="flex items-center gap-5">
-                <ShippingIcon className="hidden md:block" />
-                <div>
-                  <h3 className="text-base font-semibold md:text-lg">
-                    {option.name}
-                  </h3>
-                  <p className="text-sm text-neutral-500 md:text-base">
-                    {option.description}
-                  </p>
+          {deliveryOptions.length > 0 ? (
+            deliveryOptions.map((option) => (
+              <div
+                key={option.id}
+                className="flex cursor-pointer items-center gap-3 rounded-xl border border-neutral-100 p-3 md:gap-5 md:p-5"
+                onClick={() => handleSelect(option.id)} // click anywhere on card
+              >
+                <Checkbox
+                  className="size-5 rounded-full md:size-6"
+                  checked={selectedOption === option.id}
+                  onCheckedChange={() => handleSelect(option.id)}
+                />
+                <div className="flex items-center gap-5">
+                  <ShippingIcon className="hidden md:block" />
+                  <div>
+                    <h3 className="text-base font-semibold md:text-lg">
+                      {option.name}
+                    </h3>
+                    <p className="text-sm text-neutral-500 md:text-base">
+                      {option.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-sm text-neutral-500">
+              No delivery options available...
+            </p>
+          )}
         </div>
       </DrawerHeader>
 

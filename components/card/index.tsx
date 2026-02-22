@@ -131,7 +131,7 @@ export default function ProductCard({
                 onError={handleImageError}
               />
             </div>
-            <div className="absolute top-4 flex w-full items-center justify-between px-4">
+            <div className="absolute top-4 flex w-full items-center justify-between px-4 capitalize">
               <div>{payload?.badge && <Badge>{payload.badge}</Badge>}</div>
               <CardActionGuard className="justify-end">
                 <LikeButton payload={payload} />

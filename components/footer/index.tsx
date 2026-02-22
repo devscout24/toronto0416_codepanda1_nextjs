@@ -4,16 +4,17 @@ import TwitterIcon from "@/assets/icons/twitter.svg";
 import LocationIcon from "@/assets/icons/location.svg";
 import PhoneIcon from "@/assets/icons/phone.svg";
 import EmailIcon from "@/assets/icons/email.svg";
-import PaypalIcon from "@/assets/svgs/Paypal.svg";
-import AmexIcon from "@/assets/svgs/Amex.svg";
-import AppleIcon from "@/assets/svgs/Apple pay.svg";
-import DiscoverIcon from "@/assets/svgs/Discover.svg";
-import GoogleIcon from "@/assets/svgs/Google pay.svg";
+// import PaypalIcon from "@/assets/svgs/Paypal.svg";
+// import AmexIcon from "@/assets/svgs/Amex.svg";
+// import AppleIcon from "@/assets/svgs/Apple pay.svg";
+// import DiscoverIcon from "@/assets/svgs/Discover.svg";
+// import GoogleIcon from "@/assets/svgs/Google pay.svg";
 import MasterCadIcon from "@/assets/svgs/Mastercad.svg";
 import VisaIcon from "@/assets/svgs/Visa.svg";
 import SufisLogo from "../logo";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
+import StripeIcon from "@/assets/icons/stripe.svg";
 
 export default function Footer() {
   const footerNav = {
@@ -96,7 +97,8 @@ export default function Footer() {
         <div className="section-container flex w-full flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex w-full items-center justify-center gap-6 md:justify-start">
             <p>Payment Method:</p>
-            <div className="flex flex-wrap items-center gap-2">
+            <span className="bg-white px-5 rounded-md"><StripeIcon /></span>
+            {/* <div className="flex flex-wrap items-center gap-2">
               <PaypalIcon />
               <AmexIcon />
               <AppleIcon />
@@ -104,10 +106,10 @@ export default function Footer() {
               <GoogleIcon />
               <MasterCadIcon />
               <VisaIcon />
-            </div>
+            </div> */}
           </div>
           <p className="text-nowrap">
-            © Copyright {new Date().getFullYear()} By Sufis
+            © Copyright {new Date().getFullYear()} Sufis. All Rights Reserved.
           </p>
         </div>
       </section>
