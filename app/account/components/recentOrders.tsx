@@ -7,6 +7,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import moment from "moment";
 
 export default function RecentOrders({ payload }: { payload: TOrder[] }) {
+  const statusColorMap: Record<string, string> = {
+    pending: "text-secondary",
+    processing: "text-blue-500",
+    in_shipping: "text-amber-500",
+    completed: "text-primary",
+    cancelled: "text-destructive",
+  };
   const orderColumns: ColumnDef<TOrder>[] = [
     {
       accessorKey: "order_id",
@@ -14,7 +21,7 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
       cell: ({ row }) => {
         return (
           <span>
-            {row?.original?.order_id?.slice(0, 5)}***
+            {row?.original?.order_id?.slice(0, 3)}***
             {row?.original?.order_id?.slice(-4)}
           </span>
         );
@@ -54,13 +61,10 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
           <span
             className={cn(
               "font-medium capitalize",
-              row?.original?.status === "pending" && "text-secondary",
-              row?.original?.status === "processing" && "text-blue-500",
-              row?.original?.status === "Completed" && "text-primary",
-              row?.original?.status === "Canceled" && "text-red-500",
+              statusColorMap[row?.original?.status as string],
             )}
           >
-            {row?.original?.status}
+            {row?.original?.status?.replaceAll("_", " ")}
           </span>
         );
       },

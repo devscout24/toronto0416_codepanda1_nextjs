@@ -5,23 +5,28 @@ import { TProduct } from "@/types/product.type";
 import { getProductDetails } from "../components/action";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function ProductDetailsPage({ params }: Props) {
+  const resolvedParams = await params;
   let productDetails: TProduct | null = null;
 
+  if (!resolvedParams?.id || resolvedParams.id === "undefined") {
+    return <p className="mt-10 text-center">Invalid product ID.</p>;
+  }
+
   try {
-    productDetails = await getProductDetails(params.id);
+    productDetails = await getProductDetails(resolvedParams.id);
   } catch (error) {
     console.error("Failed to fetch product details:", error);
     productDetails = null;
   }
 
   if (!productDetails) {
-    return <p className="text-center mt-10">Product not found.</p>;
+    return <p className="mt-10 text-center">Product not found.</p>;
   }
 
   return (

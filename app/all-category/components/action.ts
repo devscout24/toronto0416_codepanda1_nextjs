@@ -9,14 +9,12 @@ import {
 import { revalidatePath } from "next/cache";
 
 // Fetch all products
-export const allProducts = async ({
-  page = 1,
-}: {
-  page?: number;
-}): Promise<TProductData | []> => {
+export const allProducts = async (
+  queryString?: string,
+): Promise<TProductData | []> => {
   try {
     const response = await fetcher<TProductResponse>(
-      `/products?page=${page}&per_page=12`,
+      `/products?${queryString ?? ""}&per_page=12`,
       {
         cache: "no-store",
       },
@@ -37,7 +35,7 @@ export const allProducts = async ({
 // Fetch product details by ID
 export const getProductDetails = async (id: string) => {
   try {
-    const response = await fetcher<TProductDetails>(`/products/${id}`);
+    const response = await fetcher<TProductDetails>(`/products/${id}/`);
 
     if (!response?.data?.product) {
       console.error(`Product with id ${id} not found`);

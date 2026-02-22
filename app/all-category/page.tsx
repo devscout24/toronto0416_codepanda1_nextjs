@@ -9,12 +9,26 @@ import { allProducts } from "./components/action";
 export default async function AllCategoryPage({
   searchParams,
 }: {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const page = Number(searchParams.page) || 1;
+  const resolvedSearchParams = await searchParams;
+
+  const params = new URLSearchParams();
+
+  Object.entries(resolvedSearchParams).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => params.append(key, v));
+    } else if (value) {
+      params.set(key, value);
+    }
+  });
+
+  const queryString = params.toString();
+
   let productData: TProductData | [] = [];
+
   try {
-    productData = await allProducts({ page });
+    productData = await allProducts(queryString);
   } catch (error) {
     console.error("Failed to fetch products:", error);
     productData = [];
