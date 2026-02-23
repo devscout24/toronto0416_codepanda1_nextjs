@@ -2,11 +2,11 @@
 
 import { DataTable } from "@/components/data-table";
 import { cn } from "@/lib/utils";
-import { TOrder } from "@/types/user.type";
+import { Order } from "@/types/order";
 import { ColumnDef } from "@tanstack/react-table";
 import moment from "moment";
 
-export default function RecentOrders({ payload }: { payload: TOrder[] }) {
+export default function RecentOrders({ payload }: { payload: Order[] }) {
   const statusColorMap: Record<string, string> = {
     pending: "text-secondary",
     processing: "text-blue-500",
@@ -14,7 +14,7 @@ export default function RecentOrders({ payload }: { payload: TOrder[] }) {
     completed: "text-primary",
     cancelled: "text-destructive",
   };
-  const orderColumns: ColumnDef<TOrder>[] = [
+  const orderColumns: ColumnDef<Order>[] = [
     {
       accessorKey: "order_id",
       header: "Order #",

@@ -10,17 +10,26 @@ import LeftSide from "./components/leftSide";
 import RightSide from "./components/rightSide";
 import Link from "next/link";
 import Header from "../../components/header";
+import { getOrderDetails } from "../../components/action";
 
-export default function OrderDetailsPage() {
+export default async function OrderDetailsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const orderId = await params;
+  console.log("Order ID:", orderId.id);
+
+  const orderDetails = await getOrderDetails(orderId?.id);
+
   return (
     <section>
       <Header>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Order Details</h2>
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="bg-primary py-5 text-white mr-2">
+              <Button className="bg-primary mr-2 py-5 text-white">
                 Manage Order <ChevronDown />
               </Button>
             </DropdownMenuTrigger>
@@ -34,14 +43,16 @@ export default function OrderDetailsPage() {
                 <DropdownMenuItem>Give Review</DropdownMenuItem>
               </Link>
             </DropdownMenuContent>
-          </DropdownMenu> </div></Header>
-      <div className="flex flex-col md:flex-row items-start gap-5 mt-5">
-        <div className="w-full md:w-[60%] lg:w-[65%] space-y-5">
-          <LeftSide />
+          </DropdownMenu>{" "}
+        </div>
+      </Header>
+      <div className="mt-5 flex flex-col items-start gap-5 md:flex-row">
+        <div className="w-full space-y-5 md:w-[60%] lg:w-[65%]">
+          <LeftSide order={orderDetails} />
         </div>
 
-        <div className="w-full md:w-[40%] lg:w-[35%] space-y-5">
-          <RightSide />
+        <div className="w-full space-y-5 md:w-[40%] lg:w-[35%]">
+          <RightSide order={orderDetails} />
         </div>
       </div>
     </section>

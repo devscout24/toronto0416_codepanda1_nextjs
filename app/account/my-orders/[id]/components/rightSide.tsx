@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
-import { orderDetails } from "@/consts/order";
 import { cn } from "@/lib/utils";
+import { Order } from "@/types/order";
 
-export default function RightSide() {
+export default function RightSide({ order }: { order: Order | null }) {
   return (
     <>
       <div className="w-full rounded-xl bg-white p-5">
@@ -12,18 +12,18 @@ export default function RightSide() {
 
         <div className="space-y-2.5">
           <div className="flex items-center justify-between text-sm">
-            <p>Subtotal ({orderDetails.items.length} product)</p>
-            <p>${orderDetails.summary.subtotal.toFixed(2)}</p>
+            <p>Subtotal ({order?.items?.length} product)</p>
+            <p>${order?.sub_total.toFixed(2)}</p>
           </div>
 
           <div className="flex items-center justify-between text-sm">
             <p>Shipping Fee</p>
-            <p>${orderDetails.summary.shippingFee.toFixed(2)}</p>
+            <p>${order?.shipping_charge.toFixed(2)}</p>
           </div>
 
           <div className="flex items-center justify-between text-sm">
-            <p>VAT ({orderDetails.summary.vatPercentage})</p>
-            <p>${orderDetails.summary.vat.toFixed(2)}</p>
+            <p>VAT</p>
+            <p>${order?.vat_amount.toFixed(2)}</p>
           </div>
         </div>
 
@@ -31,7 +31,7 @@ export default function RightSide() {
 
         <div className="flex items-center justify-between font-semibold">
           <p>Total</p>
-          <p>${orderDetails.summary.total.toFixed(2)}</p>
+          <p>${order?.total_price.toFixed(2)}</p>
         </div>
       </div>
 
@@ -40,8 +40,8 @@ export default function RightSide() {
 
         <Separator className="my-2.5" />
 
-        <div className="space-y-8 pt-3.5">
-          {orderDetails.statusTimeline.map((item, index) => (
+        {/* <div className="space-y-8 pt-3.5">
+          {order.statusTimeline.map((item, index) => (
             <div key={index} className="relative flex items-start gap-4">
               <div
                 className={cn(
@@ -63,7 +63,7 @@ export default function RightSide() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );

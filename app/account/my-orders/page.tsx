@@ -1,17 +1,17 @@
 import { TOrder } from "@/types/user.type";
 import Header from "../components/header";
 import RecentOrders from "../components/recentOrders";
-import { getAccountInfo } from "../components/action";
+import { getAccountInfo, getOrderList } from "../components/action";
+import { Order } from "@/types/order";
 
 export default async function MyOrdersPage() {
-  let orders: TOrder[] = [];
+  let orders: Order[] = [];
 
   try {
-    const response = await getAccountInfo();
-    orders = response?.orders || [];
+    const response = await getOrderList();
+    orders = response?.results || [];
   } catch (error) {
     console.error("Error fetching account info:", error);
-    
   }
 
   return (

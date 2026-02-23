@@ -1,3 +1,5 @@
+import { Order } from "./order";
+
 export type TPersonalInfo = {
   id: number;
   name: string;
@@ -9,7 +11,7 @@ export type TPersonalInfo = {
 };
 
 export type TAddressBookEntry = {
-  image?: string
+  image?: string;
   id: number;
   city: string;
   area: string;
@@ -38,7 +40,7 @@ export type TOrder = {
 export type TUserProfile = {
   personal_info: TPersonalInfo;
   addresses: TAddressBookEntry[];
-  orders: TOrder[];
+  orders: Order[];
 };
 
 export type TUserProfileResponse = {
@@ -78,8 +80,6 @@ export interface User {
   email: string;
 }
 
-
-
 export type TUserAccount = {
   id?: number;
   name: string;
@@ -91,15 +91,14 @@ export type TUserAccount = {
 
 export type TUserResponse = {
   data: {
-  id?: number;
-  name: string;
-  phone: string;
-  country: string;
-  email?: string; // optional if your API doesn't return email
-  profile_image?: string; // optional
+    id?: number;
+    name: string;
+    phone: string;
+    country: string;
+    email?: string; // optional if your API doesn't return email
+    profile_image?: string; // optional
+  };
 };
-}
-
 
 export type TAddressBook = {
   id: number;

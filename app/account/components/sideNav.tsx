@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { getProfileInfo } from "./action";
 
 type TNavItem = {
   label: string;
@@ -85,6 +86,7 @@ const getLinkClasses = (isActive: boolean) =>
 
 export default function SideNav() {
   const pathname = usePathname();
+  const [userName, setUserName] = React.useState("User");
 
   const matchPath = (path?: string, allowNested = false): boolean => {
     if (!path) return false;
@@ -97,9 +99,22 @@ export default function SideNav() {
     return pathname.startsWith(normalized);
   };
 
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await getProfileInfo();
+
+        setUserName(res?.name || "User");
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <nav>
-      <h2 className="mb-5 font-semibold">Hello, Kodu Azad</h2>
+      <h2 className="mb-5 font-semibold">Hello, {userName}</h2>
 
       <ul className="space-y-5">
         {navItems.map((item, index) => {

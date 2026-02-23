@@ -1,6 +1,11 @@
 "use server";
 
 import fetcher from "@/lib/fetcher";
+import {
+  BillingHistoryResponse,
+  OrderDetailsResponse,
+  OrderListResponse,
+} from "@/types/order";
 import { SpecialResponse } from "@/types/product.type";
 import {
   TAddressBook,
@@ -37,6 +42,36 @@ export const getAccountInfo = async () => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
+
+export const getOrderList = async () => {
+  try {
+    const response = await fetcher<OrderListResponse>("/order-list/");
+    if (!response?.data) {
+      console.error(`Account Info not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching Account Info`, error);
+    return null;
+  }
+};
+
+export const getOrderDetails = async (orderId: string) => {
+  try {
+    const response = await fetcher<OrderDetailsResponse>(
+      `/order-details/${orderId}/`,
+    );
+    if (!response?.data) {
+      console.error(`Order details not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching Order details`, error);
     return null;
   }
 };
@@ -198,5 +233,20 @@ export const updateAddress = async ({
     return res.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getInvoice = async () => {
+  try {
+    const response =
+      await fetcher<BillingHistoryResponse>("/billing/invoices/");
+    if (!response?.data) {
+      console.error(`default address not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching Account Info`, error);
+    return null;
   }
 };

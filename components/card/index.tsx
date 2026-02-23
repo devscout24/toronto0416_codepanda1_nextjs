@@ -124,7 +124,7 @@ export default function ProductCard({
                 src={
                   imageError || !payload?.images || payload?.images.length === 0
                     ? defaultImage
-                    : process.env.NEXT_PUBLIC_BASE_URL + payload?.images[0]
+                    : payload?.images[0]
                 }
                 alt={payload?.title || "Product Image"}
                 className="h-62 w-full object-cover duration-700 group-hover:scale-125"

@@ -59,3 +59,4 @@ export const allFilters: TFilterDefinition[] = [
     queryKey: "in_stock",
   },
 ];
+

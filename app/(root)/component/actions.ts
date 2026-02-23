@@ -66,7 +66,7 @@ export const getReview = async () => {
     // You need to create this endpoint in your Django API
     // For now, returning null as fallback
     const response = await fetcher<TestimonialApiResponse>(
-      `/recently-viewed-reviews`,
+      `/recently-viewed-products/`,
     );
 
     if (!response?.data) {
