@@ -35,12 +35,7 @@ export const allFilters: TFilterDefinition[] = [
     minQueryKey: "price_min",
     maxQueryKey: "price_max",
   },
-  {
-    title: "Customer Ratings",
-    type: "rating",
-    max: 5,
-    queryKey: "rating",
-  },
+
   {
     title: "Dietary",
     type: "checkbox",
@@ -51,12 +46,6 @@ export const allFilters: TFilterDefinition[] = [
       { label: "Vegan", value: "vegan" },
       { label: "Halal Certified", value: "halal_certified" },
     ],
-  },
-  {
-    title: "Availability",
-    type: "toggle",
-    label: "Only in-stock items",
-    queryKey: "in_stock",
   },
 ];
 

@@ -58,27 +58,27 @@ export default function Checkout({
     }
   };
 
-  // const handleCreatePayment = async () => {
-  //   setLoading(true);
-  //   if (!order_id) {
-  //     toast.error("Order ID is missing");
-  //     return;
-  //   }
+  const handleCreatePayment = async () => {
+    setLoading(true);
+    if (!order_id) {
+      toast.error("Order ID is missing");
+      return;
+    }
 
-  //   try {
-  //     const redirectTo = await createPayment(order_id);
-  //     if (redirectTo) {
-  //       window.location.href = redirectTo;
-  //     } else {
-  //       toast.error("Failed to create payment. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating payment:", error);
-  //     toast.error("Something went wrong while creating payment");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    try {
+      const redirectTo = await createPayment(order_id);
+      if (redirectTo) {
+        window.location.href = redirectTo;
+      } else {
+        toast.error("Failed to create payment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating payment:", error);
+      toast.error("Something went wrong while creating payment");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleApplyCoupon = async () => {
     console.log(couponCode, "couponCode");
@@ -208,7 +208,7 @@ export default function Checkout({
             </Button>
           ))}
 
-        {/* {title === "Place Order" &&
+        {title === "Place Order" &&
           (!isDisabled ? (
             // <Link href={redirectTo}>
             <Button
@@ -223,7 +223,7 @@ export default function Checkout({
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>
-          ))} */}
+          ))}
         {title === "Proceed to Checkout" &&
           (!isDisabled ? (
             <Link href={redirectTo}>

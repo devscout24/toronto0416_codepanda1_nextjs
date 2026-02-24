@@ -115,7 +115,6 @@ export default function SideNav() {
   return (
     <nav>
       <h2 className="mb-5 font-semibold">Hello, {userName}</h2>
-
       <ul className="space-y-5">
         {navItems.map((item, index) => {
           const children = item.children ?? [];

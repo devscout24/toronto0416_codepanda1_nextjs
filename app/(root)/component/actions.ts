@@ -1,7 +1,10 @@
 import fetcher from "@/lib/fetcher";
 import { PostalCodeAPIResponse } from "@/types/cart.type";
 import { SpecialResponse } from "@/types/product.type";
-import { TestimonialApiResponse } from "@/types/testimonials.type";
+import {
+  TCategoryResponse,
+  TestimonialApiResponse,
+} from "@/types/testimonials.type";
 
 export const getWeeklySpecial = async () => {
   try {
@@ -65,9 +68,8 @@ export const getReview = async () => {
     // Note: The /recently-viewed-reviews endpoint does not exist on the backend
     // You need to create this endpoint in your Django API
     // For now, returning null as fallback
-    const response = await fetcher<TestimonialApiResponse>(
-      `/recently-viewed-products/`,
-    );
+    const response =
+      await fetcher<TestimonialApiResponse>(`/view-all-reviews/`);
 
     if (!response?.data) {
       console.error(`No Review here`);
@@ -81,6 +83,21 @@ export const getReview = async () => {
       error,
     );
     // Return null to allow the app to continue without reviews
+    return null;
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    const response = await fetcher<TCategoryResponse>(`/categories/`);
+
+    if (!response?.data) {
+      console.error(`Categories not found`);
+      return null;
+    }
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching categories`, error);
     return null;
   }
 };

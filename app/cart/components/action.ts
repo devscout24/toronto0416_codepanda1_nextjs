@@ -153,11 +153,17 @@ export async function setDefaultOptions(select_id: number) {
   }
 }
 
-export async function postAddressId(address_id: number) {
+export async function postAddressId({
+  address_id,
+  order_id,
+}: {
+  address_id: number;
+  order_id: string;
+}) {
   try {
     const res = await fetcher<OrderResponse>("/proceed-to-pay/", {
       method: "POST",
-      body: JSON.stringify({ address_id }),
+      body: JSON.stringify({ address_id, order_id }),
     });
     revalidatePath("/cart");
     return res?.data?.order_id;

@@ -46,16 +46,20 @@ export const getAccountInfo = async () => {
   }
 };
 
-export const getOrderList = async () => {
+export const getOrderList = async (page: string = "1") => {
   try {
-    const response = await fetcher<OrderListResponse>("/order-list/");
+    const response = await fetcher<OrderListResponse>(
+      `/order-list/?per_page=8&page=${page}`,
+    );
+
     if (!response?.data) {
-      console.error(`Account Info not found`);
+      console.error(`Order list not found`);
       return null;
     }
+
     return response.data;
   } catch (error) {
-    console.error(`Error fetching Account Info`, error);
+    console.error(`Error fetching Order list`, error);
     return null;
   }
 };

@@ -16,7 +16,10 @@ import defaultImg from "@/assets/images/default.png";
 import { Spinner } from "@/components/ui/spinner";
 import debounce from "lodash/debounce";
 import { useRef } from "react";
-import { addToCart } from "@/app/all-category/components/action";
+import {
+  addToCart,
+  updateCartValue,
+} from "@/app/all-category/components/action";
 
 export default function ProductCart({
   cartData,
@@ -25,7 +28,7 @@ export default function ProductCart({
 }) {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [imageError, setImageError] = useState(false);
-  const [removingIds, setRemovingIds] = useState<number[]>([]); 
+  const [removingIds, setRemovingIds] = useState<number[]>([]);
 
   const handleImageError = () => setImageError(true);
   const debouncedUpdateRef = useRef(
@@ -95,10 +98,9 @@ export default function ProductCart({
     if (newValue.quantity < 1) return;
 
     try {
-      const res = await addToCart(newValue.productId, newValue.quantity);
-      console.log(res);
+      await updateCartValue(newValue.productId, newValue.quantity);
     } catch (error) {
-      console.error("Error adding product to cart:", error);
+      console.error("Error updating cart item:", error);
     }
   };
 

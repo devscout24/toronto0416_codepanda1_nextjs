@@ -1,6 +1,7 @@
 "use server";
 
 import fetcher from "@/lib/fetcher";
+import { TApiFilterResponse } from "@/types/filters.type";
 import {
   TProductData,
   TProductDetails,
@@ -28,6 +29,20 @@ export const allProducts = async (
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
+    return [];
+  }
+};
+
+export const getFilters = async () => {
+  try {
+    const response = await fetcher<TApiFilterResponse>("/get-filter-items/");
+    if (!response?.data) {
+      console.error("No filters found");
+      return [];
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching filters:", error);
     return [];
   }
 };
@@ -70,6 +85,26 @@ export const addToCart = async (product_id: number, quantity: number) => {
     const res = await fetcher<{ message: string }>("/add-to-cart/", {
       method: "POST",
       body: JSON.stringify({ product_id, quantity }),
+    });
+
+    // Revalidate pages AFTER successful add
+    revalidatePath("/all-category");
+    revalidatePath("/cart");
+    revalidatePath("/", "layout");
+    return res;
+  } catch (error) {
+    console.error(`Error adding product ${product_id} to cart:`, error);
+  }
+};
+
+export const updateCartValue = async (
+  product_id: number,
+  items_number: number,
+) => {
+  try {
+    const res = await fetcher<{ message: string }>("/add-cart-item/", {
+      method: "POST",
+      body: JSON.stringify({ product_id, items_number }),
     });
 
     // Revalidate pages AFTER successful add

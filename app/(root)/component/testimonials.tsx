@@ -27,16 +27,16 @@ try {
                   <h1 className="text-xl font-semibold md:text-2xl lg:text-3xl">
                     {testimonial.title}
                   </h1>
-                  <p className="text-sm lg:text-base">{testimonial.subtitle}</p>
+                  {/* <p className="text-sm lg:text-base">{testimonial.comment}</p> */}
                 </div>
 
                 <div className="flex flex-col items-center gap-5">
                   <h2 className="font-semibold lg:text-xl">
-                    {testimonial.name}
+                    {testimonial.reviewer_name}
                   </h2>
                   <Rating rating={testimonial.rating} readOnly />
                   <p className="w-full text-sm md:w-1/2 lg:text-base">
-                    {testimonial.feedback}
+                    {testimonial.comment}
                   </p>
                 </div>
 
