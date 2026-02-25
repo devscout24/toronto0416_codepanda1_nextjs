@@ -7,19 +7,24 @@ import { Spinner } from "@/components/ui/spinner";
 import { CartMetaData } from "@/types/cart.type";
 import Link from "next/link";
 import { useState } from "react";
-import { applyCoupon, createPayment, postAddressId } from "./action";
+import {
+  applyCoupon,
+  createCheckout,
+  createPayment,
+  processPay,
+} from "./action";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Checkout({
   title,
-  redirectTo,
+  // redirectTo,
   isDisabled = false,
   metadata,
 }: {
   title: string;
-  redirectTo: string;
+  // redirectTo: string;
   isDisabled?: boolean;
   metadata?: CartMetaData;
 }) {
@@ -32,27 +37,49 @@ export default function Checkout({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handlePostAddressId = async () => {
+  // checkout
+  const handleCheckout = async () => {
     setLoading(true);
-    if (!addressId) {
+    try {
+      const res = await createCheckout();
+      if (res?.order_id) {
+        router.push(`/cart/checkout?orderId=${res?.order_id}`);
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to proceed to checkout.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProcessPay = async () => {
+    setLoading(true);
+    if (!addressId || !order_id) {
       toast.error("Please select an address");
       return;
     }
 
     try {
-      const order_id = await postAddressId(Number(addressId));
+      const orderId = await processPay({
+        address_id: Number(addressId),
+        order_id: String(order_id),
+      });
 
-      if (order_id) {
-        const redirectTo = await createPayment(order_id);
-        if (redirectTo) {
-          window.location.href = redirectTo;
-        } else {
-          toast.error("Failed to create payment. Please try again.");
-        }
+      if (orderId) {
+        router.push(`/cart/checkout/payment?orderId=${orderId}`);
       }
     } catch (error) {
-      console.error("Error posting address id:", error);
-      toast.error("Failed to proceed");
+      console.error("Error processing payment:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to process payment. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -191,11 +218,28 @@ export default function Checkout({
           <span className="float-right">${metadata?.total_price}</span>
         </div>
 
+        {title === "Proceed to Checkout" &&
+          (!isDisabled ? (
+            // <Link href={redirectTo}>
+            <Button
+              onClick={handleCheckout}
+              disabled={isDisabled || loading}
+              className="w-full"
+            >
+              {title} {loading && <Spinner />}
+            </Button>
+          ) : (
+            // </Link>
+            <Button className="w-full" disabled>
+              Need to Add Address
+            </Button>
+          ))}
+
         {title === "Proceed to Pay" &&
           (!isDisabled ? (
             // <Link href={redirectTo}>
             <Button
-              onClick={handlePostAddressId}
+              onClick={handleProcessPay}
               disabled={isDisabled}
               className="w-full"
             >
@@ -220,18 +264,6 @@ export default function Checkout({
             </Button>
           ) : (
             // </Link>
-            <Button className="w-full" disabled>
-              Need to Add Address
-            </Button>
-          ))}
-        {title === "Proceed to Checkout" &&
-          (!isDisabled ? (
-            <Link href={redirectTo}>
-              <Button disabled={isDisabled} className="w-full">
-                {title}
-              </Button>
-            </Link>
-          ) : (
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>

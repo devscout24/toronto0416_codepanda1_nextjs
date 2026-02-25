@@ -8,7 +8,9 @@ import {
 
 export const getWeeklySpecial = async () => {
   try {
-    const response = await fetcher<SpecialResponse>(`/weekly-special-products`);
+    const response = await fetcher<SpecialResponse>(
+      `/weekly-special-products/`,
+    );
 
     if (!response?.data) {
       console.error(`Product not found`);
@@ -23,7 +25,7 @@ export const getWeeklySpecial = async () => {
 
 export const getBestSelling = async () => {
   try {
-    const response = await fetcher<SpecialResponse>(`/best-selling-products`);
+    const response = await fetcher<SpecialResponse>(`/best-selling-products/`);
 
     if (!response?.data) {
       console.error(`Product not found`);
@@ -48,7 +50,7 @@ export const isPostalCodeAvailable = async (
 ): Promise<boolean> => {
   try {
     const response = await fetcher<PostalCodeAPIResponse>(
-      `/availability-postal-codes/?q=${encodeURIComponent(postalCode)}`,
+      `/availability-postal-codes/?q=${encodeURIComponent(postalCode)}/`,
     );
 
     if (!response?.data?.available) {
@@ -69,7 +71,7 @@ export const getReview = async () => {
     // You need to create this endpoint in your Django API
     // For now, returning null as fallback
     const response =
-      await fetcher<TestimonialApiResponse>(`/view-all-reviews/`);
+      await fetcher<TestimonialApiResponse>(`/five-star-reviews/`);
 
     if (!response?.data) {
       console.error(`No Review here`);

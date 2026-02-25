@@ -137,13 +137,19 @@ export async function getDeliveryOptions() {
   }
 }
 
-export async function setDefaultOptions(select_id: number) {
+export async function setDefaultOptions({
+  select_id,
+  order_id,
+}: {
+  select_id: number;
+  order_id: string;
+}) {
   try {
     const response = await fetcher<{ status: string; message: string }>(
       "/select-delivery-option/",
       {
         method: "POST",
-        body: JSON.stringify({ select_id }),
+        body: JSON.stringify({ select_id, order_id }),
       },
     );
     revalidatePath("/cart");
@@ -153,7 +159,19 @@ export async function setDefaultOptions(select_id: number) {
   }
 }
 
-export async function postAddressId({
+export async function createCheckout() {
+  try {
+    const res = await fetcher<OrderResponse>("/proceed-to-checkout/", {
+      method: "POST",
+    });
+    revalidatePath("/cart");
+    return res.data;
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+  }
+}
+
+export async function processPay({
   address_id,
   order_id,
 }: {
@@ -161,12 +179,12 @@ export async function postAddressId({
   order_id: string;
 }) {
   try {
-    const res = await fetcher<OrderResponse>("/proceed-to-pay/", {
+    const res = await fetcher<{ order_id: string }>("/proceed-to-pay/", {
       method: "POST",
       body: JSON.stringify({ address_id, order_id }),
     });
     revalidatePath("/cart");
-    return res?.data?.order_id;
+    return res?.order_id;
   } catch (error) {
     console.error("Error clearing cart:", error);
   }

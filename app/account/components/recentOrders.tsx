@@ -9,9 +9,10 @@ import moment from "moment";
 export default function RecentOrders({ payload }: { payload: Order[] }) {
   const statusColorMap: Record<string, string> = {
     pending: "text-secondary",
+    order_placed: "text-blue-300",
     processing: "text-blue-500",
-    in_shipping: "text-amber-500",
-    completed: "text-primary",
+    shipped: "text-amber-500",
+    delivered: "text-primary",
     cancelled: "text-destructive",
   };
   const orderColumns: ColumnDef<Order>[] = [

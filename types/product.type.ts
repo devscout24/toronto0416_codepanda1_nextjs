@@ -27,7 +27,8 @@ export type TProduct = {
 export type TProductReviews = {
   id: number;
   rating: number;
-  reviewer: string;
+  reviewer_name: string;
+  reviewer_image: string;
   date: string;
   comment: string;
 };

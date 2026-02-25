@@ -43,7 +43,7 @@ export default function DetailsTab({ payload }: { payload: TProduct }) {
                     <Rating rating={review.rating} readOnly />
                     <p>{review.comment}</p>
                     <div>
-                      <p className="font-semibold">{review.reviewer}</p>
+                      <p className="font-semibold">{review.reviewer_name}</p>
                       <p>{review.date}</p>
                     </div>
                   </div>

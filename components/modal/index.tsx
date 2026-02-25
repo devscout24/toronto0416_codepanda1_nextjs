@@ -1,10 +1,6 @@
 import ShippingAddress from "@/app/cart/modals/shippingAddress";
 import SuccessModal from "@/app/cart/components/successModal";
 import Modal from "./Modal";
-import Rating from "../shared/Rating";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../animate-ui/components/buttons/button";
 import CancelOrder from "@/app/account/components/cancelOrder";
 import MyProfileEdit from "@/app/account/components/myProfileEdit";
 import { LoginForm } from "../auth";
@@ -13,6 +9,7 @@ import { SignUpForm } from "../auth/signup";
 import { ForgotPasswordForm } from "../auth/resetPassword";
 import UpdateShippingAddress from "@/app/cart/modals/updateShippingAddress";
 import FailedModal from "@/app/cart/components/FailedModal";
+import ReviewModal from "./component/ReviewModal";
 
 export default function Modals() {
   return (
@@ -57,19 +54,7 @@ export default function Modals() {
         modalId="ratings-modal"
         openId="ratings"
       >
-        <div className="space-y-5">
-          <div className="space-y-2.5">
-            <Label>Add Ratings</Label>
-            <Rating />
-          </div>
-
-          <div className="space-y-2.5">
-            <Label>Comment (Optional)</Label>
-            <Textarea placeholder="Write your comment.." rows={10} />
-          </div>
-
-          <Button className="w-full">Submit</Button>
-        </div>
+        <ReviewModal />
       </Modal>
 
       <Modal

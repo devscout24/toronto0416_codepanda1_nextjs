@@ -18,7 +18,6 @@ export default async function OrderDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const orderId = await params;
-  console.log("Order ID:", orderId.id);
 
   const orderDetails = await getOrderDetails(orderId?.id);
 
@@ -39,9 +38,11 @@ export default async function OrderDetailsPage({
                 <DropdownMenuItem>Cancel Order</DropdownMenuItem>
               </Link>
 
-              <Link href="?ratings-modal=ratings">
-                <DropdownMenuItem>Give Review</DropdownMenuItem>
-              </Link>
+              {orderDetails?.status === "delivered" && (
+                <Link href={`?ratings-modal=ratings&id=${orderDetails?.id}`}>
+                  <DropdownMenuItem>Give Review</DropdownMenuItem>
+                </Link>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>{" "}
         </div>

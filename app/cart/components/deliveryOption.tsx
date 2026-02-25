@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/animate-ui/components/radix/checkbox";
 import { getDeliveryOptions, setDefaultOptions } from "./action";
 import { TDeliveryOption } from "@/types/cart.type";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 export default function DeliveryOptionPage({
   setBtnClose,
@@ -27,7 +28,8 @@ export default function DeliveryOptionPage({
   const [selectedOption, setSelectedOption] = useState<number | null>(
     defaultDeliveryOptionId || null,
   );
-
+  const searchParams = useSearchParams();
+  const order_id = searchParams.get("orderId");
   const [deliveryOptions, setDeliveryOptions] = useState<TDeliveryOption[]>([]);
 
   useEffect(() => {
@@ -49,7 +51,10 @@ export default function DeliveryOptionPage({
   const handleSave = async () => {
     if (selectedOption === null) return;
     try {
-      const res = await setDefaultOptions(selectedOption);
+      const res = await setDefaultOptions({
+        select_id: selectedOption,
+        order_id: String(order_id),
+      });
       toast.success(res);
       fetchDefaultDeliveryOption();
       setBtnClose(false);

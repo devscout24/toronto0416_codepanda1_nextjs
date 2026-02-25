@@ -20,7 +20,7 @@ export default async function CheckoutPage() {
         <div className="w-full md:w-[40%] lg:w-[30%]">
           <Checkout
             title="Proceed to Pay"
-            redirectTo="/cart/checkout/payment"
+            // redirectTo="/cart/checkout/payment"
             metadata={{
               sub_total: cartData?.sub_total ?? 0.0,
               shipping_fee: cartData?.shipping_fee ?? 0.0,
