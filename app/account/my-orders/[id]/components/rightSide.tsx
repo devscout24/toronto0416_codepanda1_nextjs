@@ -26,6 +26,10 @@ export default function RightSide({ order }: { order: Order | null }) {
             <p>VAT</p>
             <p>${order?.vat_amount.toFixed(2)}</p>
           </div>
+          <div className="text-primary flex items-center justify-between text-sm">
+            <p>Discount</p>
+            <p>- ${order?.discount.toFixed(2)}</p>
+          </div>
         </div>
 
         <Separator className="my-2.5" />

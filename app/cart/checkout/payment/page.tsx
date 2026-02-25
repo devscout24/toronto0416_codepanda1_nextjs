@@ -74,7 +74,7 @@ export default async function PaymentPage() {
         <div className="w-full md:w-[40%] lg:w-[30%]">
           <Checkout
             title="Place Order"
-            redirectTo="?place-order-modal=place-order"
+            // redirectTo="?place-order-modal=place-order"
             metadata={{
               sub_total: cartData?.sub_total ?? 0.0,
               shipping_fee: cartData?.shipping_fee ?? 0.0,
