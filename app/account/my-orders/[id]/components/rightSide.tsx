@@ -1,5 +1,4 @@
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 import { Order } from "@/types/order";
 import OrderTracker from "./OrderTracker";
 

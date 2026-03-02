@@ -16,10 +16,7 @@ import defaultImg from "@/assets/images/default.png";
 import { Spinner } from "@/components/ui/spinner";
 import debounce from "lodash/debounce";
 import { useRef } from "react";
-import {
-  addToCart,
-  updateCartValue,
-} from "@/app/all-category/components/action";
+import { updateCartValue } from "@/app/all-category/components/action";
 
 export default function ProductCart({
   cartData,

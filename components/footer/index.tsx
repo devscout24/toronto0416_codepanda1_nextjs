@@ -97,7 +97,9 @@ export default function Footer() {
         <div className="section-container flex w-full flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex w-full items-center justify-center gap-6 md:justify-start">
             <p>Payment Method:</p>
-            <span className="bg-white px-5 rounded-md"><StripeIcon /></span>
+            <span className="rounded-md bg-white px-5">
+              <StripeIcon />
+            </span>
             {/* <div className="flex flex-wrap items-center gap-2">
               <PaypalIcon />
               <AmexIcon />
@@ -108,7 +110,7 @@ export default function Footer() {
               <VisaIcon />
             </div> */}
           </div>
-          <p className="text-nowrap">
+          <p className="md:text-nowrap">
             © Copyright {new Date().getFullYear()} Sufis. All Rights Reserved.
           </p>
         </div>
