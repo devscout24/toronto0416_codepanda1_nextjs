@@ -55,18 +55,33 @@ export function LoginForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // onSubmit
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    loginUser({ email: values.email, password: values.password })
-      .then(() => {
-        toast.success("Login successful!");
+    try {
+      const res = await loginUser(values);
+
+      if ("error" in res) {
+        toast.error(res.error);
+        return;
+      }
+
+      if (res.status === "success") {
+        toast.success(res.message || "Login successful!");
         router.push("/");
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Login failed", error);
-        setIsLoading(false);
-      });
+      } else {
+        toast.error(res.message || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Login failed. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

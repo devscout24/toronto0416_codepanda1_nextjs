@@ -1,7 +1,6 @@
 import ShippingAddress from "@/app/cart/modals/shippingAddress";
 import SuccessModal from "@/app/cart/components/successModal";
 import Modal from "./Modal";
-import CancelOrder from "@/app/account/components/cancelOrder";
 import MyProfileEdit from "@/app/account/components/myProfileEdit";
 import { LoginForm } from "../auth";
 import Logout from "../auth/logout";
@@ -41,13 +40,13 @@ export default function Modals() {
         <FailedModal />
       </Modal>
 
-      <Modal
+      {/* <Modal
         title=""
         modalId="confirm-cancel-order-modal"
         openId="confirm-cancel-order"
       >
         <CancelOrder />
-      </Modal>
+      </Modal> */}
 
       <Modal
         title="Give a ratings on your purchase"

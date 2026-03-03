@@ -80,7 +80,7 @@ export async function loginUser(values: { email: string; password: string }) {
         maxAge: 60 * 60 * 24 * 30,
       });
 
-      return { message: "Logged in successfully!" };
+      return response;
     } catch (error) {
         console.log(error);
         if (error && typeof error === "object" && "message" in error) {

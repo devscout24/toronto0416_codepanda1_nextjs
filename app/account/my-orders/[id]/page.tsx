@@ -11,6 +11,7 @@ import RightSide from "./components/rightSide";
 import Link from "next/link";
 import Header from "../../components/header";
 import { getOrderDetails } from "../../components/action";
+import OrderCancel from "./components/OrderCancel";
 
 export default async function OrderDetailsPage({
   params,
@@ -26,25 +27,9 @@ export default async function OrderDetailsPage({
       <Header>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Order Details</h2>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="bg-primary mr-2 py-5 text-white">
-                Manage Order <ChevronDown />
-              </Button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent>
-              <Link href="?confirm-cancel-order-modal=confirm-cancel-order">
-                <DropdownMenuItem>Cancel Order</DropdownMenuItem>
-              </Link>
-
-              {orderDetails?.status === "delivered" && (
-                <Link href={`?ratings-modal=ratings&id=${orderDetails?.id}`}>
-                  <DropdownMenuItem>Give Review</DropdownMenuItem>
-                </Link>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>{" "}
+          {orderDetails?.status !== "cancelled" && (
+            <OrderCancel order={orderDetails} />
+          )}
         </div>
       </Header>
       <div className="mt-5 flex flex-col items-start gap-5 md:flex-row">

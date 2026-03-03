@@ -98,6 +98,7 @@ export default function OrderTracker({ order }: { order: { status: string } }) {
                   >
                     {item.label}
                   </p>
+                  {/* <p className="text-sm text-neutral-500">date</p> */}
                 </div>
               </div>
             );
