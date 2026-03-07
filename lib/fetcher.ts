@@ -122,9 +122,7 @@ export async function fetcher<T = unknown>(
 
     // If the status is 401, you might want to prompt for re-login or token refresh
     if (response.status === 401) {
-      // Handle re-login, token refresh, or show a specific message to the user
       console.log("Authentication error - please log in again.");
-      // You can redirect to login page or handle token refresh here
     }
 
     throw new FetcherError(errorMessage, response.status, errorData);

@@ -14,7 +14,6 @@ export async function signUpUser(values: {
             method: "POST",
             body: JSON.stringify(values), // Now sends all three values
         });
-        console.log("Signup response:", response);
         
         if (!response?.data?.access || !response?.data?.refresh) {
             return { error: "Signup failed - no tokens received" };
@@ -41,7 +40,7 @@ export async function signUpUser(values: {
 
         return { message: "Account created successfully!" };
     } catch (error) {
-        console.log(error);
+        console.error(error);
         if (error && typeof error === "object" && "message" in error) {
             return { error: (error as { message: string }).message };
         }
@@ -55,7 +54,6 @@ export async function loginUser(values: { email: string; password: string }) {
         method: "POST",
         body: JSON.stringify(values),
       });
-      console.log("Login response:", response);
 
       if (!response?.data?.access || !response?.data?.refresh) {
         return { error: "Login failed - no tokens received" };
@@ -82,7 +80,7 @@ export async function loginUser(values: { email: string; password: string }) {
 
       return response;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         if (error && typeof error === "object" && "message" in error) {
             return { error: (error as { message: string }).message };
         }
@@ -110,11 +108,10 @@ export async function sendResetEmail(email: string): Promise<{
       method: "POST",
       body: JSON.stringify({ email }),
     });
-    console.log("Reset email response:", response);
     
     return { message: "Reset email sent successfully!" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }
@@ -132,7 +129,6 @@ export async function verifyResetCode(email: string, otp: string): Promise<{
       method: "POST",
       body: JSON.stringify({ email, otp }),
     });
-    console.log("OTP verification response:", response);
     
     if (!response?.token) {
       return { error: "Invalid verification code" };
@@ -143,7 +139,7 @@ export async function verifyResetCode(email: string, otp: string): Promise<{
       token: response.token 
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }
@@ -168,11 +164,10 @@ export async function resetPassword(
         token 
       }),
     });
-    console.log("Reset password response:", response);
     
     return { message: "Password reset successfully!" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }

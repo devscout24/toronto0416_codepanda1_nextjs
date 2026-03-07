@@ -8,6 +8,6 @@ export async function addCart({ product_id, quantity }: { product_id: number; qu
         });
         return response.message;
     } catch (error) {
-        console.log(error)
+        console.error(error);
     }
 }

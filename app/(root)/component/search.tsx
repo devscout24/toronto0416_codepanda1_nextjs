@@ -20,7 +20,7 @@ export default function Search() {
 
   const handleCheckAvailability = async () => {
     if (postalCode.trim() === "") {
-      console.log("Please enter a postal code");
+      // console.log("Please enter a postal code");
       setAvailability(null);
       return;
     }
@@ -31,11 +31,11 @@ export default function Search() {
       setAvailability(available);
 
       if (available) {
-        console.log("Available");
+        // console.log("Available");
       } else {
-        console.log("Not available");
+        // console.log("Not available");
       }
-      
+
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error checking postal code:", error);

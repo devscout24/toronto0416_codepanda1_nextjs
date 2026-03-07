@@ -172,7 +172,7 @@ export function ForgotPasswordForm({
         setError(result.error);
       } else {
         // You can show a success toast here if needed
-        console.log("Code resent successfully");
+        toast.success("Code resent successfully");
       }
     } catch (error) {
       console.error("Failed to resend code", error);

@@ -18,7 +18,7 @@ export async function addAddress(values: TCartAddress) {
     revalidatePath("/account/address-book");
     revalidatePath("/cart/checkout");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }
@@ -34,7 +34,7 @@ export async function removeAddress({ address_id }: { address_id: number }) {
     revalidatePath("/account/address-book");
     revalidatePath("/cart/checkout");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error && typeof error === "object" && "message" in error) {
       return { error: (error as { message: string }).message };
     }
@@ -165,7 +165,7 @@ export async function createCheckout() {
       method: "POST",
     });
     revalidatePath("/cart");
-    return res.data;
+    return res.status;
   } catch (error) {
     console.error("Error clearing cart:", error);
   }
@@ -190,11 +190,10 @@ export async function processPay({
   }
 }
 
-export async function createPayment(order_id: string) {
+export async function createPayment() {
   try {
     const res = await fetcher<{ checkout_url: string }>("/place-order/", {
       method: "POST",
-      body: JSON.stringify({ order_id }),
     });
     revalidatePath("/cart");
     return res.checkout_url;

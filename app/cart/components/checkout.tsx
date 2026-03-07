@@ -41,9 +41,9 @@ export default function Checkout({
   const handleCheckout = async () => {
     setLoading(true);
     try {
-      const res = await createCheckout();
-      if (res?.order_id) {
-        router.push(`/cart/checkout?orderId=${res?.order_id}`);
+      const status = await createCheckout();
+      if (status === "success") {
+        router.push(`/cart/checkout`);
       }
     } catch (error) {
       console.error("Error during checkout:", error);
@@ -57,43 +57,39 @@ export default function Checkout({
     }
   };
 
-  const handleProcessPay = async () => {
-    setLoading(true);
-    if (!addressId || !order_id) {
-      toast.error("Please select an address");
-      return;
-    }
+  // const handleProcessPay = async () => {
+  //   setLoading(true);
+  //   if (!addressId || !order_id) {
+  //     toast.error("Please select an address");
+  //     return;
+  //   }
 
-    try {
-      const orderId = await processPay({
-        address_id: Number(addressId),
-        order_id: String(order_id),
-      });
+  //   try {
+  //     const orderId = await processPay({
+  //       address_id: Number(addressId),
+  //       order_id: String(order_id),
+  //     });
 
-      if (orderId) {
-        router.push(`/cart/checkout/payment?orderId=${orderId}`);
-      }
-    } catch (error) {
-      console.error("Error processing payment:", error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to process payment. Please try again.",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (orderId) {
+  //       router.push(`/cart/checkout/payment?orderId=${orderId}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error processing payment:", error);
+  //     toast.error(
+  //       error instanceof Error
+  //         ? error.message
+  //         : "Failed to process payment. Please try again.",
+  //     );
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleCreatePayment = async () => {
     setLoading(true);
-    if (!order_id) {
-      toast.error("Order ID is missing");
-      return;
-    }
 
     try {
-      const redirectTo = await createPayment(order_id);
+      const redirectTo = await createPayment();
       if (redirectTo) {
         window.location.href = redirectTo;
       } else {
@@ -108,7 +104,6 @@ export default function Checkout({
   };
 
   const handleApplyCoupon = async () => {
-    console.log(couponCode, "couponCode");
     setIsVerifying(true);
     try {
       const response = await applyCoupon({ coupon_code: couponCode });
@@ -239,7 +234,7 @@ export default function Checkout({
           (!isDisabled ? (
             // <Link href={redirectTo}>
             <Button
-              onClick={handleProcessPay}
+              onClick={handleCreatePayment}
               disabled={isDisabled}
               className="w-full"
             >
@@ -252,7 +247,7 @@ export default function Checkout({
             </Button>
           ))}
 
-        {title === "Place Order" &&
+        {/* {title === "Place Order" &&
           (!isDisabled ? (
             // <Link href={redirectTo}>
             <Button
@@ -267,7 +262,7 @@ export default function Checkout({
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>
-          ))}
+          ))} */}
       </div>
     </section>
   );

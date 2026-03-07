@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const orderStatusFlow = [
-  { status: "pending", label: "Pending" },
   { status: "order_placed", label: "Order Placed" },
   { status: "processing", label: "Processing" },
   { status: "shipped", label: "Shipped" },

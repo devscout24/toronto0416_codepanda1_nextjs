@@ -93,13 +93,13 @@ export default function MyProfileEdit() {
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values, "values");
+    // console.log(values, "values");
     try {
       const response = await updateProfileInfo(values, profileImage);
-      console.log(response, "response");
-      
+      // console.log(response, "response");
+
       if (response) {
-        console.log("Profile updated successfully", response);
+        // console.log("Profile updated successfully", response);
         window.history.back();
       }
     } catch (error) {
