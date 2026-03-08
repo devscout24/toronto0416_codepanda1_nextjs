@@ -16,8 +16,8 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import AppleIcon from "@/assets/icons/apple.svg";
-import GoogleIcon from "@/assets/icons/google.svg";
+// import AppleIcon from "@/assets/icons/apple.svg";
+// import GoogleIcon from "@/assets/icons/google.svg";
 import {
   Form,
   FormControl,
@@ -93,11 +93,11 @@ export function LoginForm({
         </CardHeader>
         <CardContent className="mt-2.5">
           <FieldGroup>
-            <Field className="flex gap-2 md:flex-row">
-              {/* <Button variant="outline" type="button" className="flex-1">
+            {/* <Field className="flex gap-2 md:flex-row">
+              <Button variant="outline" type="button" className="flex-1">
                 <AppleIcon />
                 Login with Apple
-              </Button> */}
+              </Button>
               <Button variant="outline" type="button" className="flex-1">
                 <GoogleIcon />
                 Login with Google
@@ -105,7 +105,7 @@ export function LoginForm({
             </Field>
             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
               Or continue with
-            </FieldSeparator>
+            </FieldSeparator> */}
 
             <Form {...form}>
               <form
