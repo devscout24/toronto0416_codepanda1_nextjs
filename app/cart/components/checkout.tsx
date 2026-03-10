@@ -107,9 +107,15 @@ export default function Checkout({
     setIsVerifying(true);
     try {
       const response = await applyCoupon({ coupon_code: couponCode });
-      toast.success(response?.message || "Coupon applied successfully!");
-      setAppliedCoupon(couponCode);
-      setCouponCode("");
+      if (response?.status === "success") {
+        toast.success(response?.message || "Coupon applied successfully!");
+        setAppliedCoupon(couponCode);
+        setCouponCode("");
+      } else {
+        toast.error(
+          response?.message || "Failed to apply coupon. Please try again.",
+        );
+      }
     } catch (error: unknown) {
       console.error("Error applying coupon:", error);
       toast.error(
@@ -137,17 +143,21 @@ export default function Checkout({
         <div className="space-y-2.5">
           <div className="flex items-center justify-between font-semibold">
             <p>Subtotal</p>
-            <span className="float-right">${metadata?.sub_total}</span>
+            <span className="float-right">
+              ${metadata?.sub_total.toFixed(2)}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <p>Shipping Fee</p>
-            <span className="float-right">${metadata?.shipping_fee}</span>
+            <span className="float-right">
+              ${metadata?.shipping_fee.toFixed(2)}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <p>VAT</p>
-            <span className="float-right">${metadata?.vat}</span>
+            <span className="float-right">${metadata?.vat.toFixed(2)}</span>
           </div>
         </div>
 
@@ -210,7 +220,9 @@ export default function Checkout({
 
         <div className="flex items-center justify-between font-semibold">
           <p>Total</p>
-          <span className="float-right">${metadata?.total_price}</span>
+          <span className="float-right">
+            ${metadata?.total_price.toFixed(2)}
+          </span>
         </div>
 
         {title === "Proceed to Checkout" &&

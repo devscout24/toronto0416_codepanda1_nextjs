@@ -19,9 +19,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Welcome Sufi's - Store Online",
-  description: "100% Original Products and Halal Products",
+  metadataBase: new URL("https://sufismarket.com"),
+  title: "Sufi's Market – 100% Original & Halal Grocery Store Online",
+  description:
+    "Shop fresh groceries, organic produce, and 100% halal products online at Sufi's Market with convenient delivery.",
+  openGraph: {
+    title: "Sufi's Market – Online Halal Grocery Store",
+    description:
+      "Buy fresh vegetables, rice, lentils, and halal groceries online from Sufi's Market.",
+    url: "https://sufismarket.com",
+    siteName: "Sufi's Market",
+    type: "website",
+  },
 };
+
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
   children,

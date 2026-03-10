@@ -43,6 +43,7 @@ export default function Search() {
       setIsModalOpen(true);
     } finally {
       setLoading(false);
+      setPostalCode("");
     }
   };
 
@@ -100,8 +101,7 @@ export default function Search() {
               {availability ? (
                 <div className="space-y-3">
                   <p className="font-medium text-green-600">
-                    Great news! We deliver to postal code{" "}
-                    <strong>{postalCode}</strong>.
+                    Great news! We deliver to your Area
                   </p>
                   <p>
                     You can now place your order and we&apos;ll deliver it right
@@ -111,8 +111,7 @@ export default function Search() {
               ) : (
                 <div className="space-y-3">
                   <p className="font-medium text-red-600">
-                    Sorry, we currently don&apos;t deliver to postal code{" "}
-                    <strong>{postalCode}</strong>.
+                    Sorry, we currently don&apos;t deliver to your Area
                   </p>
                   <p>
                     We&apos;re constantly expanding our delivery areas. Please

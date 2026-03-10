@@ -105,10 +105,19 @@ export default function ProductCard({
 
     try {
       const res = await addToCart(product_id, count);
-      toast.success(res?.message || "Product added to cart successfully!");
+      if (res?.status === "success") {
+        toast.success(res?.message || "Product added to cart successfully!");
+      } else {
+        toast.error(res?.message || "Failed to add product.");
+      }
       setCartLoading(false);
     } catch (error) {
       console.error("Error adding product to cart:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to add product.",
+      );
+    } finally {
+      setCartLoading(false);
     }
   };
 
@@ -165,9 +174,11 @@ export default function ProductCard({
 
             <div className="mb-2.5 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <p className="text-sm text-neutral-300 line-through">
-                  ${payload?.oldPrice}
-                </p>
+                {payload?.oldPrice && (
+                  <p className="text-sm text-neutral-300 line-through">
+                    ${payload?.oldPrice}
+                  </p>
+                )}
                 <p className="text-primary-600">
                   ${payload?.price}/{payload?.unit}
                 </p>

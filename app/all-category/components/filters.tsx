@@ -9,7 +9,7 @@ import Rating from "@/components/shared/Rating";
 import { Switch } from "@/components/animate-ui/components/headless/switch";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useCallback, useEffect, useState } from "react";
-import { BrushCleaning, Scroll } from "lucide-react";
+import { BrushCleaning } from "lucide-react";
 import { getFilters } from "./action";
 import { TApiFilterDefinition, TApiRangeFilter } from "@/types/filters.type";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -35,6 +35,75 @@ const clampNumber = (value: number, min: number, max: number) =>
 
 const parseBooleanParam = (value: string | null) =>
   value === "true" || value === "1";
+
+const SLICE_LIMIT = 10;
+
+// Extracted as a standalone component so it can hold its own `showAll` state
+function CheckboxFilterSection({
+  filter,
+  selectedValues,
+  onCheckedChange,
+}: {
+  filter: Extract<TApiFilterDefinition, { type: "checkbox" }>;
+  selectedValues: string[];
+  onCheckedChange: (
+    key: string,
+    value: string,
+    next: boolean | "indeterminate",
+  ) => void;
+}) {
+  const [showAll, setShowAll] = useState(false);
+
+  // deduplicate options by value
+  const uniqueOptions = filter.options.filter(
+    (option, index, self) =>
+      index === self.findIndex((o) => o.label === option.label),
+  );
+
+  const hasMore = uniqueOptions.length > SLICE_LIMIT;
+  const visibleOptions =
+    hasMore && !showAll ? uniqueOptions.slice(0, SLICE_LIMIT) : uniqueOptions;
+
+  return (
+    <>
+      <div className="flex flex-col gap-2.5">
+        {visibleOptions.map((option) => {
+          const checked = selectedValues.includes(option.label);
+          const id = `${filter.queryKey}-${option.label}`;
+
+          return (
+            <div key={option.label} className="flex items-center gap-2.5">
+              <Checkbox
+                id={id}
+                checked={checked}
+                onCheckedChange={(next) =>
+                  onCheckedChange(filter.queryKey, option.label, next)
+                }
+              />
+              <Label className="line-clamp-1" htmlFor={id}>
+                {option.label}
+              </Label>
+            </div>
+          );
+        })}
+
+        {hasMore && (
+          <button
+            type="button"
+            onClick={() => setShowAll((prev) => !prev)}
+            className="text-primary mt-1 w-fit cursor-pointer text-sm font-medium underline-offset-2 hover:underline"
+          >
+            {showAll
+              ? "Show less"
+              : `See all (${uniqueOptions.length - SLICE_LIMIT} more)`}
+          </button>
+        )}
+      </div>
+
+      <Separator className="my-3.5" />
+    </>
+  );
+}
 
 export default function Filters() {
   const router = useRouter();
@@ -165,42 +234,12 @@ export default function Filters() {
           searchParams.get(filter.queryKey),
         );
 
-        // deduplicate options by value
-        const uniqueOptions = filter.options.filter(
-          (option, index, self) =>
-            index === self.findIndex((o) => o.value === option.value),
-        );
-
         return (
-          <>
-            <div className="flex flex-col gap-2.5">
-              {uniqueOptions.map((option) => {
-                const checked = selectedValues.includes(option.value);
-                const id = `${filter.queryKey}-${option.value}`;
-
-                return (
-                  <div key={option.value} className="flex items-center gap-2.5">
-                    <Checkbox
-                      id={id}
-                      checked={checked}
-                      onCheckedChange={(next) =>
-                        handleCheckboxChange(
-                          filter.queryKey,
-                          option.value,
-                          next,
-                        )
-                      }
-                    />
-                    <Label className="line-clamp-1" htmlFor={id}>
-                      {option.label}
-                    </Label>
-                  </div>
-                );
-              })}
-            </div>
-
-            <Separator className="my-3.5" />
-          </>
+          <CheckboxFilterSection
+            filter={filter}
+            selectedValues={selectedValues}
+            onCheckedChange={handleCheckboxChange}
+          />
         );
       }
 

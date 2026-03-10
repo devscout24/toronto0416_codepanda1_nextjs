@@ -93,10 +93,10 @@ export function SignUpForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="shadow-none">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create Account</CardTitle>
-          <CardDescription>Sign up with your Google account</CardDescription>
+          <CardTitle className="text-xl">Welcome to Sufis</CardTitle>
+          <CardDescription>Sign up with your account</CardDescription>
         </CardHeader>
-        <CardContent className="mt-2.5">
+        <CardContent className="mt-3.5">
           <FieldGroup>
             {/* <Field className="flex gap-2 md:flex-row">
               <Button variant="outline" type="button" className="flex-1">

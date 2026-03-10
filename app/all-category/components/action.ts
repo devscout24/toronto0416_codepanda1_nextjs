@@ -82,10 +82,13 @@ export const addOrRemoveWishList = async (product_id: number) => {
 
 export const addToCart = async (product_id: number, quantity: number) => {
   try {
-    const res = await fetcher<{ message: string }>("/add-to-cart/", {
-      method: "POST",
-      body: JSON.stringify({ product_id, quantity }),
-    });
+    const res = await fetcher<{ status: string; message: string }>(
+      "/add-to-cart/",
+      {
+        method: "POST",
+        body: JSON.stringify({ product_id, quantity }),
+      },
+    );
 
     // Revalidate pages AFTER successful add
     revalidatePath("/all-category");

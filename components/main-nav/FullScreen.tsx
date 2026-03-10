@@ -63,7 +63,7 @@ export default function FullScreen({
                 <AvatarImage
                   src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileUser?.profile_image}`}
                 />
-                <AvatarFallback>
+                <AvatarFallback className="bg-gray-300 font-medium">
                   {profileUser?.name
                     ? `${profileUser.name.split(" ")[0]?.[0] || ""}${
                         profileUser.name.split(" ")[1]?.[0] || ""

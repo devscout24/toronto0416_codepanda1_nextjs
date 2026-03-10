@@ -137,7 +137,7 @@ export default function ProductCart({
                 {row.original.product_name}
               </Label>
               <p className="text-xs md:text-sm">{row.original.sku}</p>
-              <div className="mt-2 md:mt-4">
+              <div className="mt-2">
                 <Button
                   variant="ghost"
                   className="text-red-600 hover:text-red-600"

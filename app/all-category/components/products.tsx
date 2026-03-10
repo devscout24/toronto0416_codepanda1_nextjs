@@ -1,7 +1,5 @@
 import ProductCard from "@/components/card";
 import AppPagination from "@/components/pagination/pagination";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { TProduct, TProductData } from "@/types/product.type";
 import Sort from "./sort";
 

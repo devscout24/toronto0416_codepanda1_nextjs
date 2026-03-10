@@ -105,6 +105,7 @@ export async function applyCoupon({ coupon_code }: { coupon_code: string }) {
       },
     );
     revalidatePath("/cart");
+    revalidatePath("/cart/checkout");
     return response;
   } catch (error) {
     console.error("Error clearing cart:", error);
