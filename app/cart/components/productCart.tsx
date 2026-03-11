@@ -121,7 +121,7 @@ export default function ProductCart({
                 !row.original.image ||
                 row.original.image.length === 0
                   ? defaultImg
-                  : row.original.image[0]
+                  : row.original.image
               }
               alt={row.original.product_name || "Product Image"}
               width={100}

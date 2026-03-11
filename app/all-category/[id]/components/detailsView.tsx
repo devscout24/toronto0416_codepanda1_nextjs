@@ -25,10 +25,19 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
 
     try {
       const res = await addToCart(product_id, count);
-      toast.success(res?.message || "Product added to cart successfully!");
+      if (res?.status === "success") {
+        toast.success(res?.message || "Product added to cart successfully!");
+      } else {
+        toast.error(res?.message || "Failed to add product.");
+      }
       setCartLoading(false);
     } catch (error) {
       console.error("Error adding product to cart:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to add product.",
+      );
+    } finally {
+      setCartLoading(false);
     }
   };
 
