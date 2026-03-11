@@ -65,7 +65,7 @@ export default function Search() {
             <div className="relative flex h-16 items-center overflow-hidden rounded-lg bg-white">
               <LocationIcon className="absolute left-3 text-neutral-200" />
               <input
-                type="number"
+                type="text"
                 placeholder="Enter your postal code"
                 className="h-16 w-full pl-10 md:w-100 md:pl-12"
                 value={postalCode}

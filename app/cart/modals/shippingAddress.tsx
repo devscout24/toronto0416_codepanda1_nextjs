@@ -167,7 +167,7 @@ export default function ShippingAddress() {
                   <FormLabel>Postal Code</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
+                      type="text"
                       placeholder="Postal Code"
                       className="border-neutral-50"
                       {...field}

@@ -217,7 +217,7 @@ export default function UpdateShippingAddress() {
                 <FormLabel>Postal Code</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
+                    type="text"
                     placeholder="Enter postal code"
                     {...field}
                   />
