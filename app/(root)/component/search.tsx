@@ -50,31 +50,30 @@ export default function Search() {
   return (
     <>
       <section className="section-container">
-        <div className="bg-primary-500 flex flex-col items-center justify-between gap-8 rounded-2xl p-5 md:-mt-32 md:p-10 lg:flex-row">
-          <div className="text-white md:w-1/2">
-            <h2 className="text-xl md:text-2xl lg:text-3xl">
+        <div className="bg-primary-500 flex flex-col items-center justify-between gap-6 rounded-2xl p-5 md:gap-8 md:p-10 lg:flex-row">
+          <div className="text-white lg:w-1/2">
+            <h2 className="text-lg font-semibold sm:text-xl md:text-2xl lg:text-3xl">
               Check if we deliver to your area
             </h2>
-            <p className="text-sm lg:text-base">
+            <p className="mt-1 text-sm opacity-90 sm:text-sm lg:text-base">
               Enter your postal code to see if Sufi&apos;s delivery service is
               available in your location.
             </p>
           </div>
 
-          <div>
-            <div className="relative flex h-16 items-center overflow-hidden rounded-lg bg-white">
-              <LocationIcon className="absolute left-3 text-neutral-200" />
+          <div className="w-full lg:w-1/2">
+            <div className="relative flex h-14 items-center overflow-hidden rounded-lg bg-white sm:h-16">
+              <LocationIcon className="absolute left-3 shrink-0 text-neutral-200" />
               <input
                 type="text"
                 placeholder="Enter your postal code"
-                className="h-16 w-full pl-10 md:w-100 md:pl-12"
+                className="h-full w-full pr-0 pl-10 text-sm focus:outline-none sm:pl-12 sm:text-base"
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
               />
-
               <RippleButton
                 variant="secondary"
-                className="-mr-0.5 h-24 rounded-none md:w-24"
+                className="h-full shrink-0 rounded-none px-4 text-sm sm:px-6 sm:text-base md:px-8"
                 onClick={handleCheckAvailability}
                 disabled={loading}
               >
@@ -82,7 +81,7 @@ export default function Search() {
               </RippleButton>
             </div>
 
-            <p className="mt-2.5 text-sm text-white lg:text-base">
+            <p className="mt-2 text-xs text-white opacity-80 sm:text-sm lg:text-base">
               We currently deliver to most areas in the city
             </p>
           </div>

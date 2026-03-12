@@ -13,8 +13,8 @@ export default function Hero() {
               From our store <br /> to your door
             </h1>
             <p className="mt-5 text-xs md:w-[70%] md:text-base">
-              Get organic produce and sustainably sourced groceries delivery at
-              up to 4% off grocery.
+              Fresh groceries and quality products delivered conveniently to
+              your doorstep.
             </p>
 
             <Link href="/all-category">
@@ -30,7 +30,7 @@ export default function Hero() {
               src="/images/hero-image.png"
               width={500}
               height={500}
-              className="w-full lg:w-110"
+              className="w-64 md:w-96 lg:w-110"
             />
           </div>
         </div>

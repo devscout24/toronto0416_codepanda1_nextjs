@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { NavItem } from "./NavItem";
 import SufisLogo from "../logo";
@@ -33,11 +34,13 @@ export default function MobileScreen({
   cartLength: number;
   profileUser: TUserAccount | null;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className="section-container flex items-center justify-between">
       <SufisLogo />
 
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <IconButton>
             <Menu />
@@ -60,7 +63,7 @@ export default function MobileScreen({
                 <LoveIcon className="mt-1 ml-1 size-[1.3rem]" />
               </IconButton>
 
-              <Link href="/cart">
+              <Link href="/cart" onClick={() => setOpen(false)}>
                 <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
                   <BagIcon className="size-6" />
                   {cartLength > 0 && (
@@ -71,7 +74,7 @@ export default function MobileScreen({
                 </IconButton>
               </Link>
 
-              <Link href={"/account"}>
+              <Link href={"/account"} onClick={() => setOpen(false)}>
                 <Avatar className="size-11">
                   <AvatarImage
                     src={`${process.env.NEXT_PUBLIC_BASE_URL}${profileUser?.profile_image}`}
@@ -84,7 +87,11 @@ export default function MobileScreen({
               </Link>
             </div>
           ) : (
-            <Link href="?login-modal=login" className="mx-2">
+            <Link
+              href="?login-modal=login"
+              className="mx-2"
+              onClick={() => setOpen(false)}
+            >
               <Button variant="secondary" className="w-full">
                 Sign in
               </Button>
@@ -94,7 +101,11 @@ export default function MobileScreen({
           <div className="ml-6">
             <NavigationMenu className="mt-8 flex-col items-start">
               {navList.map((item) => (
-                <NavItem key={item.name} {...item} />
+                <NavItem
+                  key={item.name}
+                  {...item}
+                  onNavigate={() => setOpen(false)}
+                />
               ))}
             </NavigationMenu>
           </div>

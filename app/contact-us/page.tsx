@@ -71,24 +71,24 @@ export default function ContactUsPage() {
 
             <div className="flex items-center gap-5">
               <LocationIcon />
-              <p>Chinatown, Chicago, IL 60616 USA</p>
+              <p>Durham Region- Ajax, ON L1Z- OK5</p>
             </div>
           </div>
 
           <div className="space-y-2.5">
             <h3 className="text-xl font-semibold">Contact information</h3>
 
-            <div className="flex items-center gap-5">
+            {/* <div className="flex items-center gap-5">
               <PhoneIcon />
               <div>
                 <p>+1 5632-36215</p>
                 <p>+1 2356-12389</p>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-5">
               <EmailIcon />
-              <p>easymartinfo@gmail.com</p>
+              <p>info@sufismarket.com</p>
             </div>
           </div>
 
