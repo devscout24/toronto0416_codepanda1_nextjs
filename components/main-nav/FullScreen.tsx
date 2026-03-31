@@ -74,9 +74,21 @@ export default function FullScreen({
             </Link>
           </>
         ) : (
-          <Link href="?login-modal=login">
-            <Button variant="secondary">Sign in</Button>
-          </Link>
+          <div className="flex items-center gap-5">
+            <Link href="/cart">
+              <IconButton className="bg-primary-700 relative flex size-11 items-center justify-center rounded-full text-white">
+                <BagIcon className="size-6" />
+                {cartLength > 0 && (
+                  <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
+                    {cartLength < 10 ? cartLength : "9+"}
+                  </Badge>
+                )}
+              </IconButton>
+            </Link>
+            <Link href="?login-modal=login">
+              <Button variant="secondary">Sign in</Button>
+            </Link>
+          </div>
         )}
       </div>
     </nav>

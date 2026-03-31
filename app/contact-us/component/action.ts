@@ -1,3 +1,5 @@
+import { getGuestSessionHeadersClient } from "@/lib/guest-session";
+
 export const submitContactForm = async (formData: {
   name: string;
   email: string;
@@ -5,21 +7,24 @@ export const submitContactForm = async (formData: {
   message: string;
 }) => {
   try {
-    const response = await fetch('/contact-us/', {
-      method: 'POST',
+    const guestHeaders = await getGuestSessionHeadersClient();
+
+    const response = await fetch("/contact-us/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        ...guestHeaders,
       },
       body: JSON.stringify(formData),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to send message');
+      throw new Error("Failed to send message");
     }
 
     return { success: true };
   } catch (error) {
-    console.error('Error sending contact form:', error);
-    throw new Error('Failed to send message. Please try again.');
+    console.error("Error sending contact form:", error);
+    throw new Error("Failed to send message. Please try again.");
   }
 };

@@ -5,11 +5,14 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const accessToken = request.cookies.get("access_token")?.value;
+  const guestSessionId = request.cookies.get("guest_session_id")?.value;
 
-  if (!accessToken) {
-    if (pathname.startsWith("/account") || pathname.startsWith("/cart")) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+  if (pathname.startsWith("/account") && !accessToken) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (pathname.startsWith("/cart") && !accessToken && !guestSessionId) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

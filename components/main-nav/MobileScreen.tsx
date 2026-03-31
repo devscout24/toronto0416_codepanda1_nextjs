@@ -87,15 +87,27 @@ export default function MobileScreen({
               </Link>
             </div>
           ) : (
-            <Link
-              href="?login-modal=login"
-              className="mx-2"
-              onClick={() => setOpen(false)}
-            >
-              <Button variant="secondary" className="w-full">
-                Sign in
-              </Button>
-            </Link>
+            <div className="flex items-center justify-center gap-5">
+              <Link href="/cart" onClick={() => setOpen(false)}>
+                <IconButton className="bg-primary relative flex size-11 items-center justify-center rounded-full text-white">
+                  <BagIcon className="size-6" />
+                  {cartLength > 0 && (
+                    <Badge className="absolute -top-1 -right-1 size-5 rounded-full bg-red-500">
+                      {cartLength < 10 ? cartLength : "9+"}
+                    </Badge>
+                  )}
+                </IconButton>
+              </Link>
+              <Link
+                href="?login-modal=login"
+                className="mx-2"
+                onClick={() => setOpen(false)}
+              >
+                <Button variant="secondary" className="w-full">
+                  Sign in
+                </Button>
+              </Link>
+            </div>
           )}
 
           <div className="ml-6">

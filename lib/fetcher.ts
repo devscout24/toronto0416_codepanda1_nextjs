@@ -1,6 +1,83 @@
 "use server";
 
-import { getUserSession } from "./action";
+import { cookies } from "next/headers";
+
+const GUEST_SESSION_COOKIE_KEY = "guest_session_id";
+const GUEST_SESSION_HEADER_KEY = "X-Guest-Session-ID";
+
+type GuestSessionInitResponse = {
+  status?: string;
+  status_code?: number;
+  session_id?: string;
+  message?: string;
+};
+
+function normalizeBaseApiUrl(rawBase: string): string {
+  let base = rawBase.trim();
+
+  if (!base) {
+    throw new Error("NEXT_PUBLIC_BASE_API is not set");
+  }
+
+  if (!/^https?:\/\//i.test(base)) {
+    base = `http://${base}`;
+  }
+
+  return base.replace(/\/+$/, "");
+}
+
+async function initGuestSession(baseUrl: string): Promise<string | null> {
+  try {
+    const response = await fetch(`${baseUrl}/init-guest-session/`, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = (await response.json()) as GuestSessionInitResponse;
+    return data?.session_id ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function getServerGuestSessionId(
+  baseUrl: string,
+): Promise<string | null> {
+  const cookieStore = await cookies();
+
+  const existingGuestSession =
+    cookieStore.get(GUEST_SESSION_COOKIE_KEY)?.value ?? null;
+  if (existingGuestSession) {
+    return existingGuestSession;
+  }
+
+  const accessToken = cookieStore.get("access_token")?.value;
+  if (accessToken) {
+    return null;
+  }
+
+  const createdGuestSession = await initGuestSession(baseUrl);
+  if (!createdGuestSession) {
+    return null;
+  }
+
+  try {
+    cookieStore.set(GUEST_SESSION_COOKIE_KEY, createdGuestSession, {
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  } catch {
+    // cookies can be read-only in some server rendering paths; header still works for this request
+  }
+
+  return createdGuestSession;
+}
 
 /**
  * Fetcher function for making API requests with minimal error handling.
@@ -19,24 +96,21 @@ export async function fetcher<T = unknown>(
 
   // ...existing code...
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint.slice(1) : endpoint;
-
-  // Normalize base URL: ensure it includes a protocol and no trailing slash
-  const rawBase = process.env.NEXT_PUBLIC_BASE_API ?? "";
-  let base = rawBase.trim();
-
-  if (!base) {
-    throw new Error("NEXT_PUBLIC_BASE_API is not set");
-  }
-  if (!/^https?:\/\//i.test(base)) {
-    base = `http://${base}`;
-  }
-  base = base.replace(/\/+$/, ""); // remove trailing slashes
+  const base = normalizeBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API ?? "");
   const url = `${base}/${cleanEndpoint}`;
 
   // Don't add auth header for auth endpoints (normalize comparison)
-  const authEndpoints = ["/login", "/register", "/products"];
-  const isAuthEndpoint = authEndpoints.includes(cleanEndpoint);
-  const accessToken = !isAuthEndpoint ? await getUserSession() : null;
+  const authEndpoints = ["login", "register", "products"];
+  const normalizedEndpoint = cleanEndpoint.replace(/\/+$/, "");
+  const isAuthEndpoint = authEndpoints.includes(normalizedEndpoint);
+
+  const cookieStore = await cookies();
+  const accessToken = !isAuthEndpoint
+    ? (cookieStore.get("access_token")?.value ?? null)
+    : null;
+  const guestSessionId = !accessToken
+    ? await getServerGuestSessionId(base)
+    : null;
 
   const defaultOptions: RequestInit = {
     headers: {
@@ -45,6 +119,9 @@ export async function fetcher<T = unknown>(
         "Content-Type": "application/json",
       }),
       ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+      ...(guestSessionId && {
+        [GUEST_SESSION_HEADER_KEY]: guestSessionId,
+      }),
     },
     cache: "no-cache", // ✅ disable all caching by default
     // next: {
@@ -60,9 +137,8 @@ export async function fetcher<T = unknown>(
       ...options?.headers,
     },
   };
-  
-  const response = await fetch(url, fetchOptions);
 
+  const response = await fetch(url, fetchOptions);
 
   // Check if response has content
   const contentType = response.headers.get("content-type");
