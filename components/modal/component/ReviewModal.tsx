@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
-import { createReviewAction } from "@/app/account/my-orders/[id]/components/action";
+import { createReviewAction } from "@/components/MyOrders/action";
 import { useState } from "react";
 
 const reviewSchema = z.object({

@@ -6,7 +6,13 @@ import { Order } from "@/types/order";
 import { ColumnDef } from "@tanstack/react-table";
 import moment from "moment";
 
-export default function RecentOrders({ payload }: { payload: Order[] }) {
+export default function RecentOrders({
+  payload,
+  url,
+}: {
+  payload: Order[];
+  url: string;
+}) {
   const statusColorMap: Record<string, string> = {
     pending: "text-secondary",
     order_placed: "text-sky-500",
@@ -80,7 +86,7 @@ export default function RecentOrders({ payload }: { payload: Order[] }) {
         enableColumnVisibility={false}
         enableFiltering={false}
         enablePagination={false}
-        getRowLink={(row) => `/account/my-orders/${row?.order_id}`}
+        getRowLink={(row) => `${url}/${row?.order_id}`}
       />
     </div>
   );

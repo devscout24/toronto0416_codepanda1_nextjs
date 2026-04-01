@@ -191,10 +191,17 @@ export async function processPay({
   }
 }
 
-export async function createPayment() {
+export async function createPayment({
+  address_id,
+  guest_email,
+}: {
+  address_id: number;
+  guest_email?: string;
+}) {
   try {
     const res = await fetcher<{ checkout_url: string }>("/place-order/", {
       method: "POST",
+      body: JSON.stringify({ address_id, guest_email }),
     });
     revalidatePath("/cart");
     return res.checkout_url;

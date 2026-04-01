@@ -89,7 +89,10 @@ export default function Checkout({
     setLoading(true);
 
     try {
-      const redirectTo = await createPayment();
+      const redirectTo = await createPayment({
+        address_id: Number(addressId),
+        guest_email: "guest@example.com",
+      });
       if (redirectTo) {
         window.location.href = redirectTo;
       } else {

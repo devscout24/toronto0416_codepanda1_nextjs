@@ -8,7 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import Rating from "@/components/shared/Rating";
 import { Switch } from "@/components/animate-ui/components/headless/switch";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, memo, useCallback, useEffect, useState } from "react";
 import { BrushCleaning } from "lucide-react";
 import { getFilters } from "./action";
 import { TApiFilterDefinition, TApiRangeFilter } from "@/types/filters.type";
@@ -38,8 +38,7 @@ const parseBooleanParam = (value: string | null) =>
 
 const SLICE_LIMIT = 10;
 
-// Extracted as a standalone component so it can hold its own `showAll` state
-function CheckboxFilterSection({
+const CheckboxFilterSection = memo(function CheckboxFilterSection({
   filter,
   selectedValues,
   onCheckedChange,
@@ -54,10 +53,9 @@ function CheckboxFilterSection({
 }) {
   const [showAll, setShowAll] = useState(false);
 
-  // deduplicate options by value
   const uniqueOptions = filter.options.filter(
     (option, index, self) =>
-      index === self.findIndex((o) => o.label === option.label),
+      index === self.findIndex((o) => o.value === option.value),
   );
 
   const hasMore = uniqueOptions.length > SLICE_LIMIT;
@@ -68,16 +66,16 @@ function CheckboxFilterSection({
     <>
       <div className="flex flex-col gap-2.5">
         {visibleOptions.map((option) => {
-          const checked = selectedValues.includes(option.label);
-          const id = `${filter.queryKey}-${option.label}`;
+          const checked = selectedValues.includes(option.value);
+          const id = `${filter.queryKey}-${option.value}`;
 
           return (
-            <div key={option.label} className="flex items-center gap-2.5">
+            <div key={option.value} className="flex items-center gap-2.5">
               <Checkbox
                 id={id}
                 checked={checked}
                 onCheckedChange={(next) =>
-                  onCheckedChange(filter.queryKey, option.label, next)
+                  onCheckedChange(filter.queryKey, option.value, next)
                 }
               />
               <Label className="line-clamp-1" htmlFor={id}>
@@ -103,6 +101,109 @@ function CheckboxFilterSection({
       <Separator className="my-3.5" />
     </>
   );
+});
+
+const RangeFilterSection = memo(function RangeFilterSection({
+  filter,
+  sliderValue,
+  onRangeCommit,
+}: {
+  filter: TApiRangeFilter;
+  sliderValue: [number, number];
+  onRangeCommit: (filter: TApiRangeFilter, value: [number, number]) => void;
+}) {
+  const filterMin = Number(filter.min);
+  const filterMax = Number(filter.max);
+
+  return (
+    <>
+      <div className="flex flex-col gap-2.5">
+        <Slider
+          key={`${sliderValue[0]}-${sliderValue[1]}`}
+          min={filterMin}
+          max={filterMax}
+          step={0.01}
+          defaultValue={sliderValue}
+          onValueCommit={(value) =>
+            onRangeCommit(filter, value as [number, number])
+          }
+        />
+        <div className="text-muted-foreground mt-1.5 flex items-center justify-between text-sm">
+          <span>${sliderValue[0].toFixed(2)}</span>
+          <span>${sliderValue[1].toFixed(2)}</span>
+        </div>
+      </div>
+
+      <Separator className="my-3.5" />
+    </>
+  );
+});
+
+function RenderFilterSection({
+  filter,
+  searchParams,
+  onCheckedChange,
+  onRangeCommit,
+}: {
+  filter: TApiFilterDefinition;
+  searchParams: URLSearchParams;
+  onCheckedChange: (
+    key: string,
+    value: string,
+    next: boolean | "indeterminate",
+  ) => void;
+  onRangeCommit: (filter: TApiRangeFilter, value: [number, number]) => void;
+}) {
+  switch (filter.type) {
+    case "checkbox": {
+      const selectedValues = splitQueryValues(
+        searchParams.get(filter.queryKey),
+      );
+
+      return (
+        <CheckboxFilterSection
+          filter={filter}
+          selectedValues={selectedValues}
+          onCheckedChange={onCheckedChange}
+        />
+      );
+    }
+
+    case "range": {
+      const filterMin = Number(filter.min);
+      const filterMax = Number(filter.max);
+
+      const minParam = readNumericParam(
+        searchParams.get(`${filter.queryKey}_min`),
+        filterMin,
+      );
+      const maxParam = readNumericParam(
+        searchParams.get(`${filter.queryKey}_max`),
+        filterMax,
+      );
+      const sliderMin = clampNumber(
+        Math.min(minParam, maxParam),
+        filterMin,
+        filterMax,
+      );
+      const sliderMax = clampNumber(
+        Math.max(minParam, maxParam),
+        filterMin,
+        filterMax,
+      );
+
+      return (
+        <RangeFilterSection
+          filter={filter}
+          sliderValue={[sliderMin, sliderMax]}
+          onRangeCommit={onRangeCommit}
+        />
+      );
+    }
+
+    default:
+      return null;
+  }
 }
 
 export default function Filters() {
@@ -223,79 +324,6 @@ export default function Filters() {
     [updateParams],
   );
 
-  const RenderFilterSection = ({
-    filter,
-  }: {
-    filter: TApiFilterDefinition;
-  }) => {
-    switch (filter.type) {
-      case "checkbox": {
-        const selectedValues = splitQueryValues(
-          searchParams.get(filter.queryKey),
-        );
-
-        return (
-          <CheckboxFilterSection
-            filter={filter}
-            selectedValues={selectedValues}
-            onCheckedChange={handleCheckboxChange}
-          />
-        );
-      }
-
-      case "range": {
-        const filterMin = Number(filter.min);
-        const filterMax = Number(filter.max);
-
-        const minParam = readNumericParam(
-          searchParams.get(`${filter.queryKey}_min`),
-          filterMin,
-        );
-        const maxParam = readNumericParam(
-          searchParams.get(`${filter.queryKey}_max`),
-          filterMax,
-        );
-        const sliderMin = clampNumber(
-          Math.min(minParam, maxParam),
-          filterMin,
-          filterMax,
-        );
-        const sliderMax = clampNumber(
-          Math.max(minParam, maxParam),
-          filterMin,
-          filterMax,
-        );
-        const sliderValue: [number, number] = [sliderMin, sliderMax];
-
-        return (
-          <>
-            <div className="flex flex-col gap-2.5">
-              <Slider
-                key={`${sliderValue[0]}-${sliderValue[1]}`}
-                min={filterMin}
-                max={filterMax}
-                step={0.01}
-                defaultValue={sliderValue}
-                onValueCommit={(value) =>
-                  handleRangeCommit(filter, value as [number, number])
-                }
-              />
-              <div className="text-muted-foreground mt-1.5 flex items-center justify-between text-sm">
-                <span>${sliderValue[0].toFixed(2)}</span>
-                <span>${sliderValue[1].toFixed(2)}</span>
-              </div>
-            </div>
-
-            <Separator className="my-3.5" />
-          </>
-        );
-      }
-
-      default:
-        return null;
-    }
-  };
-
   const resetFilters = useCallback(() => {
     updateParams((params) => {
       allFilters.forEach((filter) => {
@@ -306,7 +334,6 @@ export default function Filters() {
           params.delete(filter.queryKey);
         }
       });
-      // reset static filters
       params.delete("rating");
       params.delete("in_stock");
     });
@@ -329,15 +356,18 @@ export default function Filters() {
       </div>
       <Separator className="mt-2.5" />
       <ScrollArea className="h-[75vh] w-full p-4">
-        {/* Dynamic filters from API */}
         {allFilters.map((filter) => (
           <div key={filter.title}>
             <h5 className="mb-2.5 font-semibold">{filter.title}</h5>
-            <RenderFilterSection filter={filter} />
+            <RenderFilterSection
+              filter={filter}
+              searchParams={searchParams}
+              onCheckedChange={handleCheckboxChange}
+              onRangeCommit={handleRangeCommit}
+            />
           </div>
         ))}
 
-        {/* Static: Customer Ratings */}
         <div>
           <h5 className="mb-2.5 font-semibold">Customer Ratings</h5>
           <Rating
@@ -350,7 +380,6 @@ export default function Filters() {
           <Separator className="my-3.5" />
         </div>
 
-        {/* Static: Availability */}
         <div>
           <h5 className="mb-2.5 font-semibold">Availability</h5>
           <div className="flex items-center gap-2.5">

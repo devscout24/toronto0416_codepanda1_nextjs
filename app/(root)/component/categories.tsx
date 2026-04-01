@@ -78,7 +78,7 @@ export default function Categories() {
           <div className="flex items-center gap-4">
             {categories.map((category, idx) => (
               <Link
-                href={`/all-category?categories=${category.name}`}
+                href={`/all-category?categories=${category.slug}`}
                 key={idx}
               >
                 <div className="hover:bg-primary-50 group flex w-full flex-1 cursor-pointer items-start justify-between gap-4 rounded-sm bg-white p-3.5 duration-300 active:scale-95">
