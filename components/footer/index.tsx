@@ -20,8 +20,8 @@ export default function Footer() {
   const footerNav = {
     Resources: [
       { name: "Home", href: "/" },
-      { name: "Best Selling", href: "/all-category" },
-      { name: "Weekly Special", href: "/all-category" },
+      { name: "Best Selling", href: "/#best-selling" },
+      { name: "Weekly Special", href: "/#weekly-specials" },
       { name: "Explore All", href: "/all-category" },
     ],
     Information: [
@@ -76,13 +76,13 @@ export default function Footer() {
             {[
               {
                 icon: <LocationIcon />,
-                text: "Chinatown,\nChicago, IL 60616 USA",
+                text: "Durham Region- Ajax, ON L1Z- OK5, Canada",
               },
-              {
-                icon: <PhoneIcon />,
-                text: "+1 2356-12389\n+1 5632-36215",
-              },
-              { icon: <EmailIcon />, text: "cleanthemeinfo@gmail.com" },
+              // {
+              //   icon: <PhoneIcon />,
+              //   text: "+1 2356-12389\n+1 5632-36215",
+              // },
+              { icon: <EmailIcon />, text: "info@sufismarket.com" },
             ].map((item, idx) => (
               <div className="mb-2 flex items-center gap-2" key={idx}>
                 {item.icon}

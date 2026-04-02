@@ -11,11 +11,11 @@ export default async function BestSelling() {
     const data = await getBestSelling();
     productData = data ?? [];
   } catch (error) {
-    console.error("Failed to fetch weekly special products:", error);
+    console.error("Failed to fetch best selling products:", error);
     productData = [];
   }
   return (
-    <section className="section-container">
+    <section id="best-selling" className="section-container">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-semibold">Best Selling</h2>
         <Link href="/all-category">

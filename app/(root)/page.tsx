@@ -7,6 +7,7 @@ import WeeklySpecials from "./component/weeklySpecials";
 import Banner from "./component/banner";
 import BestSelling from "./component/bestSelling";
 import Testimonials from "./component/testimonials";
+import HashScrollHandler from "./component/hashScrollHandler";
 
 export default function HomePage() {
   const benefits = [
@@ -29,6 +30,7 @@ export default function HomePage() {
 
   return (
     <section className="mb-28 space-y-28">
+      <HashScrollHandler />
       <Hero />
       <Categories />
       <WeeklySpecials />

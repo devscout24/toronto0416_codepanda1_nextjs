@@ -67,7 +67,7 @@ export default async function WeeklySpecials() {
   }
 
   return (
-    <section className="section-container">
+    <section id="weekly-specials" className="section-container">
       <div className="flex items-center justify-between">
         <h2></h2>
       </div>
