@@ -194,7 +194,7 @@ export default function ContactUsPage() {
           style={{ paddingBottom: "50%" }}
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.0986462230617!2d-121.26032332363705!3d37.95807380157939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80906d4de83b1675%3A0x7ffc00f74bcdd9ef!2sSufi%20Market!5e1!3m2!1sen!2sbd!4v1771195397167!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3472.175064565021!2d-79.01370952381208!3d43.863621371092954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4e00460d8677b%3A0xfce54fd363636a75!2s289%20Kingston%20Rd%20E%2C%20Ajax%2C%20ON%20L1Z%200K5%2C%20Canada!5e1!3m2!1sen!2sbd!4v1776801310576!5m2!1sen!2sbd"
             className="absolute top-0 left-0 h-full w-full rounded-xl"
             style={{ border: 0 }}
             allowFullScreen
