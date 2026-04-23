@@ -9,6 +9,7 @@ import { ForgotPasswordForm } from "../auth/resetPassword";
 import UpdateShippingAddress from "@/app/cart/modals/updateShippingAddress";
 import FailedModal from "@/app/cart/components/FailedModal";
 import ReviewModal from "./component/ReviewModal";
+import CartModal from "./component/CartModal";
 
 export default function Modals() {
   return (
@@ -77,6 +78,9 @@ export default function Modals() {
       </Modal>
       <Modal title="" modalId="resetpassword-modal" openId="resetpassword">
         <ForgotPasswordForm />
+      </Modal>
+      <Modal title="" modalId="cart-modal" openId="cart">
+        <CartModal />
       </Modal>
     </>
   );

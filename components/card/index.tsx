@@ -87,38 +87,12 @@ export default function ProductCard({
   payload?: TProduct;
   priority?: boolean;
 }) {
-  const [count, setCount] = useState(1);
-  const [cartLoading, setCartLoading] = useState<boolean>(false);
+  
   const [imageError, setImageError] = useState(false);
 
   // Function to handle image loading errors
   const handleImageError = () => {
     setImageError(true);
-  };
-
-  const handleAddToCard = async (product_id: number | undefined) => {
-    setCartLoading(true);
-    if (!product_id) {
-      console.error("Error: Product ID is required.");
-      return;
-    }
-
-    try {
-      const res = await addToCart(product_id, count);
-      if (res?.status === "success") {
-        toast.success(res?.message || "Product added to cart successfully!");
-      } else {
-        toast.error(res?.message || "Failed to add product.");
-      }
-      setCartLoading(false);
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Failed to add product.",
-      );
-    } finally {
-      setCartLoading(false);
-    }
   };
 
   return (
@@ -198,14 +172,23 @@ export default function ProductCard({
             </div>
           </CardContent>
 
-          <CardFooter className="mt-auto mb-4 flex items-center justify-between gap-4">
-            <CardActionGuard className="w-full">
+          <CardFooter className="mt-auto mb-4">
+            <Link
+              className="w-full"
+              href={`?cart-modal=cart&product_id=${payload?.id}`}
+            >
+              <Button variant="secondary" className="w-full">
+                Add to Cart
+              </Button>
+            </Link>
+            {/* <CardActionGuard className="w-full">
               <Counter
                 value={count}
                 onChange={(value) =>
                   setCount(typeof value === "number" ? value : count)
                 }
               />
+              
               <Button
                 disabled={cartLoading}
                 onClick={() => handleAddToCard(payload?.id)}
@@ -221,7 +204,7 @@ export default function ProductCard({
                   "Add to Cart"
                 )}
               </Button>
-            </CardActionGuard>
+            </CardActionGuard> */}
           </CardFooter>
         </Card>
       </Link>
