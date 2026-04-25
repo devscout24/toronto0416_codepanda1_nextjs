@@ -15,6 +15,7 @@ import SufisLogo from "../logo";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
 import StripeIcon from "@/assets/icons/stripe.svg";
+import { Clock3, MapPinned } from "lucide-react";
 
 export default function Footer() {
   const footerNav = {
@@ -36,12 +37,12 @@ export default function Footer() {
   return (
     <footer className="text-white">
       <section className="bg-primary-900 w-full py-15">
-        <div className="section-container flex w-full flex-col items-start justify-between gap-10 md:flex-row">
-          <div>
+        <div className="section-container flex flex-col items-start gap-10 lg:flex-row">
+          <div className="lg:w-[30%]">
             <SufisLogo size={9} />
             <p className="mt-4 mb-5">
-              Distracted by the readable content of <br /> a page when looking
-              at its layout.
+              Distracted by the readable content of a page when looking at its
+              layout.
             </p>
             <div className="flex items-center gap-5">
               <FacebookIcon className="hover:text-secondary cursor-pointer" />
@@ -49,46 +50,55 @@ export default function Footer() {
               <TwitterIcon className="hover:text-secondary cursor-pointer" />
             </div>
           </div>
-
-          {Object.keys(footerNav).map((category, idx) => (
-            <div key={idx}>
-              <p className="mb-5 text-xl font-semibold">{category}</p>
-              <ul>
-                {footerNav[category as keyof typeof footerNav].map(
-                  (item, idx) => (
-                    <li key={idx} className="group mb-2 cursor-pointer">
-                      <Link href={item.href}>
-                        <div className="w-fit">
-                          <p>{item.name}</p>
-                          <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
-                        </div>
-                      </Link>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </div>
-          ))}
-
-          <div>
-            <p className="mb-5 text-xl font-semibold">Contact</p>
-
-            {[
-              {
-                icon: <LocationIcon />,
-                text: "Durham Region- Ajax, ON L1Z- OK5, Canada",
-              },
-              // {
-              //   icon: <PhoneIcon />,
-              //   text: "+1 2356-12389\n+1 5632-36215",
-              // },
-              { icon: <EmailIcon />, text: "info@sufismarket.com" },
-            ].map((item, idx) => (
-              <div className="mb-2 flex items-center gap-2" key={idx}>
-                {item.icon}
-                <p className="whitespace-pre-line">{item.text}</p>
+          <div className="flex flex-col items-start justify-between gap-10 md:flex-row lg:w-[70%]">
+            {Object.keys(footerNav).map((category, idx) => (
+              <div key={idx}>
+                <p className="mb-5 text-xl font-semibold">{category}</p>
+                <ul>
+                  {footerNav[category as keyof typeof footerNav].map(
+                    (item, idx) => (
+                      <li key={idx} className="group mb-2 cursor-pointer">
+                        <Link href={item.href}>
+                          <div className="w-fit">
+                            <p>{item.name}</p>
+                            <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
+                          </div>
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
               </div>
             ))}
+
+            <div>
+              <p className="mb-5 text-xl font-semibold">Contact</p>
+
+              {[
+                {
+                  icon: <LocationIcon />,
+                  text: "Durham Region- Ajax, ON L1Z- OK5, Canada",
+                },
+                // {
+                //   icon: <PhoneIcon />,
+                //   text: "+1 2356-12389\n+1 5632-36215",
+                // },
+                { icon: <EmailIcon />, text: "info@sufismarket.com" },
+                {
+                  icon: <Clock3 size={16} />,
+                  text: "Next business day delivery (cutoff: 3 PM)",
+                },
+                {
+                  icon: <MapPinned size={16} />,
+                  text: "Ajax, Pickering, Whitby, Oshawa, Scarborough",
+                },
+              ].map((item, idx) => (
+                <div className="mb-2 flex items-center gap-2" key={idx}>
+                  {item.icon}
+                  <p className="whitespace-pre-line">{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

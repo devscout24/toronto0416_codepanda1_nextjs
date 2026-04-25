@@ -106,56 +106,64 @@ export default function ProductCart({
       header: "Product",
       accessorKey: "product_name",
       cell: ({ row }) => (
-        <div className="flex items-center gap-5">
-          <Checkbox
-            id={String(row.original.id)}
-            checked={selectedProducts.includes(row.original.id)}
-            onCheckedChange={(checked) =>
-              handleProductSelect(row.original.id, checked as boolean)
-            }
-          />
+        <div>
           <div className="flex items-center gap-5">
-            <Image
-              src={
-                imageError ||
-                !row.original.image ||
-                row.original.image.length === 0
-                  ? defaultImg
-                  : row.original.image
+            <Checkbox
+              id={String(row.original.id)}
+              checked={selectedProducts.includes(row.original.id)}
+              onCheckedChange={(checked) =>
+                handleProductSelect(row.original.id, checked as boolean)
               }
-              alt={row.original.product_name || "Product Image"}
-              width={100}
-              height={100}
-              className="hidden size-16 rounded-xl border object-cover md:block"
-              onError={handleImageError}
             />
-            <div>
-              <Label
-                htmlFor={String(row.original.id)}
-                className="text-sm md:text-base"
-              >
-                {row.original.product_name}
-              </Label>
-              <p className="text-xs md:text-sm">{row.original.sku}</p>
-              <div className="mt-2">
-                <Button
-                  variant="ghost"
-                  className="text-red-600 hover:text-red-600"
-                  onClick={() => handleSingleRemove(row.original.id)}
-                  disabled={removingIds.includes(row.original.id)}
+            <div className="flex items-center gap-5">
+              <Image
+                src={
+                  imageError ||
+                  !row.original.image ||
+                  row.original.image.length === 0
+                    ? defaultImg
+                    : row.original.image
+                }
+                alt={row.original.product_name || "Product Image"}
+                width={100}
+                height={100}
+                className="hidden size-16 rounded-xl border object-cover md:block"
+                onError={handleImageError}
+              />
+              <div>
+                <Label
+                  htmlFor={String(row.original.id)}
+                  className="text-sm md:text-base"
                 >
-                  {removingIds.includes(row.original.id) ? (
-                    <div className="flex items-center gap-2">
-                      <Spinner className="size-4" />
-                      <span>Removing...</span>
-                    </div>
-                  ) : (
-                    "Remove"
-                  )}
-                </Button>
+                  {row.original.product_name}
+                </Label>
+                <p className="text-xs md:text-sm">{row.original.sku}</p>
+                <div className="mt-1">
+                  <Button
+                    variant="ghost"
+                    className="text-red-600 hover:text-red-600"
+                    onClick={() => handleSingleRemove(row.original.id)}
+                    disabled={removingIds.includes(row.original.id)}
+                  >
+                    {removingIds.includes(row.original.id) ? (
+                      <div className="flex items-center gap-2">
+                        <Spinner className="size-4" />
+                        <span>Removing...</span>
+                      </div>
+                    ) : (
+                      "Remove"
+                    )}
+                  </Button>
+                </div>
               </div>
-            </div>
+            </div>{" "}
           </div>
+          {row.original.notes && (
+            <p className="text-muted-foreground ml-10 text-xs">
+              <span className="font-medium">Delivery Note:</span>{" "}
+              {row.original.notes}
+            </p>
+          )}
         </div>
       ),
     },

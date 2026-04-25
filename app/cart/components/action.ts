@@ -9,20 +9,33 @@ import {
 import { OrderResponse } from "@/types/orders.type";
 import { revalidatePath } from "next/cache";
 
-export async function addAddress(values: TCartAddress) {
+export interface DeliveryAvailabilityResponse {
+  status: "success" | "error";
+  status_code: number;
+  message: string;
+  data: DeliveryAvailabilityData;
+}
+
+export interface DeliveryAvailabilityData {
+  delivery_available: boolean;
+  available_areas: string[];
+}
+
+export async function addAddress(values: {
+  address: string;
+  is_default: string;
+}) {
   try {
-    await fetcher<{ message: string }>("/add-address/", {
+    const res = await fetcher<DeliveryAvailabilityResponse>("/add-address/", {
       method: "POST",
       body: JSON.stringify(values),
     });
+    console.log(res, "response from addAddress in action");
     revalidatePath("/account/address-book");
     revalidatePath("/cart/checkout");
+    return res;
   } catch (error) {
     console.error(error);
-    if (error && typeof error === "object" && "message" in error) {
-      return { error: (error as { message: string }).message };
-    }
-    return { error: "Adding address failed. Please try again." };
   }
 }
 

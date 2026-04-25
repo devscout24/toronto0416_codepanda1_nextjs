@@ -101,38 +101,12 @@ export default function Shipping() {
           <div key={defaultAddress?.id} className="rounded-lg border p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-5">
-                <p className="text-xl font-semibold">{defaultAddress.name}</p>
-                <Badge className="rounded-full bg-black">
-                  {defaultAddress.address_type === "home" ? "Home" : "Office"}
-                </Badge>
+                <p className="text-xl font-semibold">
+                  {defaultAddress.address}
+                </p>
+                <Badge className="rounded-full bg-black">Default</Badge>
               </div>
             </div>
-            <p>{defaultAddress.phone}</p>
-
-            <Separator className="my-2.5" />
-
-            <p>
-              {defaultAddress?.flat_no
-                ? `Flat ${defaultAddress.flat_no}, `
-                : ""}
-              {defaultAddress?.floor_no
-                ? `Floor ${defaultAddress.floor_no}, `
-                : ""}
-              {defaultAddress?.house_no
-                ? `House ${defaultAddress.house_no}, `
-                : ""}
-              {defaultAddress?.street_road
-                ? `${defaultAddress.street_road}, `
-                : ""}
-              {defaultAddress?.block_sector
-                ? `${defaultAddress.block_sector}, `
-                : ""}
-              {defaultAddress?.area ? `${defaultAddress.area}, ` : ""}
-              {defaultAddress?.city ? `${defaultAddress.city}, ` : ""}
-              {defaultAddress?.postal_code
-                ? `${defaultAddress.postal_code}`
-                : ""}
-            </p>
           </div>
         ) : (
           <></>
@@ -146,7 +120,7 @@ export default function Shipping() {
         </Link>
         <Suspense fallback={null}>
           <Modal
-            title="Add new shipping address"
+            title="Find the location for delivery"
             modalId="shipping"
             openId="shipping"
           >
@@ -155,7 +129,7 @@ export default function Shipping() {
         </Suspense>
       </div>
 
-      <div className="mt-10">
+      {/* <div className="mt-10">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Delivery option</h3>
 
@@ -194,7 +168,7 @@ export default function Shipping() {
             ${defaultDeliveryOption?.shipping_charge}
           </p>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

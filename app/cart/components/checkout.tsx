@@ -159,7 +159,7 @@ export default function Checkout({
           </div>
 
           <div className="flex items-center justify-between">
-            <p>VAT</p>
+            <p>HST</p>
             <span className="float-right">${metadata?.vat.toFixed(2)}</span>
           </div>
         </div>

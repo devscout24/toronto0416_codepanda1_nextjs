@@ -82,7 +82,7 @@ export default function Search() {
             </div>
 
             <p className="mt-2 text-xs text-white opacity-80 sm:text-sm lg:text-base">
-              We currently deliver to most areas in the city
+              We deliver to Ajax, Pickering, Whitby, Oshawa & Scarborough
             </p>
           </div>
         </div>

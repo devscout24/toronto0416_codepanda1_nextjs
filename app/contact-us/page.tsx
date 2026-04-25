@@ -103,11 +103,29 @@ export default function ContactUsPage() {
           </div>
 
           <div className="space-y-2.5">
-            <h3 className="text-xl font-semibold">We are open</h3>
-            <p>
-              Our store has re-opened for shopping, exchanges Every day 11am to
-              7pm.
-            </p>
+            <h3 className="text-xl font-semibold">Delivery Information</h3>
+            <ul className="space-y-1.5 text-sm">
+              <li className="flex items-start gap-2">
+                <span>🕒</span>
+                <span>
+                  <span className="font-semibold">
+                    Next business day delivery
+                  </span>{" "}
+                  — order before 3 PM to qualify.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span>🚚</span>
+                <span>
+                  Free delivery on orders over{" "}
+                  <span className="font-semibold">$150</span> minimum.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span>🏪</span>
+                <span>Delivery only — no in-store pickup available.</span>
+              </li>
+            </ul>
           </div>
         </div>
 

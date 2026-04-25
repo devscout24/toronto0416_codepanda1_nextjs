@@ -75,21 +75,21 @@ export function AddressBookClient({ addressBook }: AddressBookClientProps) {
 
   const columns: ColumnDef<TAddressBook>[] = [
     {
-      accessorKey: "name",
-      header: "Full Name",
+      accessorKey: "address",
+      header: "Full Addresses",
     },
-    {
-      accessorKey: "city",
-      header: "Address",
-    },
-    {
-      accessorKey: "address_type",
-      header: "Address Type",
-    },
-    {
-      accessorKey: "phone",
-      header: "Phone Number",
-    },
+    // {
+    //   accessorKey: "city",
+    //   header: "Address",
+    // },
+    // {
+    //   accessorKey: "address_type",
+    //   header: "Address Type",
+    // },
+    // {
+    //   accessorKey: "phone",
+    //   header: "Phone Number",
+    // },
     {
       id: "actions",
       header: "Actions",
@@ -97,13 +97,13 @@ export function AddressBookClient({ addressBook }: AddressBookClientProps) {
         const address = row.original;
         return (
           <div className="flex items-start justify-end gap-3">
-            <Link
+            {/* <Link
               href={`?update-shipping-address=update-shipping-modal&id=${address.id}`}
             >
               <button className="text-secondary mb-2 cursor-pointer transition-colors duration-300 hover:scale-105">
                 <SquarePen className="h-4 w-4" />
               </button>
-            </Link>
+            </Link> */}
             <DeleteAlertDialog addressId={address.id} />
           </div>
         );
@@ -128,52 +128,41 @@ export function AddressBookClient({ addressBook }: AddressBookClientProps) {
       <div className="block md:hidden">
         {addressBook.length > 0 ? (
           addressBook.map((entry) => (
-            <div key={entry.id} className="mb-4 border-b pb-4">
-              <span className="flex items-center justify-between">
-                <h3 className="font-semibold">{entry.name}</h3>
-                <Badge>{entry.address_type}</Badge>
-              </span>
-              <p className="my-2">{entry.city}</p>
-              <p className="">{entry.phone}</p>
+            <div
+              key={entry.id}
+              className="mb-4 flex items-start justify-between gap-3.5 border-b pb-4"
+            >
+              <h3 className="text-sm font-medium">{entry.address}</h3>
 
               {/* Mobile Actions */}
-              <div className="mt-3 flex items-start gap-3">
-                <Link
-                  href={`?update-shipping-address=update-shipping-modal&id=${entry.id}`}
-                >
-                  <button className="text-blue-600 transition-colors hover:text-blue-700">
-                    <SquarePen className="h-5 w-5" />
-                  </button>
-                </Link>
-                <AlertDialog>
-                  <AlertDialogTrigger
-                    render={
-                      <button className="text-red-600 transition-colors hover:text-red-700">
-                        <Trash2 className="h-5 w-5" />
-                      </button>
-                    }
-                  />
-                  <AlertDialogPopup from="bottom" className="sm:max-w-[425px]">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Delete Address?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete this address from your address book.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={() => handleDelete(entry.id)}
-                        disabled={isDeleting}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        {isDeleting ? "Deleting..." : "Delete"}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogPopup>
-                </AlertDialog>
-              </div>
+              <AlertDialog>
+                <AlertDialogTrigger
+                  render={
+                    <button className="text-red-600 transition-colors hover:text-red-700">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  }
+                />
+                <AlertDialogPopup from="bottom" className="sm:max-w-[425px]">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete Address?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      this address from your address book.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => handleDelete(entry.id)}
+                      disabled={isDeleting}
+                      className="bg-red-600 hover:bg-red-700"
+                    >
+                      {isDeleting ? "Deleting..." : "Delete"}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogPopup>
+              </AlertDialog>
             </div>
           ))
         ) : (

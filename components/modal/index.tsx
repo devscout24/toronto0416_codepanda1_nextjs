@@ -19,7 +19,7 @@ export default function Modals() {
       </Modal>
 
       <Modal
-        title="Add new shipping address"
+        title="Find the location for delivery"
         modalId="shipping-address"
         openId="shipping-modal"
       >

@@ -80,13 +80,17 @@ export const addOrRemoveWishList = async (product_id: number) => {
   }
 };
 
-export const addToCart = async (product_id: number, quantity: number) => {
+export const addToCart = async (
+  product_id: number,
+  quantity: number,
+  note: string,
+) => {
   try {
     const res = await fetcher<{ status: string; message: string }>(
       "/add-to-cart/",
       {
         method: "POST",
-        body: JSON.stringify({ product_id, quantity }),
+        body: JSON.stringify({ product_id, quantity, note }),
       },
     );
 
@@ -97,6 +101,7 @@ export const addToCart = async (product_id: number, quantity: number) => {
     return res;
   } catch (error) {
     console.error(`Error adding product ${product_id} to cart:`, error);
+    throw error;
   }
 };
 

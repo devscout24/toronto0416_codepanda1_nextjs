@@ -7,6 +7,7 @@ export type TCartProduct = {
   sku: string;
   price: string;
   quantity: number;
+  notes: string;
 };
 
 type TCoupon = {

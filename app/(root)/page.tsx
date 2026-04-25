@@ -13,8 +13,8 @@ export default function HomePage() {
   const benefits = [
     {
       icon: ShippingIcon,
-      title: "Free Shipping",
-      description: "On all orders over $109.00",
+      title: "Free Delivery",
+      description: "On all orders over $150.00",
     },
     {
       icon: PaymentIcon,

@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Info } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
 
 export interface Location {
   address: string;
@@ -10,8 +12,9 @@ export interface Location {
 }
 
 interface FindLocationPageProps {
-  onConfirm: (location: Location, orderType: "delivery" | "pickup") => void;
-  defaultOrderType?: "delivery" | "pickup";
+  onConfirm: (location: Location) => void;
+  errorMessage: string | null;
+  isLoading: boolean;
 }
 
 interface AutocompletePrediction {
@@ -70,13 +73,13 @@ interface Geocoder {
   ) => void;
 }
 
+const SERVICE_AREAS = ["Ajax", "Pickering", "Whitby", "Oshawa", "Scarborough"];
+
 export default function FindLocationPage({
   onConfirm,
-  defaultOrderType = "delivery",
+  errorMessage,
+  isLoading,
 }: FindLocationPageProps) {
-  const [orderType, setOrderType] = useState<"delivery" | "pickup">(
-    defaultOrderType,
-  );
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
     null,
@@ -95,13 +98,6 @@ export default function FindLocationPage({
   const sessionTokenRef = useRef<any>(null);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-
-  // Static pickup location
-  const pickupLocation: Location = {
-    address: "289 Kingston Rd E, Ajax, ON L1Z 0K5, Canada",
-    latitude: 43.863621371092954,
-    longitude: -79.01370952381208,
-  };
 
   useEffect(() => {
     if (!apiKey) return;
@@ -133,35 +129,52 @@ export default function FindLocationPage({
     if (!googleReady) return;
 
     if (mapRef.current && !mapInstanceRef.current) {
-      const defaultCenter =
-        orderType === "pickup"
-          ? { lat: pickupLocation.latitude!, lng: pickupLocation.longitude! }
-          : { lat: 42.4902, lng: -96.4136 };
+      const FALLBACK_CENTER = { lat: 43.863621, lng: -79.011135 };
 
-      mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-        center: defaultCenter,
-        zoom: orderType === "pickup" ? 15 : 13,
-        disableDefaultUI: true,
-        styles: [
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          { featureType: "transit", stylers: [{ visibility: "off" }] },
-        ],
-      });
+      const initMap = (center: { lat: number; lng: number }) => {
+        mapInstanceRef.current = new window.google.maps.Map(mapRef.current!, {
+          center,
+          zoom: 15,
+          disableDefaultUI: true,
+          styles: [
+            { featureType: "poi", stylers: [{ visibility: "off" }] },
+            { featureType: "transit", stylers: [{ visibility: "off" }] },
+          ],
+        });
 
-      markerRef.current = new window.google.maps.Marker({
-        position: defaultCenter,
-        map: mapInstanceRef.current,
-        icon: {
-          path: window.google.maps.SymbolPath.CIRCLE,
-          scale: 10,
-          fillColor: "#EA4335",
-          fillOpacity: 1,
-          strokeColor: "#fff",
-          strokeWeight: 2,
-        },
-      });
+        markerRef.current = new window.google.maps.Marker({
+          position: center,
+          map: mapInstanceRef.current,
+          icon: {
+            path: window.google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: "#EA4335",
+            fillOpacity: 1,
+            strokeColor: "#fff",
+            strokeWeight: 2,
+          },
+        });
 
-      setMapLoaded(true);
+        setMapLoaded(true);
+      };
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            initMap({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          () => {
+            // Permission denied or unavailable — fall back to store location
+            initMap(FALLBACK_CENTER);
+          },
+          { timeout: 6000 },
+        );
+      } else {
+        initMap(FALLBACK_CENTER);
+      }
     }
 
     if (!autocompleteServiceRef.current) {
@@ -177,37 +190,15 @@ export default function FindLocationPage({
       sessionTokenRef.current =
         new window.google.maps.places.AutocompleteSessionToken();
     }
-  }, [googleReady, orderType]);
-
-  // Update map when switching to pickup
-  useEffect(() => {
-    if (orderType === "pickup" && mapInstanceRef.current && markerRef.current) {
-      const center = {
-        lat: pickupLocation.latitude!,
-        lng: pickupLocation.longitude!,
-      };
-      mapInstanceRef.current.setCenter(center);
-      mapInstanceRef.current.setZoom(15);
-      markerRef.current.setPosition(center);
-      setSelectedLocation(pickupLocation);
-      setSearchQuery(pickupLocation.address);
-    } else if (orderType === "delivery") {
-      setSelectedLocation(null);
-      setSearchQuery("");
-    }
-  }, [orderType]);
+  }, [googleReady]);
 
   const handleConfirm = () => {
-    if (orderType === "pickup") {
-      onConfirm(pickupLocation, "pickup");
-    } else if (selectedLocation) {
-      onConfirm(selectedLocation, "delivery");
+    if (selectedLocation) {
+      onConfirm(selectedLocation);
     }
   };
 
   const handleSearchChange = async (query: string) => {
-    if (orderType === "pickup") return;
-
     setSearchQuery(query);
     setSuggestions([]);
     setShowSuggestions(false);
@@ -239,8 +230,6 @@ export default function FindLocationPage({
     placeId: string,
     description: string,
   ) => {
-    if (orderType === "pickup") return;
-
     setSearchQuery(description);
     setShowSuggestions(false);
 
@@ -269,13 +258,9 @@ export default function FindLocationPage({
     }
   };
 
-  const handleOrderTypeChange = (type: "delivery" | "pickup") => {
-    setOrderType(type);
-  };
-
   return (
     <div className="flex h-[75vh] w-full flex-col gap-4">
-      {/* Map Section - 50% height */}
+      {/* Map Section */}
       <div className="relative h-1/2 w-full overflow-hidden rounded-md">
         <div ref={mapRef} className="absolute inset-0" />
         {!mapLoaded && (
@@ -285,38 +270,24 @@ export default function FindLocationPage({
         )}
       </div>
 
-      {/* Text/Panel Section - 50% height */}
+      {/* Panel Section */}
       <div className="flex h-1/2 w-full flex-col overflow-y-auto">
-        {/* Order type toggle */}
-        <div className="mb-4">
-          <h3 className="mb-4 text-xl font-semibold">Find a location nearby</h3>
-          <p className="mb-1 text-sm text-gray-500">Select order preference</p>
-          <div className="flex gap-1 rounded-md border border-gray-200 bg-gray-50 p-0.5">
-            <button
-              onClick={() => handleOrderTypeChange("delivery")}
-              className={`flex-1 cursor-pointer rounded-sm px-2 py-1.5 text-sm font-medium transition-all ${
-                orderType === "delivery"
-                  ? "border border-gray-200 bg-white text-gray-900 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              Delivery
-            </button>
-            <button
-              onClick={() => handleOrderTypeChange("pickup")}
-              className={`flex-1 cursor-pointer rounded-sm px-2 py-1.5 text-sm font-medium transition-all ${
-                orderType === "pickup"
-                  ? "border border-gray-200 bg-white text-gray-900 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              Pick Up
-            </button>
-          </div>
+        {/* <h3 className="mb-1 text-xl font-semibold">Find a location nearby</h3> */}
+
+        {/* Service areas */}
+        <div className="mb-1">
+          <p className="mb-1.5 text-xs text-gray-500">
+            We deliver to:{" "}
+            {SERVICE_AREAS.map((area) => (
+              <span key={area} className="text-xs font-medium text-orange-600">
+                {area},{" "}
+              </span>
+            ))}
+          </p>
         </div>
 
-        {/* Search input - Disabled for pickup */}
-        <div className="relative mb-5">
+        {/* Search input */}
+        <div className="relative mb-2">
           <Search
             size={16}
             className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
@@ -326,85 +297,75 @@ export default function FindLocationPage({
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder={
-              orderType === "pickup"
-                ? "Pickup location is fixed"
-                : "Search a location"
-            }
-            className={`w-full rounded-lg border border-gray-200 py-2 pr-4 pl-9 text-sm transition-all outline-none ${
-              orderType === "pickup"
-                ? "cursor-not-allowed bg-gray-100 text-gray-500"
-                : "bg-gray-50 focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
-            }`}
+            placeholder="Search your delivery address"
+            className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pr-4 pl-9 text-sm transition-all outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
             autoComplete="off"
             onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
-            disabled={orderType === "pickup"}
           />
 
-          {/* Suggestions dropdown - Only for delivery */}
-          {orderType === "delivery" &&
-            showSuggestions &&
-            suggestions.length > 0 && (
-              <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-48 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
-                {suggestions.map((suggestion) => (
-                  <button
-                    key={suggestion.place_id}
-                    onClick={() =>
-                      handleSuggestionClick(
-                        suggestion.place_id,
-                        suggestion.description,
-                      )
-                    }
-                    className="hover:text-secondary w-full border-b border-gray-100 px-3 py-2.5 text-left text-sm text-gray-700 transition-colors last:border-b-0 hover:bg-orange-50"
-                  >
-                    <div className="flex items-start gap-2">
-                      <Search
-                        size={14}
-                        className="mt-1 shrink-0 text-gray-400"
-                      />
-                      <div className="flex-1 overflow-hidden">
-                        <p className="truncate text-sm font-medium">
-                          {suggestion.description}
-                        </p>
-                      </div>
+          {/* Suggestions dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-48 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
+              {suggestions.map((suggestion) => (
+                <button
+                  key={suggestion.place_id}
+                  onClick={() =>
+                    handleSuggestionClick(
+                      suggestion.place_id,
+                      suggestion.description,
+                    )
+                  }
+                  className="hover:text-secondary w-full border-b border-gray-100 px-3 py-2.5 text-left text-sm text-gray-700 transition-colors last:border-b-0 hover:bg-orange-50"
+                >
+                  <div className="flex items-start gap-2">
+                    <Search size={14} className="mt-1 shrink-0 text-gray-400" />
+                    <div className="flex-1 overflow-hidden">
+                      <p className="truncate text-sm font-medium">
+                        {suggestion.description}
+                      </p>
                     </div>
-                  </button>
-                ))}
-              </div>
-            )}
-        </div>
-
-        {/* Confirm button */}
-        <div className="mt-auto pt-4">
-          {(orderType === "pickup" || selectedLocation) && (
-            <div className="mb-3 rounded-lg border border-orange-100 bg-orange-50 px-3 py-2.5">
-              <p className="text-secondary truncate text-xs font-medium">
-                📍{" "}
-                {orderType === "pickup"
-                  ? pickupLocation.address
-                  : selectedLocation?.address}
-              </p>
+                  </div>
+                </button>
+              ))}
             </div>
           )}
-          <button
+        </div>
+        <div className="flex items-start gap-2">
+          <Info size={14} className="mt-0.5 shrink-0 text-gray-400" />
+          <p className="text-xs text-gray-500">
+            <span className="font-semibold text-gray-600">
+              No in-store pickup available.
+            </span>{" "}
+          </p>
+        </div>
+        {/* Confirm button */}
+        <div className="mt-auto pt-2">
+          {errorMessage ? (
+            <div className="mb-3 rounded-lg border border-red-100 bg-red-50 px-3 py-2.5">
+              <p className="text-xs font-medium text-red-600">
+                ⚠️ {errorMessage}
+              </p>
+            </div>
+          ) : selectedLocation ? (
+            <div className="mb-3 rounded-lg border border-orange-100 bg-orange-50 px-3 py-2.5">
+              <p className="text-secondary truncate text-xs font-medium">
+                📍 {selectedLocation.address}
+              </p>
+            </div>
+          ) : null}
+          <Button
+            variant={"secondary"}
+            size={"lg"}
             onClick={handleConfirm}
-            disabled={orderType === "delivery" && !selectedLocation}
-            className="w-full rounded-xl py-3.5 text-sm font-semibold transition-all"
-            style={{
-              background:
-                orderType === "pickup" || selectedLocation
-                  ? "linear-gradient(135deg, #f97316, #fb923c)"
-                  : "#e5e7eb",
-              color:
-                orderType === "pickup" || selectedLocation ? "#fff" : "#9ca3af",
-              cursor:
-                orderType === "pickup" || selectedLocation
-                  ? "pointer"
-                  : "not-allowed",
-            }}
+            disabled={!selectedLocation || isLoading}
+            className="w-full"
           >
-            Add Location
-          </button>
+            Add Location {isLoading && <Spinner />}
+          </Button>
+
+          <p className="mt-2 text-xs text-blue-700">
+            - Next business day delivery (cutoff: 3 PM)
+          </p>
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ import Rating from "@/components/shared/Rating";
 import { CartCarosul } from "./CartCarosul";
 
 export default function CartModal() {
-  const [count, setCount] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const [cartLoading, setCartLoading] = useState<boolean>(false);
   const [productDetails, setProductDetails] = useState<TProduct | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -47,36 +47,33 @@ export default function CartModal() {
     fetchProduct();
   }, [product_id]);
 
-  const handleAddToCard = async (id: number | undefined) => {
-    console.log(
-      "id:",
-      id,
-      "count:",
-      count,
-      "packingInstructions:",
-      packingInstructions,
-    );
-
-    if (!id) {
+  const handleAddToCard = async (product_id: number | undefined) => {
+    if (!product_id) {
       console.error("Error: Product ID is required.");
       return;
     }
+
+    console.log(
+      { product_id, quantity, packingInstructions },
+      "Payload for addToCart function",
+    );
     setCartLoading(true);
-    // try {
-    //   const res = await addToCart(id, count, packingInstructions);
-    //   if (res?.status === "success") {
-    //     toast.success(res?.message || "Product added to cart successfully!");
-    //   } else {
-    //     toast.error(res?.message || "Failed to add product.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error adding product to cart:", error);
-    //   toast.error(
-    //     error instanceof Error ? error.message : "Failed to add product.",
-    //   );
-    // } finally {
-    //   setCartLoading(false);
-    // }
+    try {
+      const res = await addToCart(product_id, quantity, packingInstructions);
+      if (res?.status === "success") {
+        toast.success(res?.message || "Product added to cart successfully!");
+      } else {
+        toast.error(res?.message || "Failed to add product.");
+      }
+      window.history.back();
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to add product.",
+      );
+    } finally {
+      setCartLoading(false);
+    }
   };
 
   if (!product_id || product_id === "undefined") {
@@ -186,9 +183,9 @@ export default function CartModal() {
         <div className="mt-auto">
           <CardActionGuard className="w-full">
             <Counter
-              value={count}
+              value={quantity}
               onChange={(value) =>
-                setCount(typeof value === "number" ? value : count)
+                setQuantity(typeof value === "number" ? value : quantity)
               }
             />
             <Button

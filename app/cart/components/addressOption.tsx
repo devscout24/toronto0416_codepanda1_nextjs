@@ -94,10 +94,10 @@ export default function AddressOptionPage({
             addressBook?.map((address) => (
               <div
                 key={address?.id}
-                className="cursor-pointer gap-5 rounded-xl border p-5"
+                className="cursor-pointer gap-5 rounded-md border p-3 md:rounded-xl md:p-5"
                 onClick={() => setSelectedIndex(address?.id)}
               >
-                <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 md:flex-row">
+                <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
                   <div className="flex items-start gap-3 md:gap-5">
                     <Checkbox
                       className="mt-1 size-5 rounded-full md:size-6"
@@ -105,26 +105,12 @@ export default function AddressOptionPage({
                       onCheckedChange={() => setSelectedIndex(address?.id)}
                     />
                     <span>
-                      <h1 className="text-lg font-medium md:text-xl">
-                        {address?.name}
+                      <h1 className="font-medium md:text-lg">
+                        {address?.address}
                       </h1>
-                      <p className="">{address?.phone}</p>
                     </span>
                   </div>
-                  <Badge className="mt-1 rounded-full bg-black/90 px-3 py-1 text-xs capitalize md:text-sm">
-                    {address?.address_type}
-                  </Badge>
                 </div>
-                <p className="mt-5">
-                  {address?.flat_no ? `Flat ${address.flat_no}, ` : ""}
-                  {address?.floor_no ? `Floor ${address.floor_no}, ` : ""}
-                  {address?.house_no ? `House ${address.house_no}, ` : ""}
-                  {address?.street_road ? `${address.street_road}, ` : ""}
-                  {address?.block_sector ? `${address.block_sector}, ` : ""}
-                  {address?.area ? `${address.area}, ` : ""}
-                  {address?.city ? `${address.city}, ` : ""}
-                  {address?.postal_code ? `${address.postal_code}` : ""}
-                </p>
               </div>
             ))
           ) : (

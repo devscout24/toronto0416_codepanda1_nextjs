@@ -1,7 +1,425 @@
 export const content = {
   policy:
-    "<body style='line-height: 1.6; color: #333;'><div class='product-container' style='width: 100%; margin: 20px auto;'><div class='product-header' style='margin-bottom: 20px;'><h1 style='font-size: 24px; color: #333;'>Personal Information We Collect</h1><p class='product-description' style='font-size: 16px; color: #555;'>When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site. We refer to this automatically-collected information as 'Device Information'.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>We collect Device Information using the following technologies:</h2><ul style='list-style-type: disc; margin-left: 20px;'><li style='margin-bottom: 10px;'>‘Cookies’ are data files that are placed on your device or computer and often include an anonymous unique identifier. For more information about cookies, and how to disable cookies, visit <a href='http://www.allaboutcookies.org' target='_blank' style='color: #0056b3;'>http://www.allaboutcookies.org</a>.</li><li style='margin-bottom: 10px;'>‘Log files’ track actions occurring on the Site, and collect data including your IP address, browser type, Internet service provider, referring/exit pages, and date/time stamps.</li><li style='margin-bottom: 10px;'>‘Web beacons’, ‘tags’, and ‘pixels’ are electronic files used to record information about how you browse the Site.</li></ul><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Additionally, when you make a purchase or attempt to make a purchase through the Site, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit card numbers), email address, and phone number. We refer to this information as 'Order Information'.</h2><p style='font-size: 16px; color: #555;'>When we talk about ‘Personal Information’ in this Privacy Policy, we are talking both about Device Information and Order Information.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>How Do We Use Your Personal Information?</h2><p style='font-size: 16px; color: #555;'>We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information, arranging for shipping, and providing you with invoices and/or order confirmations). Additionally, we use this Order Information to:</p><ul style='list-style-type: disc; margin-left: 20px;'><li style='margin-bottom: 10px;'>Communicate with you;</li><li style='margin-bottom: 10px;'>Screen our orders for potential risk or fraud; and</li><li style='margin-bottom: 10px;'>When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.</li></ul><p style='font-size: 16px; color: #555;'>We use the Device Information that we collect to help us screen for potential risk and fraud (in particular, your IP address), and more generally to improve and optimize our Site (for example, by generating analytics about how our customers browse and interact with the Site, and to assess the success of our marketing and advertising campaigns).</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Sharing Your Personal Information</h2><p style='font-size: 16px; color: #555;'>We share your Personal Information with third parties to help us use your Personal Information, as described above. For example, we use Shopify to power our online store--you can read more about how Shopify uses your Personal Information here: <a href='https://www.shopify.com/legal/privacy' target='_blank' style='color: #0056b3;'>https://www.shopify.com/legal/privacy</a>. We also use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: <a href='https://www.google.com/intl/en/policies/privacy/' target='_blank' style='color: #0056b3;'>https://www.google.com/intl/en/policies/privacy/</a>. You can also opt-out of Google Analytics here: <a href='https://tools.google.com/dlpage/gaoptout' target='_blank' style='color: #0056b3;'>https://tools.google.com/dlpage/gaoptout</a>.</p><p style='font-size: 16px; color: #555;'>Finally, we may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant or other lawful request for information we receive, or to otherwise protect our rights.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Behavioural Advertising</h2><p style='font-size: 16px; color: #555;'>As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (‘NAI’) educational page at <a href='http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work' target='_blank' style='color: #0056b3;'>http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work</a>.</p><p style='font-size: 16px; color: #555;'>You can opt out of targeted advertising by using the links below:</p><ul style='list-style-type: disc; margin-left: 20px;'><li style='margin-bottom: 10px;'>Facebook: <a href='https://www.facebook.com/settings/?tab=ads' target='_blank' style='color: #0056b3;'>https://www.facebook.com/settings/?tab=ads</a></li><li style='margin-bottom: 10px;'>Google: <a href='https://www.google.com/settings/ads/anonymous' target='_blank' style='color: #0056b3;'>https://www.google.com</a></li><li style='margin-bottom: 10px;'>Bing: <a href='https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads' target='_blank' style='color: #0056b3;'>https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads</a></li></ul></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Changes</h2><p style='font-size: 16px; color: #555;'>We may update this privacy policy from time to time in order to reflect, for example, changes to our practices or for other operational, legal or regulatory reasons.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Contact Us</h2><p style='font-size: 16px; color: #555;'>For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e‑mail: <a href='mailto:support@cleanthemes.co.uk' style='color: #0056b3;'>support@cleanthemes.co.uk</a>.</p></div></body>",
+    "<body style='line-height: 1.6; color: #333;'><div class='product-container' style='width: 100%; margin: 20px auto;'><h1 class='western'><strong><span style='font-family: Calibri, sans-serif;'>Privacy Policy – Sufi</span></strong><strong><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>s</span></span></strong></h1>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><strong><span style='font-family: Calibri, sans-serif;'>Effective Date:</span></strong> <span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>April 9, 2026</span></span></span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Sufis (&ldquo;Sufis&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) is committed to protecting your privacy and safeguarding your personal information. This Privacy Policy describes how we collect, use, disclose, and protect your information when you visit our website or use our services.</span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>By using our website, you consent to the practices described in this Privacy Policy.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>1. Information We Collect</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We may collect the following types of personal information:</span></span></p>\n" +
+    "<h3 class='western'><span style='font-family: Calibri, sans-serif;'>a) Information You Provide</span></h3>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Name </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Email address </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Phone number </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Billing and shipping address </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Payment information (processed securely via third-party providers) </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Account login details (if applicable) </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<h3 class='western'><span style='font-family: Calibri, sans-serif;'>b) Automatically Collected Information</span></h3>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>IP address </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Browser type and device information </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Pages visited and browsing behavior </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Cookies and tracking technologies </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<h3 class='western'><span style='font-family: Calibri, sans-serif;'>c) Transaction Information</span></h3>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Order history </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Purchase preferences </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delivery details </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>2. How We Use Your Information</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We collect and use your information to:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Process and fulfill orders </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Provide delivery and customer service </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Communicate order updates and promotions </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Improve website performance and user experience </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Prevent fraud and enhance security </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Comply with legal and regulatory requirements </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We only collect information necessary for these purposes, consistent with Canadian privacy standards. </span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>3. Consent</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>By using our website or providing your personal information, you consent to its collection, use, and disclosure as outlined in this policy.</span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>You may withdraw your consent at any time, subject to legal or contractual restrictions. Withdrawal may affect your ability to use certain services.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>4. Sharing of Information</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><span style='font-family: Calibri, sans-serif;'>We do </span><strong><span style='font-family: Calibri, sans-serif;'>not sell or rent</span></strong><span style='font-family: Calibri, sans-serif;'> your personal information.</span></span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We may share your information with:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Payment processors (e.g., credit card providers) </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delivery and logistics partners </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Website and hosting providers </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Marketing service providers (only where consent is given) </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We may also disclose information if required by law or to protect our rights and business operations.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>5. Data Storage &amp; Security</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We implement appropriate safeguards to protect your information, including:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Secure servers and encryption </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Restricted access to personal data </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Industry-standard payment security systems </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>However, no method of transmission over the Internet is 100% secure.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'><br /> 6. Cookies &amp; Tracking Technologies</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We use cookies to:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Enhance website functionality </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Remember user preferences </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Analyze traffic and performance </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>You can modify your browser settings to disable cookies, but some features of the site may not function properly.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>7. Third-Party Services</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Our website may include links to third-party websites or services. We are not responsible for their privacy practices and encourage you to review their policies.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>8. Data Retention</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We retain personal information only as long as necessary for:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Order fulfillment and customer service </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Legal, tax, and accounting requirements </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Business analytics (in anonymized form) </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>9. Your Rights</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Under Canadian privacy laws, you have the right to:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Access your personal information </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Request corrections </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Withdraw consent </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Request deletion (subject to legal obligations) </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>To make a request, contact us using the details below.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'><br /> <br /> 10. Children&rsquo;s Privacy</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Our website is not intended for individuals under the age of 13. We do not knowingly collect personal information from children.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>11. Changes to This Policy</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We may update this Privacy Policy from time to time. Updates will be posted on this page with a revised effective date.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>12. Contact Us</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>If you have questions or requests regarding this Privacy Policy, please contact:</span></span></p>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><strong><span style='font-family: Calibri, sans-serif;'>Sufis </span></strong><strong><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>Market</span></span></strong><span style='font-family: Calibri, sans-serif;'><br /> </span><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>Ajx, Ontario, Canada</span></span><span style='font-family: Calibri, sans-serif;'><br /> Email: </span><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>info@sufismarket.com</span></span><span style='font-family: Calibri, sans-serif;'><br /> </span></span></span><br /> </p>\n" +
+    "<!-- Comments are visible in the HTML source only --></body>",
 
   condition:
-    "<body style='line-height: 1.6; color: #333;'><div class='product-container' style='width: 100%; margin: 20px auto;'><div class='product-header' style='margin-bottom: 20px;'><h1 style='font-size: 24px; color: #333;'>Overview</h1><p class='product-description' style='font-size: 16px; color: #555;'>This website is operated by CleanShop. Throughout the site, the terms ‘we’, ‘us’ and ‘our’ refer to CleanShop. CleanShop offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.By visiting our site and/ or purchasing something from us, you engage in our ‘Service’ and agree to be bound by the following terms and conditions (‘Terms of Service’, ‘Terms’), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.Please read these Terms of Service carefully before accessing or using our website.</p><p style='font-size: 16px; color: #555;'>By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service.Any new features or tools which are added to the current store shall also be subject to the Terms of Service. You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes.Our store is hosted on Shopify Inc. They provide us with the online e-commerce platform that allows us to sell our products and services to you.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Section 1 - Online Store Terms</h2><p style='font-size: 16px; color: #555;'>By agreeing to these Terms of Service, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site.You may not use our products for any illegal or unauthorized purpose nor may you, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws).You must not transmit any worms or viruses or any code of a destructive nature.A breach or violation of any of the Terms will result in an immediate termination of your Services.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Section 2 - General Conditions</h2><p style='font-size: 16px; color: #555;'>We reserve the right to refuse service to anyone for any reason at any time.You understand that your content (not including credit card information), may be transferred unencrypted and involve (a) transmissions over various networks; and (b) changes to conform and adapt to technical requirements of connecting networks or devices. Credit card information is always encrypted during transfer over networks.You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service or any contact on the website through which the service is provided, without express written permission by us.The headings used in this agreement are included for convenience only and will not limit or otherwise affect these Terms.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Section 3 - Accuracy, Completeness and Timeliness of Information</h2><p style='font-size: 16px; color: #555;'>We are not responsible if information made available on this site is not accurate, complete or current. The material on this site is provided for general information only and should not be relied upon or used as the sole basis for making decisions without consulting primary, more accurate, more complete or more timely sources of information. Any reliance on the material on this site is at your own risk.This site may contain certain historical information. Historical information, necessarily, is not current and is provided for your reference only. We reserve the right to modify the contents of this site at any time, but we have no obligation to update any information on our site. You agree that it is your responsibility to monitor changes to our site.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Section 4 - Modification to The Service and Prices</h2><p style='font-size: 16px; color: #555;'>Prices for our products are subject to change without notice.We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time.We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.</p></div><div class='product-details'><h2 style='font-size: 20px; color: #333; margin-bottom: 10px;'>Section 5 - Products or Services (if application)</h2><p style='font-size: 16px; color: #555;'>Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our Return Policy.<br>We have made every effort to display as accurately as possible the colors and images of our products that appear at the store. We cannot guarantee that your computer monitor's display of any color will be accurate.<br>We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.<br>We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected.</p></div></div></body>",
+    "<body style='line-height: 1.6; color: #333;'><div class='product-container' style='width: 100%; margin: 20px auto;'><h1 class='western'><strong><span style='font-family: Calibri, sans-serif;'>Terms &amp; Conditions – Sufi&rsquo;s Grocery</span></strong></h1>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><strong><span style='font-family: Calibri, sans-serif;'>Effective Date:</span></strong> <span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>April 9, 2026</span></span></span></span></p>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><span style='font-family: Calibri, sans-serif;'>Welcome to Sufi</span><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>s Market</span></span><span style='font-family: Calibri, sans-serif;'> (&ldquo;Sufis&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). These Terms and Conditions govern your use of our website, services, and any purchases made through our platform.</span></span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>By accessing or using our website, you agree to be bound by these Terms.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>1. Definitions</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><strong>&ldquo;<span style='font-family: Calibri, sans-serif;'>Website&rdquo;</span></strong><span style='font-family: Calibri, sans-serif;'> refers to the Sufi&rsquo;s Grocery website and all related services </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><strong>&ldquo;<span style='font-family: Calibri, sans-serif;'>User&rdquo;</span></strong><span style='font-family: Calibri, sans-serif;'> means any individual accessing or using the website </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><strong>&ldquo;<span style='font-family: Calibri, sans-serif;'>Products&rdquo;</span></strong><span style='font-family: Calibri, sans-serif;'> refers to all grocery items, goods, and services offered </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><strong>&ldquo;<span style='font-family: Calibri, sans-serif;'>Order&rdquo;</span></strong><span style='font-family: Calibri, sans-serif;'> means a purchase request submitted through the website </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>2. Use of Website</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>You agree to:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Use the website for lawful purposes only </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Provide accurate and complete information when placing orders </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Not misuse, disrupt, or attempt unauthorized access to the website </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We reserve the right to restrict or terminate access if misuse is detected.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>3. Product Availability &amp; Accuracy</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>All products are subject to availability </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Prices, descriptions, and images are provided for convenience and may vary </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>We reserve the right to: </span></p>\n" +
+    "<ul>\n" +
+    "<li value='1'>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Limit quantities </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Substitute items of equal or greater value (especially for grocery items) </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Cancel orders due to stock or pricing errors </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>This aligns with grocery industry practice where inventory fluctuates daily. </span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>4. Pricing &amp; Payments</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>All prices are listed in CAD and subject to applicable taxes </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Prices may change without notice </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Payment must be completed at checkout using approved methods </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>We use secure third-party payment processors </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We are not responsible for:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Bank fees </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Currency conversion charges (if applicable) </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>5. Orders &amp; Cancellations</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Orders are confirmed only after successful payment </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>We reserve the right to cancel or refuse any order at our discretion </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Users may request cancellation before order processing begins </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Once an order is processed or out for delivery, cancellations may not be possible.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>6. Delivery &amp; Pickup</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delivery times are estimates and not guaranteed </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delays may occur due to weather, demand, or operational issues </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Users must ensure accurate delivery information </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We are not liable for:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delays outside our control </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Failed deliveries due to incorrect address or unavailability </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>7. Returns &amp; Refunds</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Due to the nature of grocery products:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Perishable items (meat, produce, dairy) are </span><strong><span style='font-family: Calibri, sans-serif;'>final sale</span></strong></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Refunds or replacements may be issued only if: </span></p>\n" +
+    "<ul>\n" +
+    "<li value='1'>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Items are defective </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Items are missing </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Items are significantly different from ordered </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><span style='font-family: Calibri, sans-serif;'>Claims must be made within </span><strong><span style='font-family: Calibri, sans-serif;'>24 hours of delivery</span></strong><span style='font-family: Calibri, sans-serif;'>.</span></span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>8. Account Responsibility</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>If you create an account:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>You are responsible for maintaining confidentiality </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>You are liable for all activity under your account </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>You must notify us immediately of unauthorized use </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>9. Intellectual Property</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>All website content including:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Logos </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Branding (Sufis) </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Images and design </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Text and layout </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>are owned by Sufis and may not be copied, reproduced, or used without permission.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>10. Limitation of Liability</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>To the fullest extent permitted by law:</span></span></p>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Sufi&rsquo;s Grocery shall not be liable for:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Indirect or consequential damages </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Loss of profits, data, or business </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Issues arising from third-party services </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>Our total liability shall not exceed the value of the order in question.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>11. Food &amp; Product Disclaimer</span></strong></h2>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Products are sold as-is </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Customers are responsible for checking: </span></p>\n" +
+    "<ul>\n" +
+    "<li value='1'>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Allergies </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Ingredients </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Dietary suitability </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We are not liable for allergic reactions or misuse of products.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>12. Third-Party Services</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We may use third-party providers for:</span></span></p>\n" +
+    "<ul>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Payments </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Delivery </span></p>\n" +
+    "</li>\n" +
+    "<li>\n" +
+    "<p class='western'><span style='font-family: Calibri, sans-serif;'>Website hosting </span></p>\n" +
+    "</li>\n" +
+    "</ul>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>These providers may access necessary data to perform services, similar to standard e-commerce practices. </span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>13. Privacy</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: \"Times New Roman\", serif;'><span style='font-size: medium;'><span style='font-family: Calibri, sans-serif;'>Your use of the website is also governed by our </span><strong><span style='font-family: Calibri, sans-serif;'>Privacy Policy</span></strong><span style='font-family: Calibri, sans-serif;'>, which outlines how your information is collected and used.</span></span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>14. Changes to Terms</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>We reserve the right to update these Terms at any time. Continued use of the website constitutes acceptance of updated Terms.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>15. Governing Law</span></strong></h2>\n" +
+    "<p align='left'><span style='font-family: Calibri, sans-serif;'><span style='font-size: medium;'>These Terms shall be governed by and interpreted in accordance with the laws of the Province of Ontario and the laws of Canada.</span></span></p>\n" +
+    "<p class='western'>&nbsp;</p>\n" +
+    "<h2 class='western'><strong><span style='font-family: Calibri, sans-serif;'>16. Contact Information</span></strong></h2>\n" +
+    "<p class='western'><strong><span style='font-family: Calibri, sans-serif;'>Sufis </span></strong><strong><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>Market</span></span></strong><span style='font-family: Calibri, sans-serif;'><br /> </span><span lang='en-CA'>Ajx, </span><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>Ontario, Canada</span></span><span style='font-family: Calibri, sans-serif;'><br /> Email: </span><span style='font-family: Calibri, sans-serif;'><span lang='en-CA'>info@sufismarket.com</span></span></p>\n" +
+    "<!-- Comments are visible in the HTML source only --></body>",
 };

@@ -17,6 +17,41 @@ import {
 } from "@/types/user.type";
 import { revalidatePath } from "next/cache";
 
+export interface DeliveryAvailabilityResponse {
+  status: "success" | "error";
+  status_code: number;
+  message: string;
+  data: DeliveryAvailabilityData;
+}
+
+export interface DeliveryAvailabilityData {
+  delivery_available: boolean;
+  available_areas: string[];
+}
+
+export async function addAddress(values: {
+  address: string;
+  is_default: string;
+}) {
+  try {
+    const res = await fetcher<DeliveryAvailabilityResponse>("/add-address/", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
+    console.log(res, "response from addAddress in action");
+    revalidatePath("/account/address-book");
+    revalidatePath("/cart/checkout");
+    return res;
+  } catch (error) {
+    console.error(error);
+    return {
+      status: "error",
+      message: error instanceof Error ? error.message : "Failed to add address",
+      status_code: 500,
+    } as DeliveryAvailabilityResponse;
+  }
+}
+
 export const getFavoriteList = async () => {
   try {
     const response = await fetcher<SpecialResponse>(`/favorites/`);
@@ -187,18 +222,6 @@ export const setDefaultAddress = async (addressId: number) => {
   } catch (error) {
     console.error("Error setting default address:", error);
     return null;
-  }
-};
-
-export const addAddress = async ({ body }: { body: TAddressBook }) => {
-  try {
-    const res = await fetcher<TAddressBookResponse>("/add-address/", {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
-    return res.data;
-  } catch (error) {
-    console.error(error);
   }
 };
 

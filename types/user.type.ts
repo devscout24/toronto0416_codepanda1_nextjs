@@ -39,7 +39,7 @@ export type TOrder = {
 
 export type TUserProfile = {
   personal_info: TPersonalInfo;
-  addresses: TAddressBookEntry[];
+  addresses: TAddressBook[];
   orders: Order[];
 };
 
@@ -102,21 +102,8 @@ export type TUserResponse = {
 
 export type TAddressBook = {
   id: number;
-  city: string;
-  area: string;
-  postal_code: string;
-  block_sector: string;
-  street_road: string | null;
-  house_no: string | null;
-  flat_no: string | null;
-  floor_no: string | null;
-  name: string;
-  phone: string;
-  delivery_note: string;
   is_default: boolean;
-  block_Sector: string;
-  addressType: "home" | "office";
-  address_type: "home" | "office";
+  address: string;
 };
 
 export type TAddressBookResponse = {
