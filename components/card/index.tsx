@@ -94,11 +94,14 @@ export default function ProductCard({
 
   useEffect(() => {
     const fetchIsAddress = async () => {
+      setLoading(true);
       try {
         const res = await checkIsAddress();
         setIsAddress(res === "yes");
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchIsAddress();
