@@ -4,10 +4,14 @@ import { useState } from "react";
 import FindLocationPage, { Location } from "./FindLocationModal";
 import { toast } from "sonner";
 import { addAddress } from "@/app/account/components/action";
+import { useSearchParams } from "next/dist/client/components/navigation";
 
 export default function shippingAddress() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const searchParams = useSearchParams();
+  const product_id = searchParams.get("product_id");
 
   const handleOnConfirm = async (location: Location) => {
     setErrorMessage(null);
@@ -29,6 +33,10 @@ export default function shippingAddress() {
       if (res.status === "error") {
         setErrorMessage(res.message);
         return;
+      }
+
+      if (product_id) {
+        window.location.href = `?cart-modal=cart&product_id=${product_id}`;
       }
 
       toast.success(res.message || "Address added successfully!");

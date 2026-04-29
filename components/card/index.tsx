@@ -13,10 +13,11 @@ import Link from "next/link";
 import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addToCart } from "@/app/all-category/components/action";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
+import { checkIsAddress } from "../action";
 
 export function SkeletonProductCard() {
   return (
@@ -87,8 +88,21 @@ export default function ProductCard({
   payload?: TProduct;
   priority?: boolean;
 }) {
-  
   const [imageError, setImageError] = useState(false);
+  const [isAddress, setIsAddress] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchIsAddress = async () => {
+      try {
+        const res = await checkIsAddress();
+        setIsAddress(res === "yes");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchIsAddress();
+  }, []);
 
   // Function to handle image loading errors
   const handleImageError = () => {
@@ -98,7 +112,7 @@ export default function ProductCard({
   return (
     <section className="w-full select-none">
       <Link href={`/all-category/${payload?.id}`}>
-        <Card className="group flex h-fit min-h-[428px] w-full cursor-pointer flex-col overflow-hidden p-0">
+        <Card className="group flex h-fit min-h-107 w-full cursor-pointer flex-col overflow-hidden p-0">
           <CardHeader className="relative z-30 p-0">
             <div className="overflow-hidden">
               <Image
@@ -175,36 +189,16 @@ export default function ProductCard({
           <CardFooter className="mt-auto mb-4">
             <Link
               className="w-full"
-              href={`?cart-modal=cart&product_id=${payload?.id}`}
+              href={
+                isAddress
+                  ? `?cart-modal=cart&product_id=${payload?.id}`
+                  : `?shipping-address=shipping-modal&product_id=${payload?.id}`
+              }
             >
               <Button variant="secondary" className="w-full">
                 Add to Cart
               </Button>
             </Link>
-            {/* <CardActionGuard className="w-full">
-              <Counter
-                value={count}
-                onChange={(value) =>
-                  setCount(typeof value === "number" ? value : count)
-                }
-              />
-              
-              <Button
-                disabled={cartLoading}
-                onClick={() => handleAddToCard(payload?.id)}
-                variant="secondary"
-                className="flex-1"
-              >
-                {cartLoading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <Spinner className="size-4" />
-                    <span>Adding...</span>
-                  </div>
-                ) : (
-                  "Add to Cart"
-                )}
-              </Button>
-            </CardActionGuard> */}
           </CardFooter>
         </Card>
       </Link>
