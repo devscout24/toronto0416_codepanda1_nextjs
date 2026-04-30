@@ -14,10 +14,8 @@ import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
 import { useEffect, useState } from "react";
-import { addToCart } from "@/app/all-category/components/action";
-import { toast } from "sonner";
-import { Spinner } from "../ui/spinner";
 import { checkIsAddress } from "../action";
+import { Spinner } from "../ui/spinner";
 
 export function SkeletonProductCard() {
   return (
@@ -84,28 +82,13 @@ export function SkeletonProductCard() {
 export default function ProductCard({
   payload,
   // priority = false,
+  isAddress,
 }: {
   payload?: TProduct;
   priority?: boolean;
+  isAddress?: boolean;
 }) {
   const [imageError, setImageError] = useState(false);
-  const [isAddress, setIsAddress] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchIsAddress = async () => {
-      setLoading(true);
-      try {
-        const res = await checkIsAddress();
-        setIsAddress(res === "yes");
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchIsAddress();
-  }, []);
 
   // Function to handle image loading errors
   const handleImageError = () => {

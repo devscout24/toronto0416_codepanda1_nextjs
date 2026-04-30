@@ -6,7 +6,6 @@ import { LoginForm } from "../auth";
 import Logout from "../auth/logout";
 import { SignUpForm } from "../auth/signup";
 import { ForgotPasswordForm } from "../auth/resetPassword";
-import UpdateShippingAddress from "@/app/cart/modals/updateShippingAddress";
 import FailedModal from "@/app/cart/components/FailedModal";
 import ReviewModal from "./component/ReviewModal";
 import CartModal from "./component/CartModal";
@@ -24,14 +23,6 @@ export default function Modals() {
         openId="shipping-modal"
       >
         <ShippingAddress />
-      </Modal>
-
-      <Modal
-        title="Update shipping address"
-        modalId="update-shipping-address"
-        openId="update-shipping-modal"
-      >
-        <UpdateShippingAddress />
       </Modal>
 
       <Modal title="" modalId="place-order-modal" openId="place-order">

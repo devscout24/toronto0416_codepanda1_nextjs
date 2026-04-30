@@ -2,23 +2,28 @@ import Image from "next/image";
 import Search from "./search";
 import { RippleButton } from "@/components/animate-ui/components/buttons/ripple";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export default function Hero() {
   return (
     <>
-      <section className="flex h-[80vh] w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pb-16">
+      <section className="flex h-full w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pt-6 pb-24 md:h-[80vh] md:pt-0 md:pb-16">
         <div className="section-container flex w-full flex-col items-center md:flex-row md:justify-between">
           <div className="text-white">
-            <h1 className="text-3xl font-bold md:text-6xl">
-              From our store <br /> to your door
+            <Badge variant={"accent"}>100% HMA Halal product</Badge>
+            <h1 className="md:4xl mt-1 text-3xl font-bold lg:text-5xl">
+              South Asian & Middle
+              <br /> Eastern grocery focus
             </h1>
-            <p className="mt-5 text-xs md:w-[70%] md:text-base">
-              Fresh groceries and quality products delivered conveniently to
-              your doorstep.
+            <p className="mt-3 text-xs md:w-[70%] md:text-base lg:mt-5">
+              Service coverage across Durham Region and Scarborough
             </p>
 
             <Link href="/all-category">
-              <RippleButton variant="secondary" className="mt-10 px-8 py-6">
+              <RippleButton
+                variant="secondary"
+                className="mt-6 px-8 py-6 lg:mt-10"
+              >
                 Shop Now
               </RippleButton>
             </Link>
