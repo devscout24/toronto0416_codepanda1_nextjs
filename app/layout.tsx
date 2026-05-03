@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { Toaster } from "@/components/ui/sonner";
 import GuestSessionInitializer from "@/components/GuestSessionInitializer";
+import BottomNav from "@/components/main-nav/Bottomnav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,23 +46,30 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
         <GuestSessionInitializer />
+
         <div className="flex min-h-screen flex-col">
           <MainNav />
           <Breadcrumbs />
-          {children}
+
+          {/* main content — clears the fixed bottom nav on mobile */}
+          <main className="flex-1 pb-16 md:pb-0">{children}</main>
 
           <Suspense fallback={null}>
             <Modals />
           </Suspense>
 
-          <div className="mt-auto">
+          {/* footer hidden on mobile since bottom nav takes that space */}
+          <div>
             <Footer />
           </div>
         </div>
 
-        {/* Toaster must be inside body, but outside main layout */}
+        {/* fixed bottom nav — client component, isolated */}
+        <BottomNav />
+
         <Toaster position="top-right" />
       </body>
     </html>

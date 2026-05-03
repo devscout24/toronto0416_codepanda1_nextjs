@@ -51,13 +51,18 @@ export default function Sort({
   };
 
   return (
-    <div className="mb-7 flex justify-between rounded-2xl bg-white p-4">
-      <div className="flex items-center gap-4">
+    <div className="mb-4 flex items-center justify-between rounded-2xl bg-white p-3 md:mb-7 md:p-4">
+      <div className="flex items-center gap-2 md:gap-4">
+        {/* Filter drawer — mobile/tablet only */}
         <div className="block lg:hidden">
           <Drawer direction="left">
             <DrawerTrigger asChild>
-              <Button variant="outline">
-                <SlidersHorizontal />
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 w-9 p-0 md:h-10 md:w-10"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
               </Button>
             </DrawerTrigger>
             <DrawerContent className="max-w-[275px]! rounded-2xl border bg-white">
@@ -73,28 +78,36 @@ export default function Sort({
           </Drawer>
         </div>
 
-        <p className="hidden md:block">
-          Showing {products?.length} of{" "}
-          {Array.isArray(productData) ? 0 : productData?.count} products
+        {/* Product count */}
+        <p className="text-xs text-gray-500 sm:text-sm md:text-base">
+          <span className="font-medium text-gray-900">{products?.length}</span>
+          <span className="hidden sm:inline">
+            {" "}
+            of {Array.isArray(productData) ? 0 : productData?.count} products
+          </span>
+          <span className="sm:hidden">
+            /{Array.isArray(productData) ? 0 : productData?.count}
+          </span>
         </p>
       </div>
 
-      <div>
-        <Select value={currentSort} onValueChange={handleSortChange}>
-          <SelectTrigger className="w-[120px] bg-neutral-50 py-5 text-black md:w-[180px]">
-            <SelectValue placeholder="Price" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="default">Default</SelectItem>
-            <SelectItem value="low_to_high">
-              Low <ArrowRightLeft className="ml-2 inline h-4 w-4" /> High
-            </SelectItem>
-            <SelectItem value="high_to_low">
-              High <ArrowLeftRight className="ml-2 inline h-4 w-4" /> Low
-            </SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Sort select */}
+      <Select value={currentSort} onValueChange={handleSortChange}>
+        <SelectTrigger className="h-9 w-[110px] bg-neutral-50 text-xs text-black sm:w-[140px] sm:text-sm md:h-10 md:w-[180px] md:py-5 md:text-base">
+          <SelectValue placeholder="Sort" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="default">Default</SelectItem>
+          <SelectItem value="low_to_high">
+            Low <ArrowRightLeft className="ml-2 inline h-3 w-3 md:h-4 md:w-4" />{" "}
+            High
+          </SelectItem>
+          <SelectItem value="high_to_low">
+            High{" "}
+            <ArrowLeftRight className="ml-2 inline h-3 w-3 md:h-4 md:w-4" /> Low
+          </SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 }

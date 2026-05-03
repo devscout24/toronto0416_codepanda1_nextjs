@@ -5,13 +5,25 @@ import FullScreen from "./FullScreen";
 import MobileScreen from "./MobileScreen";
 import { TUserAccount } from "@/types/user.type";
 
+type NavItem = {
+  name: string;
+  href: string;
+};
+
+export type NavGroup = {
+  name: string;
+  menu: NavItem[];
+};
+
 export default function MainNavClient({
   navList,
+  navListMobile,
   isUserLoggedIn,
   cartLength,
   profileUser,
 }: {
   navList: { name: string; href: string }[];
+  navListMobile: NavGroup[];
   isUserLoggedIn: boolean;
   cartLength: number;
   profileUser: TUserAccount | null;
@@ -30,7 +42,7 @@ export default function MainNavClient({
         isSticky ? "fixed top-0 right-0 left-0 z-50 transition-all" : ""
       }`}
     >
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <FullScreen
           navList={navList}
           isUserLoggedIn={isUserLoggedIn}
@@ -39,9 +51,9 @@ export default function MainNavClient({
         />
       </div>
 
-      <div className="lg:hidden">
+      <div className="md:hidden">
         <MobileScreen
-          navList={navList}
+          navListMobile={navListMobile}
           isUserLoggedIn={isUserLoggedIn}
           cartLength={cartLength}
           profileUser={profileUser}

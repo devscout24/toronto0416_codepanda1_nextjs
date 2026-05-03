@@ -50,19 +50,19 @@ export default function Search() {
   return (
     <>
       <section className="section-container">
-        <div className="bg-primary-500 flex flex-col items-center justify-between gap-6 rounded-2xl p-5 md:gap-8 md:p-10 lg:flex-row">
+        <div className="bg-primary-500 flex flex-col items-center justify-between gap-3 rounded-2xl p-5 md:gap-8 md:p-10 lg:flex-row">
           <div className="text-white lg:w-1/2">
             <h2 className="text-lg font-semibold sm:text-xl md:text-2xl lg:text-3xl">
               Check if we deliver to your area
             </h2>
-            <p className="mt-1 text-sm opacity-90 sm:text-sm lg:text-base">
+            <p className="text-xs opacity-90 md:mt-1 lg:text-base">
               Enter your postal code to see if Sufi&apos;s delivery service is
               available in your location.
             </p>
           </div>
 
           <div className="w-full lg:w-1/2">
-            <div className="relative flex h-14 items-center overflow-hidden rounded-lg bg-white sm:h-16">
+            <div className="relative flex h-11 items-center overflow-hidden rounded-lg bg-white md:h-14">
               <LocationIcon className="absolute left-3 shrink-0 text-neutral-200" />
               <input
                 type="text"

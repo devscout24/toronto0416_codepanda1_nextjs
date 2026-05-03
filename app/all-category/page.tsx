@@ -37,7 +37,7 @@ export default async function AllCategoryPage({
   const products = Array.isArray(productData) ? [] : productData.results || [];
 
   return (
-    <section className="section-container w-full pt-10">
+    <section className="section-container w-full pt-4 md:pt-10">
       <div className="flex gap-7">
         <div className="hidden w-1/5 lg:block">
           <Suspense fallback={<FiltersSkeleton />}>

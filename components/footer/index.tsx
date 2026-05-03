@@ -35,7 +35,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="text-white">
+    <footer className="pb-15 text-white md:pb-0">
       <section className="bg-primary-900 w-full py-15">
         <div className="section-container flex flex-col items-start gap-10 lg:flex-row">
           <div className="lg:w-[30%]">

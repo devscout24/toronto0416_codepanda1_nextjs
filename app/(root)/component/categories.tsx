@@ -16,43 +16,6 @@ import Image from "next/image";
 
 export default function Categories() {
   const [categories, setCategories] = useState<TCategory[]>([]);
-  // const categories = [
-  //   {
-  //     icon: Categories1Icon,
-  //     name: "Vegetable",
-  //     subtitle: "Local market",
-  //   },
-  //   {
-  //     icon: Categories2Icon,
-  //     name: "Snacks & Breads",
-  //     subtitle: "In store delivery",
-  //   },
-  //   {
-  //     icon: Categories3Icon,
-  //     name: "Fruits",
-  //     subtitle: "Comical Free",
-  //   },
-  //   {
-  //     icon: Categories1Icon,
-  //     name: "Vegetable",
-  //     subtitle: "Local market",
-  //   },
-  //   {
-  //     icon: Categories4Icon,
-  //     name: "Milk & Dairy",
-  //     subtitle: "Process Food",
-  //   },
-  //   {
-  //     icon: Categories5Icon,
-  //     name: "Chicken legs",
-  //     subtitle: "Frozen Meal",
-  //   },
-  //   {
-  //     icon: Categories2Icon,
-  //     name: "Snacks & Breads",
-  //     subtitle: "In store delivery",
-  //   },
-  // ];
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -81,14 +44,14 @@ export default function Categories() {
                 href={`/all-category?categories=${category.slug}`}
                 key={idx}
               >
-                <div className="hover:bg-primary-50 group flex w-full flex-1 cursor-pointer items-start justify-between gap-4 rounded-sm bg-white p-3.5 duration-300 active:scale-95">
+                <div className="hover:bg-primary-50 group flex w-full flex-1 cursor-pointer items-start justify-between gap-2 rounded-sm bg-white p-3 duration-300 active:scale-95 md:gap-4 md:p-3.5">
                   <div className="select-none">
-                    <div className="text-lg font-semibold text-nowrap">
+                    <div className="text-sm font-medium text-nowrap md:text-lg md:font-semibold">
                       {category.name}
                     </div>
                     <div className="text-xs text-nowrap">{category.slogan}</div>
                   </div>
-                  <div className="mt-8 h-12 w-12 duration-500 group-hover:scale-120">
+                  <div className="mt-8 h-10 w-10 duration-500 group-hover:scale-120 md:h-12 md:w-12">
                     <Image
                       src={
                         category.icon || category.svg_icon || Categories1Icon
@@ -96,7 +59,7 @@ export default function Categories() {
                       alt={category.name}
                       width={100}
                       height={100}
-                      className="h-12 w-auto"
+                      className="h-10 w-auto md:h-12"
                     />
                   </div>
                 </div>

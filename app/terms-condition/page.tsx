@@ -1,3 +1,5 @@
+"use client";
+
 import { content } from "@/consts/content";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
@@ -14,7 +16,7 @@ export default function TermsConditionPage() {
         </h2>
       </div>
 
-      <div className="section-container my-10">
+      <div className="mx-auto my-10 w-full max-w-4xl px-4">
         <div>{reactElements}</div>
       </div>
     </section>

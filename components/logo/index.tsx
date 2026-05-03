@@ -10,6 +10,8 @@ export default function SufisLogo({ size = 5 }: { size?: number }) {
           alt="logo"
           width={100}
           height={100}
+          loading="eager"
+          priority
           className="py-1"
           style={{ width: `${size}rem` }}
         />

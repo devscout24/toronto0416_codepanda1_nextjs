@@ -99,18 +99,30 @@ export async function fetcher<T = unknown>(
   const base = normalizeBaseApiUrl(process.env.NEXT_PUBLIC_BASE_API ?? "");
   const url = `${base}/${cleanEndpoint}`;
 
-  // Don't add auth header for auth endpoints (normalize comparison)
-  const authEndpoints = ["login", "register", "products"];
+  // Don't add auth header for public endpoints (normalize comparison)
+  const publicEndpoints = [
+    "login",
+    "register",
+    "products",
+    "recently-viewed-products",
+    "best-selling",
+    "weekly-special",
+    "all-category",
+    "init-guest-session",
+  ];
   const normalizedEndpoint = cleanEndpoint.replace(/\/+$/, "");
-  const isAuthEndpoint = authEndpoints.includes(normalizedEndpoint);
+  const isPublicEndpoint = publicEndpoints.some((endpoint) =>
+    normalizedEndpoint.includes(endpoint),
+  );
 
   const cookieStore = await cookies();
-  const accessToken = !isAuthEndpoint
+  const accessToken = !isPublicEndpoint
     ? (cookieStore.get("access_token")?.value ?? null)
     : null;
-  const guestSessionId = !accessToken
-    ? await getServerGuestSessionId(base)
-    : null;
+  const guestSessionId =
+    !accessToken && !isPublicEndpoint
+      ? await getServerGuestSessionId(base)
+      : null;
 
   const defaultOptions: RequestInit = {
     headers: {

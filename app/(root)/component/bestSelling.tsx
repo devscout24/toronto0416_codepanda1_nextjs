@@ -23,7 +23,7 @@ export default async function BestSelling() {
         </Link>
       </div>
 
-      <div className="mt-8 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid w-full grid-cols-2 gap-2 md:gap-4 lg:grid-cols-3">
         {productData.map((product, idx) => (
           <ProductCard
             key={product.id}

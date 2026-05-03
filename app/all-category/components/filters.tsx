@@ -343,7 +343,7 @@ export default function Filters() {
   const inStockChecked = parseBooleanParam(searchParams.get("in_stock"));
 
   return (
-    <section className="rounded-2xl bg-white shadow lg:sticky lg:top-0">
+    <section className="rounded-2xl bg-white lg:sticky lg:top-0 lg:shadow">
       <div className="flex items-center justify-between px-4 pt-4">
         <div className="flex items-center gap-2.5">
           <FilterIcon />

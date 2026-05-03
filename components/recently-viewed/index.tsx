@@ -9,9 +9,8 @@ export default async function RecentlyViewed({
 }: {
   title?: string;
 }) {
+  let productData: TProduct[] = [];
 
-let productData: TProduct[] = [];
-  
   try {
     const data = await getRecentlyViews();
     productData = data ?? [];
@@ -19,6 +18,8 @@ let productData: TProduct[] = [];
     console.error("Failed to fetch weekly special products:", error);
     productData = [];
   }
+
+  if (productData?.length === 0) return null;
 
   return (
     <section>

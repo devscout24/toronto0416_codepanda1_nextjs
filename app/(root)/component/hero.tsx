@@ -7,11 +7,11 @@ import { Badge } from "@/components/ui/badge";
 export default function Hero() {
   return (
     <>
-      <section className="flex h-full w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pt-6 pb-24 md:h-[80vh] md:pt-0 md:pb-16">
-        <div className="section-container flex w-full flex-col items-center md:flex-row md:justify-between">
+      <section className="flex h-full w-full items-center bg-[url('/images/BGHome.png')] bg-cover bg-center pb-36 md:h-[60vh] md:pb-16 lg:h-[80vh]">
+        <div className="section-container flex w-full flex-col-reverse items-center md:flex-row md:justify-between">
           <div className="text-white">
             <Badge variant={"accent"}>100% HMA Halal product</Badge>
-            <h1 className="md:4xl mt-1 text-3xl font-bold lg:text-5xl">
+            <h1 className="md:4xl mt-3 text-3xl font-bold lg:text-5xl">
               South Asian & Middle
               <br /> Eastern grocery focus
             </h1>
@@ -22,7 +22,7 @@ export default function Hero() {
             <Link href="/all-category">
               <RippleButton
                 variant="secondary"
-                className="mt-6 px-8 py-6 lg:mt-10"
+                className="mt-6 md:px-8 md:py-6 lg:mt-10"
               >
                 Shop Now
               </RippleButton>
@@ -40,7 +40,7 @@ export default function Hero() {
           </div>
         </div>
       </section>
-      <div className="-mt-56">
+      <div className="-mt-52">
         <Search />
       </div>
     </>

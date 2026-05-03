@@ -12,6 +12,13 @@ import BagIcon from "@/assets/icons/bag.svg";
 import { Button } from "../animate-ui/components/buttons/button";
 import { TUserAccount } from "@/types/user.type";
 import SearchField from "./searchField";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+} from "../animate-ui/components/radix/dialog";
+import { Search } from "lucide-react";
+import { useState } from "react";
 
 export default function FullScreen({
   navList,
@@ -24,20 +31,35 @@ export default function FullScreen({
   cartLength: number;
   profileUser: TUserAccount | null;
 }) {
+  const [searchOpen, setSearchOpen] = useState(false);
   return (
     <nav className="section-container flex w-full items-center justify-between py-2">
       <div className="flex items-center gap-16">
         <SufisLogo size={6} />
 
-        <NavigationMenu className="gap-10">
+        <NavigationMenu className="gap-6! xl:gap-10">
           {navList.map((item) => (
             <NavItem key={item.name} {...item} />
           ))}
         </NavigationMenu>
       </div>
 
-      <div className="flex items-center gap-5">
-        <SearchField />
+      <div className="flex items-center gap-3 xl:gap-5">
+        <div className="hidden lg:block">
+          <SearchField />
+        </div>
+        <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
+          <DialogTrigger className="hidden md:block lg:hidden" asChild>
+            <button aria-label="Open search">
+              <Search className="size-7" />
+            </button>
+          </DialogTrigger>
+          <DialogContent className="top-0 left-0 w-72 translate-x-0 translate-y-0 rounded-none rounded-b-2xl p-4 sm:top-[5%] sm:left-1/2 sm:max-w-lg sm:-translate-x-1/2 sm:rounded-2xl">
+            <div className="flex items-center gap-2">
+              <SearchField isTablet />
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {isUserLoggedIn ? (
           <>

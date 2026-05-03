@@ -23,7 +23,7 @@ export default async function AllProducts({
     <>
       <Sort productData={productData} products={products} />
 
-      <div className="grid min-h-[300px] grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid min-h-75 grid-cols-2 gap-2 md:gap-5 lg:grid-cols-3">
         {products && products.length > 0 ? (
           products.map((product, idx) => (
             <ProductCard
