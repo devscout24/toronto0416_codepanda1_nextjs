@@ -20,7 +20,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - .env.production
+      - .env
     volumes:
       - /app/node_modules
     healthcheck:
