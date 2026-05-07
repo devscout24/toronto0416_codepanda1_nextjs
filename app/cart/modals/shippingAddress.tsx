@@ -13,45 +13,49 @@ export default function shippingAddress() {
   const searchParams = useSearchParams();
   const product_id = searchParams.get("product_id");
 
-  const handleOnConfirm = async (location: Location) => {
-    setErrorMessage(null);
-    setIsLoading(true);
+ const handleOnConfirm = async (location: Location) => {
+   setErrorMessage(null);
+   setIsLoading(true);
 
-    try {
-      const res = await addAddress({
-        address: location.address,
-        is_default: "True",
-      });
+   try {
+     const res = await addAddress({
+       address: location.address,
+       is_default: "True",
+     });
 
-      console.log(res, "response from addAddress in shippingAddress component");
+     console.log(res, "response from addAddress in shippingAddress component");
 
-      if (!res) {
-        setErrorMessage("Something went wrong. Please try again.");
-        return;
-      }
+     if (!res) {
+       setErrorMessage("Something went wrong. Please try again.");
+       return;
+     }
 
-      if (res.status === "error") {
-        setErrorMessage(res.message);
-        return;
-      }
+     if (res.status === "error") {
+       setErrorMessage(res.message);
+       return;
+     }
 
-      if (product_id) {
-        window.location.href = `?cart-modal=cart&product_id=${product_id}`;
-      }
+     toast.success(res.message || "Address added successfully!");
 
-      toast.success(res.message || "Address added successfully!");
-      window.history.back();
-    } catch (error: unknown) {
-      console.error("Error adding address:", error);
-      setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : "Failed to add address. Please try again.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+     if (product_id) {
+       window.location.replace(
+         `${window.location.pathname}?cart-modal=cart&product_id=${product_id}`,
+       );
+       return; // stop here, don't call history.back()
+     }
+
+     window.history.back();
+   } catch (error: unknown) {
+     console.error("Error adding address:", error);
+     setErrorMessage(
+       error instanceof Error
+         ? error.message
+         : "Failed to add address. Please try again.",
+     );
+   } finally {
+     setIsLoading(false);
+   }
+ };
 
   return (
     <div>
