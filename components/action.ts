@@ -34,6 +34,7 @@ export async function addCart({
 export async function checkIsAddress() {
   try {
     const res = await fetcher<AddressExistenceResponse>("/have-address/");
+    console.log(res, "form res of action");
     return res?.data?.have_address;
   } catch (error) {
     console.error(error);

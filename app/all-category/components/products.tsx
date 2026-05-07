@@ -11,13 +11,7 @@ export default async function AllProducts({
   productData?: TProductData | [];
   products?: TProduct[];
 }) {
-  let isAddress = false;
-  try {
-    const res = await checkIsAddress();
-    isAddress = res === "yes";
-  } catch (error) {
-    console.error(error);
-  }
+  
 
   return (
     <>
@@ -26,11 +20,7 @@ export default async function AllProducts({
       <div className="grid min-h-75 grid-cols-2 gap-2 md:gap-5 lg:grid-cols-3">
         {products && products.length > 0 ? (
           products.map((product, idx) => (
-            <ProductCard
-              key={product?.id || idx}
-              payload={product}
-              isAddress={isAddress}
-            />
+            <ProductCard key={product?.id || idx} payload={product} />
           ))
         ) : (
           <div className="col-span-full flex h-full w-full items-center justify-center py-20">

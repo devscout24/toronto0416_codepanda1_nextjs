@@ -12,7 +12,8 @@ import Link from "next/link";
 import CardActionGuard from "./components/CardActionGuard";
 import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { checkIsAddress } from "../action";
 
 export function SkeletonProductCard() {
   return (
@@ -59,17 +60,27 @@ export function SkeletonProductCard() {
 
 export default function ProductCard({
   payload,
-  isAddress,
 }: {
   payload?: TProduct;
   priority?: boolean;
-  isAddress?: boolean;
 }) {
   const [imageError, setImageError] = useState(false);
+  const [isAddress, setIsAddress] = useState<boolean>(false);
+  useEffect(() => {
+    const checkAddress = async () => {
+      try {
+        const res = await checkIsAddress();
+        setIsAddress(res === "yes");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    checkAddress();
+  }, []);
 
   return (
     <section className="w-full select-none">
-      <Card className="group flex h-fit min-h-[340px] w-full flex-col overflow-hidden p-0 sm:min-h-107">
+      <Card className="group flex h-fit min-h-85 w-full flex-col overflow-hidden p-0 sm:min-h-107">
         <Link href={`/all-category/${payload?.id}`}>
           <CardHeader className="relative z-30 p-0">
             <div className="overflow-hidden">
