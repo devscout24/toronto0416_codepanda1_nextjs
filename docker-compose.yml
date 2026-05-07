@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: AIzaSyBFHDroNvBvr33SCfRaWDjZZVJKUafEDb8
+        NEXT_PUBLIC_BASE_API: https://api.sufismarket.com/api
+        NEXT_PUBLIC_BASE_URL: https://api.sufismarket.com
     container_name: sufis_market
     restart: unless-stopped
     dns:
