@@ -1,5 +1,6 @@
 "use client";
 
+import { checkIsAddress } from "@/components/action";
 import { Button } from "@/components/animate-ui/components/buttons/button";
 import Rating from "@/components/shared/Rating";
 import { ThumbnailCarousel } from "@/components/shared/ThumbnailsCarousel";
@@ -7,8 +8,22 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { TProduct } from "@/types/product.type";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function DetailsView({ payload }: { payload: TProduct }) {
+  const [isAddress, setIsAddress] = useState<boolean>(true);
+  useEffect(() => {
+    const checkAddress = async () => {
+      try {
+        const res = await checkIsAddress();
+        setIsAddress(res === "yes");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    checkAddress();
+  }, []);
+
   return (
     <section className="flex flex-col-reverse items-center justify-between gap-10 lg:flex-row">
       <div className="w-full lg:w-1/2">
@@ -67,10 +82,18 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
           </div>
 
           <Link
+            scroll={false}
             className="w-full"
-            href={`?cart-modal=cart&product_id=${payload?.id}`}
+            href={
+              isAddress
+                ? `?cart-modal=cart&product_id=${payload?.id}`
+                : `?shipping-address=shipping-modal&product_id=${payload?.id}`
+            }
           >
-            <Button variant="secondary" className="w-full">
+            <Button
+              variant="secondary"
+              className="h-8 w-full text-xs sm:h-9 sm:text-sm"
+            >
               Add to Cart
             </Button>
           </Link>

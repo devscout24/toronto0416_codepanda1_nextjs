@@ -142,6 +142,7 @@ export function LoginForm({
                           <Link
                             href="?resetpassword-modal=resetpassword"
                             className="ml-auto text-sm underline-offset-4 hover:underline"
+                            scroll={false}
                           >
                             Forgot your password?
                           </Link>
@@ -178,7 +179,9 @@ export function LoginForm({
                   </div>
                   <FieldDescription className="text-center">
                     Don&apos;t have an account?{" "}
-                    <Link href="?signup-modal=signup">Sign up</Link>
+                    <Link href="?signup-modal=signup" scroll={false}>
+                      Sign up
+                    </Link>
                   </FieldDescription>
                 </Field>
               </form>

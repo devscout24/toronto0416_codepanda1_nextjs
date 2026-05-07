@@ -100,9 +100,17 @@ export default function FindLocationPage({
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
-    if (!apiKey) return;
+    if (!apiKey) {
+      console.error(
+        "❌ Google Maps API Key is missing! Check NEXT_PUBLIC_GOOGLE_MAPS_API_KEY env var",
+      );
+      return;
+    }
+
+    console.log("✅ Google Maps API Key found, loading script...");
 
     if (window.google?.maps?.places) {
+      console.log("✅ Google Maps already loaded");
       setGoogleReady(true);
       return;
     }
@@ -114,14 +122,28 @@ export default function FindLocationPage({
       script.async = true;
       script.defer = true;
       (script as any).loading = "async";
-      script.onload = () => setGoogleReady(true);
-      script.onerror = () => console.error("Google Maps failed to load");
+      
+      script.onload = () => {
+        console.log("✅ Google Maps script loaded successfully");
+        setGoogleReady(true);
+      };
+
+      script.onerror = (error) => {
+        console.error("❌ Google Maps script failed to load:", error);
+        console.error("Script src was:", script.src);
+      };
+      
       document.head.appendChild(script);
     } else {
       const existing = document.getElementById(
         "gmaps-page",
       ) as HTMLScriptElement;
-      existing.addEventListener("load", () => setGoogleReady(true));
+      if (!existing.onload) {
+        existing.addEventListener("load", () => {
+          console.log("✅ Google Maps script loaded (from cache)");
+          setGoogleReady(true);
+        });
+      }
     }
   }, [apiKey]);
 

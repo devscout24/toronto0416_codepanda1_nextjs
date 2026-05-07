@@ -31,7 +31,7 @@ export default async function AddressBookPage() {
       <AddressBookClient addressBook={addressBook} />
 
       <div className="mt-5 flex justify-end">
-        <Link href="?shipping-address=shipping-modal">
+        <Link href="?shipping-address=shipping-modal" scroll={false}>
           <Button>Add New Address</Button>
         </Link>
       </div>

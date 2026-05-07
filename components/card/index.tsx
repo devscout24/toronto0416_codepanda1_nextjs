@@ -65,7 +65,7 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   const [imageError, setImageError] = useState(false);
-  const [isAddress, setIsAddress] = useState<boolean>(false);
+  const [isAddress, setIsAddress] = useState<boolean>(true);
   useEffect(() => {
     const checkAddress = async () => {
       try {
@@ -170,6 +170,7 @@ export default function ProductCard({
 
         <CardFooter className="mt-auto mb-3 px-2 sm:mb-4 sm:px-4">
           <Link
+            scroll={false}
             className="w-full"
             href={
               isAddress

@@ -107,7 +107,7 @@ export default function FullScreen({
                 )}
               </IconButton>
             </Link>
-            <Link href="?login-modal=login">
+            <Link href="?login-modal=login" scroll={false}>
               <Button variant="secondary">Sign in</Button>
             </Link>
           </div>
