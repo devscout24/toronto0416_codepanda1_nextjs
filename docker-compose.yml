@@ -1,8 +1,12 @@
+version: '3.8'
+
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
     container_name: sufis_market
     restart: unless-stopped
     dns:
@@ -12,7 +16,36 @@ services:
     environment:
       NODE_ENV: production
       NODE_OPTIONS: "--max-old-space-size=4096"
+      PORT: 3000
     ports:
       - "3000:3000"
     env_file:
-      - .env
+      - .env.production
+    volumes:
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "app=sufis_market"
+    networks:
+      - sufis_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+networks:
+  sufis_network:
+    driver: bridge
