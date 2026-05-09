@@ -14,6 +14,7 @@ import { Button } from "../animate-ui/components/buttons/button";
 import defaultImage from "@/assets/images/default.png";
 import { useEffect, useState } from "react";
 import { checkIsAddress } from "../action";
+import { Spinner } from "../ui/spinner";
 
 export function SkeletonProductCard() {
   return (
@@ -66,13 +67,17 @@ export default function ProductCard({
 }) {
   const [imageError, setImageError] = useState(false);
   const [isAddress, setIsAddress] = useState<boolean>(true);
+  const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>(false);
   useEffect(() => {
     const checkAddress = async () => {
+      setIsLoadingAddress(true);
       try {
         const res = await checkIsAddress();
         setIsAddress(res === "yes");
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoadingAddress(false);
       }
     };
     checkAddress();
@@ -179,10 +184,11 @@ export default function ProductCard({
             }
           >
             <Button
+              disabled={isLoadingAddress}
               variant="secondary"
               className="h-8 w-full text-xs sm:h-9 sm:text-sm"
             >
-              Add to Cart
+              Add to Cart {isLoadingAddress && <Spinner />}
             </Button>
           </Link>
         </CardFooter>

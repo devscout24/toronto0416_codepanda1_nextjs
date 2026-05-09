@@ -5,6 +5,7 @@ import { Button } from "@/components/animate-ui/components/buttons/button";
 import Rating from "@/components/shared/Rating";
 import { ThumbnailCarousel } from "@/components/shared/ThumbnailsCarousel";
 import { Badge } from "@/components/ui/badge";
+import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
 import { TProduct } from "@/types/product.type";
 import Link from "next/link";
@@ -12,13 +13,17 @@ import { useEffect, useState } from "react";
 
 export default function DetailsView({ payload }: { payload: TProduct }) {
   const [isAddress, setIsAddress] = useState<boolean>(true);
+  const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>(false);
   useEffect(() => {
     const checkAddress = async () => {
+      setIsLoadingAddress(true);
       try {
         const res = await checkIsAddress();
         setIsAddress(res === "yes");
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoadingAddress(false);
       }
     };
     checkAddress();
@@ -91,10 +96,11 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
             }
           >
             <Button
+              disabled={isLoadingAddress}
               variant="secondary"
               className="h-8 w-full text-xs sm:h-9 sm:text-sm"
             >
-              Add to Cart
+              Add to Cart {isLoadingAddress && <Spinner />}
             </Button>
           </Link>
         </div>
