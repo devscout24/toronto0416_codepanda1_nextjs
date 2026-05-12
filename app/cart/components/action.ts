@@ -30,7 +30,7 @@ export async function addAddress(values: {
       method: "POST",
       body: JSON.stringify(values),
     });
-    console.log(res, "response from addAddress in action");
+    // console.log(res, "response from addAddress in action");
     revalidatePath("/account/address-book");
     revalidatePath("/cart/checkout");
     return res;

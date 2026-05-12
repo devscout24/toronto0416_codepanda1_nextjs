@@ -563,7 +563,7 @@ export async function repairCollection(
     const data = await readCollection(collection);
     return { repaired: false, recordCount: data.length };
   } catch {
-    console.log(`Repairing collection ${collection}...`);
+    // console.log(`Repairing collection ${collection}...`);
     await writeCollection(collection, []);
     return { repaired: true, recordCount: 0 };
   }

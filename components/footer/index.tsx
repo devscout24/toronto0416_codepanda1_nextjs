@@ -1,127 +1,210 @@
 import FacebookIcon from "@/assets/icons/facebook.svg";
 import InstaIcon from "@/assets/icons/insta.svg";
 import TwitterIcon from "@/assets/icons/twitter.svg";
-import LocationIcon from "@/assets/icons/location.svg";
-import PhoneIcon from "@/assets/icons/phone.svg";
 import EmailIcon from "@/assets/icons/email.svg";
-// import PaypalIcon from "@/assets/svgs/Paypal.svg";
-// import AmexIcon from "@/assets/svgs/Amex.svg";
-// import AppleIcon from "@/assets/svgs/Apple pay.svg";
-// import DiscoverIcon from "@/assets/svgs/Discover.svg";
-// import GoogleIcon from "@/assets/svgs/Google pay.svg";
-import MasterCadIcon from "@/assets/svgs/Mastercad.svg";
-import VisaIcon from "@/assets/svgs/Visa.svg";
+import LocationIcon from "@/assets/icons/location.svg";
+import stripeIcon from "@/assets/icons/stripe.png";
 import SufisLogo from "../logo";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
-import StripeIcon from "@/assets/icons/stripe.svg";
-import { Clock3, MapPinned } from "lucide-react";
+import { Clock3, MapPinned, Phone, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
-  const footerNav = {
-    Resources: [
-      { name: "Home", href: "/" },
-      { name: "Best Selling", href: "/#best-selling" },
-      { name: "Weekly Special", href: "/#weekly-specials" },
-      { name: "Explore All", href: "/all-category" },
-    ],
-    Information: [
-      { name: "Contact Us", href: "/contact-us" },
-      { name: "Privacy policy", href: "/privacy-policy" },
-      { name: "Terms & conditions", href: "/terms-condition" },
-      // { name: "Refund policy", href: "#" },
-      // { name: "Shipping & return", href: "#" },
-    ],
-  };
+  const customerServiceLinks = [
+    { name: "Home", href: "/" },
+    { name: "Best Selling", href: "/#best-selling" },
+    { name: "Weekly Special", href: "/#weekly-specials" },
+    { name: "Explore All Categories", href: "/all-category" },
+    { name: "Contact Us", href: "/contact-us" },
+  ];
+
+  const policyLinks = [
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms-condition" },
+    // { name: "Refund Policy", href: "#" },
+    // { name: "Shipping & Returns", href: "#" },
+  ];
+
+  const contactDetails = [
+    {
+      icon: <LocationIcon className="mt-0.5 shrink-0" />,
+      text: "Durham Region — Ajax, ON L1Z 0K5, Canada",
+    },
+    {
+      icon: <EmailIcon className="shrink-0" />,
+      text: "info@sufismarket.com",
+      href: "mailto:info@sufismarket.com",
+    },
+    // {
+    //   icon: <Phone size={15} className="shrink-0" />,
+    //   text: "+1 (235) 612-3890",
+    //   href: "tel:+12356123890",
+    // },
+  ];
+
+  const deliveryDetails = [
+    {
+      icon: <Clock3 size={15} className="mt-0.5 shrink-0" />,
+      text: "Next business day delivery. Order cutoff: 3:00 PM.",
+    },
+    {
+      icon: <MapPinned size={15} className="mt-0.5 shrink-0" />,
+      text: "Serving: Ajax · Pickering · Whitby · Oshawa · Scarborough",
+    },
+  ];
 
   return (
-    <footer className="pb-15 text-white md:pb-0">
-      <section className="bg-primary-900 w-full py-15">
-        <div className="section-container flex flex-col items-start gap-10 lg:flex-row">
-          <div className="lg:w-[30%]">
-            <SufisLogo size={9} />
-            <p className="mt-4 mb-5">
-              Distracted by the readable content of a page when looking at its
-              layout.
+    <footer className="text-white">
+      {/* ── Main footer body ── */}
+      <section className="bg-primary-900 w-full">
+        <div className="section-container grid grid-cols-1 gap-x-10 gap-y-12 py-20 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+          {/* Column 1 — Brand (wider than the rest) */}
+          <div className="flex flex-col gap-6">
+            <SufisLogo size={8} />
+            <p className="max-w-xs text-sm leading-relaxed">
+              Sufis Market brings fresh, certified halal groceries, produce and
+              We serve families across the Durham Region with reliable next
+              business day delivery — because quality food should always be
+              within reach.
             </p>
-            <div className="flex items-center gap-5">
-              <FacebookIcon className="hover:text-secondary cursor-pointer" />
-              <InstaIcon className="hover:text-secondary cursor-pointer" />
-              <TwitterIcon className="hover:text-secondary cursor-pointer" />
-            </div>
           </div>
-          <div className="flex flex-col items-start justify-between gap-10 md:flex-row lg:w-[70%]">
-            {Object.keys(footerNav).map((category, idx) => (
-              <div key={idx}>
-                <p className="mb-5 text-xl font-semibold">{category}</p>
-                <ul>
-                  {footerNav[category as keyof typeof footerNav].map(
-                    (item, idx) => (
-                      <li key={idx} className="group mb-2 cursor-pointer">
-                        <Link href={item.href}>
-                          <div className="w-fit">
-                            <p>{item.name}</p>
-                            <Separator className="origin-left scale-x-0 duration-300 group-hover:scale-x-100" />
-                          </div>
-                        </Link>
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </div>
-            ))}
 
-            <div>
-              <p className="mb-5 text-xl font-semibold">Contact</p>
-
-              {[
-                {
-                  icon: <LocationIcon />,
-                  text: "Durham Region- Ajax, ON L1Z- OK5, Canada",
-                },
-                // {
-                //   icon: <PhoneIcon />,
-                //   text: "+1 2356-12389\n+1 5632-36215",
-                // },
-                { icon: <EmailIcon />, text: "info@sufismarket.com" },
-                {
-                  icon: <Clock3 size={16} />,
-                  text: "Next business day delivery (cutoff: 3 PM)",
-                },
-                {
-                  icon: <MapPinned size={16} />,
-                  text: "Ajax, Pickering, Whitby, Oshawa, Scarborough",
-                },
-              ].map((item, idx) => (
-                <div className="mb-2 flex items-center gap-2" key={idx}>
-                  {item.icon}
-                  <p className="whitespace-pre-line">{item.text}</p>
-                </div>
+          {/* Column 2 — Customer Service */}
+          <div>
+            <p className="mb-4 text-base font-semibold tracking-wide uppercase">
+              Customer Service
+            </p>
+            <ul className="space-y-3">
+              {customerServiceLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-secondary group flex items-center gap-1.5 text-sm transition-colors duration-200"
+                  >
+                    <ChevronRight
+                      size={13}
+                      className="-translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                    />
+                    {item.name}
+                  </Link>
+                </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Column 3 — Policies & Contact */}
+          <div>
+            <p className="mb-4 text-base font-semibold tracking-wide uppercase">
+              Policies
+            </p>
+            <ul className="mb-10 space-y-3">
+              {policyLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-secondary group flex items-center gap-1.5 text-sm transition-colors duration-200"
+                  >
+                    <ChevronRight
+                      size={13}
+                      className="-translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                    />
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mb-4 text-base font-semibold tracking-wide uppercase">
+              Get in Touch
+            </p>
+            <ul className="space-y-4">
+              {contactDetails.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="text-secondary mt-0.5 shrink-0">
+                    {item.icon}
+                  </span>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="hover:text-secondary text-sm leading-relaxed transition-colors duration-200"
+                    >
+                      {item.text}
+                    </a>
+                  ) : (
+                    <p className="text-sm leading-relaxed">{item.text}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4 — Delivery Info + Follow Us */}
+          <div>
+            <p className="mb-4 text-base font-semibold tracking-wide uppercase">
+              Delivery Info
+            </p>
+            <ul className="space-y-4">
+              {deliveryDetails.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="text-secondary mt-0.5 shrink-0">
+                    {item.icon}
+                  </span>
+                  <p className="text-sm leading-relaxed">{item.text}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10">
+              <p className="mb-4 text-base font-semibold tracking-wide uppercase">
+                Follow Us
+              </p>
+              <div className="flex items-center gap-5">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="hover:text-secondary transition-colors duration-200"
+                >
+                  <FacebookIcon />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="hover:text-secondary transition-colors duration-200"
+                >
+                  <InstaIcon />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Twitter / X"
+                  className="hover:text-secondary transition-colors duration-200"
+                >
+                  <TwitterIcon />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-primary-800 flex w-full items-center justify-between py-6">
-        <div className="section-container flex w-full flex-col items-center justify-between gap-4 md:flex-row">
-          <div className="flex w-full items-center justify-center gap-6 md:justify-start">
-            <p>Payment Method:</p>
-            <span className="rounded-md bg-white px-5">
-              <StripeIcon />
-            </span>
-            {/* <div className="flex flex-wrap items-center gap-2">
-              <PaypalIcon />
-              <AmexIcon />
-              <AppleIcon />
-              <DiscoverIcon />
-              <GoogleIcon />
-              <MasterCadIcon />
-              <VisaIcon />
-            </div> */}
+      {/* ── Divider ── */}
+      <Separator className="bg-white/10" />
+
+      {/* ── Bottom bar ── */}
+      <section className="bg-primary-800 w-full">
+        <div className="section-container flex w-full flex-col items-center justify-between gap-4 py-6 md:flex-row">
+          <div className="flex items-center gap-3">
+            <p className="text-sm">Secure payments via</p>
+            <Image
+              src={stripeIcon}
+              alt="Stripe"
+              className="h-8 w-auto rounded bg-white px-4 py-2"
+              width={100}
+              height={40}
+            />
           </div>
-          <p className="md:text-nowrap">
-            © Copyright {new Date().getFullYear()} Sufis. All Rights Reserved.
+          <p className="text-sm md:text-nowrap">
+            © {new Date().getFullYear()} Sufis Market. All Rights Reserved.
           </p>
         </div>
       </section>

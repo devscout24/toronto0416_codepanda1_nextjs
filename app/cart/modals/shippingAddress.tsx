@@ -23,7 +23,7 @@ export default function shippingAddress() {
        is_default: "True",
      });
 
-     console.log(res, "response from addAddress in shippingAddress component");
+     //  console.log(res, "response from addAddress in shippingAddress component");
 
      if (!res) {
        setErrorMessage("Something went wrong. Please try again.");
