@@ -14,19 +14,20 @@ export default function HomePage() {
     {
       icon: ShippingIcon,
       title: "Free Delivery",
-      description: "On all orders over $150.00",
+      description: "Free delivery on orders over $150.",
     },
     {
       icon: PaymentIcon,
-      title: "100% Payment Secure",
-      description: "Your payment are safe with us.",
+      title: "Secure Online Payment",
+      description: "Safe and secure payment processing.",
     },
     {
       icon: SupportIcon,
-      title: "Support 24/7",
-      description: "Contact us 24 hours a day",
+      title: "Customer Support",
+      description: "Support available during business hours.",
     },
   ];
+
 
   return (
     <section className="mb-28 space-y-28">
