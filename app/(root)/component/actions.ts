@@ -67,9 +67,6 @@ export const isPostalCodeAvailable = async (
 
 export const getReview = async () => {
   try {
-    // Note: The /recently-viewed-reviews endpoint does not exist on the backend
-    // You need to create this endpoint in your Django API
-    // For now, returning null as fallback
     const response =
       await fetcher<TestimonialApiResponse>(`/five-star-reviews/`);
 
@@ -79,12 +76,10 @@ export const getReview = async () => {
     }
     return response.data;
   } catch (error) {
-    // Log the error but don't crash the app
     console.error(
       `Error fetching reviews - endpoint may not exist on backend:`,
       error,
     );
-    // Return null to allow the app to continue without reviews
     return null;
   }
 };
