@@ -1,0 +1,130 @@
+import { Order } from "./order";
+
+export type TPersonalInfo = {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  country: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TAddressBookEntry = {
+  image?: string;
+  id: number;
+  city: string;
+  area: string;
+  postal_code: string;
+  block_sector: string;
+  street_road: string | null;
+  house_no: string | null;
+  flat_no: string | null;
+  floor_no: string | null;
+  name: string;
+  phone: string;
+  delivery_note: string;
+  address_type: "home" | "office"; // literal types
+  is_default: boolean;
+};
+
+export type TOrder = {
+  order_id: string;
+  orderId: string;
+  placed_on: string;
+  item: string;
+  total_price: string;
+  status: string;
+};
+
+export type TUserProfile = {
+  personal_info: TPersonalInfo;
+  addresses: TAddressBook[];
+  orders: Order[];
+};
+
+export type TUserProfileResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TUserProfile;
+};
+
+export type TInvoice = {
+  id: string;
+  status: "Paid" | "Pending" | "Failed";
+  amount: string;
+  downloadUrl?: string; // Optional since it's an action
+};
+
+// sing in resposne
+// types/apiResponse.ts
+
+export interface ApiResponse<T> {
+  status: string;
+  status_code: number;
+  message: string;
+  data: T;
+  token?: string;
+}
+
+export interface LoginData {
+  access: string;
+  refresh: string;
+  user: User;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
+export type TUserAccount = {
+  id?: number;
+  name: string;
+  phone: string;
+  country: string;
+  email?: string; // optional if your API doesn't return email
+  profile_image?: FormDataEntryValue | string; // optional
+};
+
+export type TUserResponse = {
+  data: {
+    id?: number;
+    name: string;
+    phone: string;
+    country: string;
+    email?: string; // optional if your API doesn't return email
+    profile_image?: string; // optional
+  };
+};
+
+export type TAddressBook = {
+  id: number;
+  is_default: boolean;
+  address: string;
+};
+
+export type TAddressBookResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TAddressBook;
+};
+
+// Single delivery option
+export type TDeliveryOption = {
+  id: number;
+  name: string;
+  description: string;
+  shipping_charge: string; // keep as string (API returns string)
+};
+
+// Full API response
+export type TDeliveryOptionResponse = {
+  status: string;
+  status_code: number;
+  message: string;
+  data: TDeliveryOption;
+};

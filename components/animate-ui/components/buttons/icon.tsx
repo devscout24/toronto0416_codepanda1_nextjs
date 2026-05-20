@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import {
   Button as ButtonPrimitive,
   type ButtonProps as ButtonPrimitiveProps,
-} from "@/components/animate-ui/primitives/buttons/button";
-import { cn } from "@/lib/utils";
+} from '@/components/animate-ui/primitives/buttons/button';
+import { cn } from '@/lib/utils';
 import {
   Particles,
   ParticlesEffect,
-} from "@/components/animate-ui/primitives/effects/particles";
+} from '@/components/animate-ui/primitives/effects/particles';
 
 const buttonVariants = cva(
   "flex items-center justify-center rounded-md transition-[box-shadow,_color,_background-color,_border-color,_outline-color,_text-decoration-color,_fill,_stroke] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer",
@@ -26,7 +26,7 @@ const buttonVariants = cva(
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary-500",
+          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
@@ -45,7 +45,7 @@ const buttonVariants = cva(
   },
 );
 
-type IconButtonProps = Omit<ButtonPrimitiveProps, "asChild"> &
+type IconButtonProps = Omit<ButtonPrimitiveProps, 'asChild'> &
   VariantProps<typeof buttonVariants> & {
     children?: React.ReactNode;
   };
@@ -76,13 +76,7 @@ function IconButton({
         {children}
         <ParticlesEffect
           data-variant={variant}
-          className={cn(
-            variant === "secondary"
-              ? "bg-secondary-200 size-1 rounded-full"
-              : variant === "ghost"
-                ? "size-1 rounded-full bg-neutral-200"
-                : "bg-primary-200 size-1 rounded-full",
-          )}
+          className="bg-neutral-500 size-1 rounded-full"
         />
       </ButtonPrimitive>
     </Particles>

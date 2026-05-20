@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -152,34 +151,74 @@ function NavigationMenuLink({
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
   const [hover, setHover] = React.useState(false);
-  const child = (props as any).children as React.ReactNode;
-  let enhancedChild = child;
+  const child = (props as { children?: React.ReactNode }).children;
 
-  // Try to extract plain text label from child for animation
-  if (React.isValidElement(child)) {
-    const inner = (child.props as any)?.children;
-    const label = typeof inner === "string" ? inner : undefined;
-    if (label) {
-      enhancedChild = React.cloneElement(child as any, {
-        className: cn((child.props as any)?.className, "relative"),
-        children: (
-          <>
-            {!hover && <span className="block">{label}</span>}
-            {hover && (
-              <RollingText
-                className="text-primary block"
-                text={label}
-                // Faster animation on hover
-                transition={{ duration: 0.2, delay: 0.02, ease: "easeOut" }}
-                delay={0}
-                swapOffset={0.08}
-              />
-            )}
-          </>
-        ),
-      });
+  const hasPlainText = (node: React.ReactNode): boolean =>
+    React.Children.toArray(node).some((entry) => {
+      if (typeof entry === "string") {
+        return entry.trim().length > 0;
+      }
+
+      if (typeof entry === "number") {
+        return true;
+      }
+
+      if (React.isValidElement(entry)) {
+        const element = entry as React.ReactElement<{
+          children?: React.ReactNode;
+        }>;
+        return hasPlainText(element.props.children);
+      }
+
+      return false;
+    });
+
+  const enhanceNode = (node: React.ReactNode): React.ReactNode => {
+    if (typeof node === "string" || typeof node === "number") {
+      const label = String(node);
+
+      return (
+        <>
+          {!hover && <span className="block">{label}</span>}
+          {hover && (
+            <RollingText
+              className="text-primary block"
+              text={label}
+              transition={{ duration: 0.2, delay: 0.02, ease: "easeOut" }}
+              delay={0}
+              swapOffset={0.08}
+            />
+          )}
+        </>
+      );
     }
-  }
+
+    if (Array.isArray(node)) {
+      return node.map((item) => enhanceNode(item));
+    }
+
+    if (React.isValidElement(node)) {
+      const element = node as React.ReactElement<{
+        className?: string;
+        children?: React.ReactNode;
+      }>;
+
+      const enhancedChildren = enhanceNode(element.props.children);
+      const hasClassName = typeof element.props.className === "string";
+
+      return React.cloneElement(
+        element,
+        hasClassName
+          ? { className: cn(element.props.className, "relative") }
+          : undefined,
+        enhancedChildren,
+      );
+    }
+
+    return node;
+  };
+
+  const enhancedChild = hasPlainText(child) ? enhanceNode(child) : child;
 
   return (
     <NavigationMenuPrimitive.Link

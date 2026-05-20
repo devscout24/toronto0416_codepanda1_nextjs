@@ -1,0 +1,64 @@
+import ShippingIcon from "@/assets/icons/free-shipping.svg";
+import PaymentIcon from "@/assets/icons/secure-payment.svg";
+import SupportIcon from "@/assets/icons/support.svg";
+import Hero from "./component/hero";
+import Categories from "./component/categories";
+import WeeklySpecials from "./component/weeklySpecials";
+import Banner from "./component/banner";
+import BestSelling from "./component/bestSelling";
+import Testimonials from "./component/testimonials";
+import HashScrollHandler from "./component/hashScrollHandler";
+
+export default function HomePage() {
+  const benefits = [
+    {
+      icon: ShippingIcon,
+      title: "Free Delivery",
+      description: "Free delivery on orders over $150.",
+    },
+    {
+      icon: PaymentIcon,
+      title: "Secure Online Payment",
+      description: "Safe and secure payment processing.",
+    },
+    {
+      icon: SupportIcon,
+      title: "Customer Support",
+      description: "Support available during business hours.",
+    },
+  ];
+
+
+  return (
+    <section className="mb-28 space-y-28">
+      <HashScrollHandler />
+      <Hero />
+      <Categories />
+      <WeeklySpecials />
+      <Banner />
+      <BestSelling />
+      <Testimonials />
+
+      <section>
+        {
+          <div className="section-container flex flex-col items-start justify-between gap-10 md:flex-row">
+            {benefits.map((benefit, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-4 md:flex-col lg:flex-row"
+              >
+                <benefit.icon />
+                <div className="space-y-2">
+                  <h4 className="text-xl font-semibold lg:text-base">
+                    {benefit.title}
+                  </h4>
+                  <p className="mt-2 text-sm">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        }
+      </section>
+    </section>
+  );
+}

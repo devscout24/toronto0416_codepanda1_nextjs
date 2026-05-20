@@ -63,7 +63,7 @@ async function readCollection(collection: string): Promise<DatabaseRecord[]> {
     return parsed;
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      console.log(
+      console.error(
         `Collection ${collection}.json not found, creating empty collection`,
       );
       return [];
@@ -83,7 +83,6 @@ async function readCollection(collection: string): Promise<DatabaseRecord[]> {
           "utf8",
         );
         await fs.writeFile(backupPath, corruptedContent, "utf-8");
-        console.log(`Backup created: ${backupPath}`);
       } catch (backupError) {
         console.error("Failed to create backup:", backupError);
       }
@@ -130,17 +129,13 @@ async function writeCollection(
 
     // Rename temp file to actual file (atomic operation)
     await fs.rename(tempPath, fullPath);
-
-    console.log(
-      `Successfully wrote ${data.length} records to ${collection}.json`,
-    );
   } catch (error) {
     console.error(`Error writing to ${collection}:`, error);
 
     // Clean up temp file if it exists
     try {
       await fs.unlink(tempPath);
-      console.log(`Cleaned up temporary file: ${tempPath}`);
+      // console.log(`Cleaned up temporary file: ${tempPath}`);
     } catch (cleanupError) {
       // Ignore cleanup errors, but log them
       console.warn(`Could not clean up temp file ${tempPath}:`, cleanupError);
@@ -150,10 +145,10 @@ async function writeCollection(
     const nodeError = error as NodeJS.ErrnoException;
     if (nodeError.code === "ENOENT" && nodeError.message?.includes("rename")) {
       try {
-        console.log(`Fallback: Writing directly to ${collection}.json`);
+        // console.log(`Fallback: Writing directly to ${collection}.json`);
         const jsonString = JSON.stringify(data, null, 2);
         await fs.writeFile(fullPath, jsonString, "utf-8");
-        console.log(`Fallback write successful for ${collection}.json`);
+        // console.log(`Fallback write successful for ${collection}.json`);
         return;
       } catch (fallbackError) {
         console.error(`Fallback write also failed:`, fallbackError);
@@ -568,7 +563,7 @@ export async function repairCollection(
     const data = await readCollection(collection);
     return { repaired: false, recordCount: data.length };
   } catch {
-    console.log(`Repairing collection ${collection}...`);
+    // console.log(`Repairing collection ${collection}...`);
     await writeCollection(collection, []);
     return { repaired: true, recordCount: 0 };
   }

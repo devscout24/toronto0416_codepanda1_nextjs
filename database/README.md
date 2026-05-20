@@ -269,7 +269,7 @@ const updatedCount = await updateManyRecords(
   { status: "read" },
 );
 
-console.log(`Updated ${updatedCount} messages`);
+// console.log(`Updated ${updatedCount} messages`);
 ```
 
 ### 🗑️ Deleting Data
@@ -283,9 +283,9 @@ Delete the first record that matches the filter. Returns `true` if deleted, `fal
 const deleted = await deleteRecord("messages", { id: 123 });
 
 if (deleted) {
-  console.log("Message deleted!");
+  // console.log("Message deleted!");
 } else {
-  console.log("Message not found");
+  // console.log("Message not found");
 }
 ```
 
@@ -297,7 +297,7 @@ Delete all records that match the filter. Returns the number of deleted records.
 // Delete all messages from a user
 const deletedCount = await deleteManyRecords("messages", { sender: "john" });
 
-console.log(`Deleted ${deletedCount} messages`);
+// console.log(`Deleted ${deletedCount} messages`);
 ```
 
 ## 🎯 Advanced Filtering
