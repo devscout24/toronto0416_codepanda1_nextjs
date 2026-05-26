@@ -2,9 +2,11 @@ import { TCartItems } from "@/types/cart.type";
 import Checkout from "../components/checkout";
 import Shipping from "../components/shipping";
 import { getCart } from "../components/action";
+import { isUser } from "@/components/main-nav/actions";
 
 export default async function CheckoutPage() {
   let cartData: TCartItems | null = null;
+  const isUserLoggedIn = await isUser();
 
   try {
     cartData = await getCart();
@@ -20,6 +22,7 @@ export default async function CheckoutPage() {
         <div className="w-full md:w-[40%] lg:w-[30%]">
           <Checkout
             title="Proceed to Pay"
+            isUserLoggedIn={isUserLoggedIn}
             // redirectTo="/cart/checkout/payment"
             metadata={{
               sub_total: cartData?.sub_total ?? 0.0,

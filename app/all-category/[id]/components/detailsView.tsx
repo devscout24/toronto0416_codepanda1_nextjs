@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 export default function DetailsView({ payload }: { payload: TProduct }) {
   const [isAddress, setIsAddress] = useState<boolean>(true);
   const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>(false);
+
+  console.log("Product Details Payload:", payload);
   useEffect(() => {
     const checkAddress = async () => {
       setIsLoadingAddress(true);
@@ -73,16 +75,25 @@ export default function DetailsView({ payload }: { payload: TProduct }) {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              {payload.oldPrice && (
-                <p className="text-neutral-300 line-through">
-                  ${payload.oldPrice}
-                </p>
+            <div className="flex items-center gap-0.5 overflow-hidden sm:gap-2.5">
+              {Number(payload?.price) > 0 ? (
+                <>
+                  {payload?.old_price && (
+                    <del className="price-original text-xs text-neutral-400 line-through">
+                      ${payload?.old_price}
+                    </del>
+                  )}
+                  <p className="price-sale text-primary-600 text-xs font-medium sm:text-sm">
+                    ${payload?.price}/{payload?.unit}
+                  </p>
+                </>
+              ) : (
+                payload?.old_price && (
+                  <p className="text-xs font-medium text-neutral-800 sm:text-sm">
+                    ${payload?.old_price}/{payload?.unit}
+                  </p>
+                )
               )}
-
-              <p className="text-primary-600 text-lg">
-                ${payload.price}/{payload.unit}
-              </p>
             </div>
           </div>
 

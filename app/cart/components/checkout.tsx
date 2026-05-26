@@ -22,20 +22,23 @@ export default function Checkout({
   // redirectTo,
   isDisabled = false,
   metadata,
+  isUserLoggedIn,
 }: {
   title: string;
   // redirectTo: string;
   isDisabled?: boolean;
   metadata?: CartMetaData;
+  isUserLoggedIn?: boolean;
 }) {
   const [couponCode, setCouponCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const addressId = searchParams.get("address_id");
-  const order_id = searchParams.get("orderId");
+  // const order_id = searchParams.get("orderId");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [guestEmail, setGuestEmail] = useState("guest@example.com");
 
   // checkout
   const handleCheckout = async () => {
@@ -57,41 +60,13 @@ export default function Checkout({
     }
   };
 
-  // const handleProcessPay = async () => {
-  //   setLoading(true);
-  //   if (!addressId || !order_id) {
-  //     toast.error("Please select an address");
-  //     return;
-  //   }
-
-  //   try {
-  //     const orderId = await processPay({
-  //       address_id: Number(addressId),
-  //       order_id: String(order_id),
-  //     });
-
-  //     if (orderId) {
-  //       router.push(`/cart/checkout/payment?orderId=${orderId}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error processing payment:", error);
-  //     toast.error(
-  //       error instanceof Error
-  //         ? error.message
-  //         : "Failed to process payment. Please try again.",
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const handleCreatePayment = async () => {
     setLoading(true);
 
     try {
       const redirectTo = await createPayment({
         address_id: Number(addressId),
-        guest_email: "guest@example.com",
+        guest_email: guestEmail,
       });
       if (redirectTo) {
         window.location.href = redirectTo;
@@ -247,37 +222,37 @@ export default function Checkout({
 
         {title === "Proceed to Pay" &&
           (!isDisabled ? (
-            // <Link href={redirectTo}>
-            <Button
-              onClick={handleCreatePayment}
-              disabled={isDisabled}
-              className="w-full"
-            >
-              {title} {loading && <Spinner className="size-4" />}
-            </Button>
+            <div className="space-y-3">
+              {!isUserLoggedIn && (
+                <div className="space-y-1">
+                  <Label
+                    htmlFor="guest-email"
+                    className="text-xs text-neutral-400"
+                  >
+                    Email is needed for payment receipt
+                  </Label>
+                  <input
+                    id="guest-email"
+                    type="email"
+                    className="h-8 w-full rounded-md border px-3 text-xs outline-none focus:ring-1 focus:ring-black"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)}
+                  />
+                </div>
+              )}
+              <Button
+                onClick={handleCreatePayment}
+                disabled={isDisabled}
+                className="w-full"
+              >
+                {title} {loading && <Spinner className="size-4" />}
+              </Button>
+            </div>
           ) : (
-            // </Link>
             <Button className="w-full" disabled>
               Need to Add Address
             </Button>
           ))}
-
-        {/* {title === "Place Order" &&
-          (!isDisabled ? (
-            // <Link href={redirectTo}>
-            <Button
-              onClick={handleCreatePayment}
-              disabled={isDisabled || loading}
-              className="w-full"
-            >
-              {title} {loading && <Spinner className="size-4" />}
-            </Button>
-          ) : (
-            // </Link>
-            <Button className="w-full" disabled>
-              Need to Add Address
-            </Button>
-          ))} */}
       </div>
     </section>
   );

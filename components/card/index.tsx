@@ -19,9 +19,9 @@ import { Spinner } from "../ui/spinner";
 export function SkeletonProductCard() {
   return (
     <section>
-      <Card className="flex h-[380px] w-full flex-col overflow-hidden p-0 sm:h-[447px]">
+      <Card className="flex h-95 w-full flex-col overflow-hidden p-0 sm:h-111.75">
         <CardHeader className="relative p-0">
-          <Skeleton className="h-[160px] w-full rounded-none sm:h-[215px]" />
+          <Skeleton className="h-40 w-full rounded-none sm:h-53.75" />
           <div className="absolute top-4 flex w-full items-center justify-between px-4">
             <Skeleton className="h-5 w-16 rounded-md sm:h-6 sm:w-24" />
             <Skeleton className="h-7 w-7 rounded-full sm:h-8 sm:w-8" />
@@ -85,7 +85,7 @@ export default function ProductCard({
 
   return (
     <section className="w-full select-none">
-      <Card className="group flex h-fit min-h-85 w-full flex-col overflow-hidden p-0 sm:min-h-107">
+      <Card className="group flex h-fit min-h-64 w-full flex-col overflow-hidden p-0 sm:min-h-107">
         <Link href={`/all-category/${payload?.id}`}>
           <CardHeader className="relative z-30 p-0">
             <div className="overflow-hidden">
@@ -117,7 +117,7 @@ export default function ProductCard({
           </CardHeader>
 
           <CardContent className="mt-1.5 px-2 sm:px-4">
-            <div className="line-clamp-1 h-5">
+            {/* <div className="line-clamp-1 h-6">
               {payload?.tags && payload?.tags?.length > 0 && (
                 <div className="flex gap-1 sm:gap-2">
                   {payload?.tags.map((tag) => (
@@ -131,15 +131,15 @@ export default function ProductCard({
                   ))}
                 </div>
               )}
-            </div>
+            </div> */}
 
             <div className="my-1.5 sm:my-2.5">
               <h2 className="line-clamp-1 text-sm font-semibold sm:text-lg">
                 {payload?.title}
               </h2>
-              <p className="line-clamp-1 text-xs sm:text-sm">
+              {/* <p className="line-clamp-1 text-xs sm:text-sm">
                 {payload?.description}
-              </p>
+              </p> */}
             </div>
 
             <div className="mb-3 sm:mb-5">
@@ -148,14 +148,24 @@ export default function ProductCard({
 
             <div className="mb-2 flex items-center justify-between sm:mb-2.5">
               <div className="flex items-center gap-0.5 overflow-hidden sm:gap-2.5">
-                {payload?.oldPrice && (
-                  <p className="text-xs text-neutral-300 line-through">
-                    ${payload?.oldPrice}
-                  </p>
+                {Number(payload?.price) > 0 ? (
+                  <>
+                    {payload?.oldPrice && (
+                      <del className="price-original text-xs text-neutral-400 line-through">
+                        ${payload?.oldPrice}
+                      </del>
+                    )}
+                    <p className="price-sale text-primary-600 text-xs font-medium sm:text-sm">
+                      ${payload?.price}/{payload?.unit}
+                    </p>
+                  </>
+                ) : (
+                  payload?.oldPrice && (
+                    <p className="text-xs font-medium text-neutral-800 sm:text-sm">
+                      ${payload?.oldPrice}/{payload?.unit}
+                    </p>
+                  )
                 )}
-                <p className="text-primary-600 text-xs font-medium sm:text-sm">
-                  ${payload?.price}/{payload?.unit}
-                </p>
               </div>
               <div
                 className={cn(
@@ -186,7 +196,7 @@ export default function ProductCard({
             <Button
               disabled={isLoadingAddress}
               variant="secondary"
-              className="h-8 w-full text-xs sm:h-9 sm:text-sm"
+              className="h-7.5 w-full text-xs sm:h-9 sm:text-sm"
             >
               Add to Cart {isLoadingAddress && <Spinner />}
             </Button>
