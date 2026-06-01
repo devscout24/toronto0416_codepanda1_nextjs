@@ -191,7 +191,7 @@ export default function Footer() {
       <Separator className="bg-white/10" />
 
       {/* ── Bottom bar ── */}
-      <section className="bg-primary-800 w-full">
+      <section className="bg-primary-800 w-full pb-16 sm:pb-0">
         <div className="section-container flex w-full flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <div className="flex items-center gap-3">
             <p className="text-sm">Secure payments via</p>

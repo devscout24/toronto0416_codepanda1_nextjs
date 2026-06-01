@@ -133,7 +133,7 @@ export default function ProductCart({
               <div>
                 <Label
                   htmlFor={String(row.original.id)}
-                  className="text-sm md:text-base"
+                  className="text-sm md:text-base line-clamp-1"
                 >
                   {row.original.product_name}
                 </Label>
@@ -172,7 +172,7 @@ export default function ProductCart({
       accessorKey: "price",
       cell: ({ row }) => (
         <div className="text-sm font-semibold md:text-base">
-          ${row.original.price}
+          ${Number(row.original.price).toFixed(2)}
         </div>
       ),
     },
@@ -204,7 +204,7 @@ export default function ProductCart({
         <div className="text-sm font-semibold md:text-base">
           $
           {(Number(row.original.price) * Number(row.original.quantity)).toFixed(
-            3,
+            2,
           )}
         </div>
       ),

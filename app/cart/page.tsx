@@ -15,7 +15,7 @@ export default async function CartPage() {
 
   return (
     <section className="mx-4 pt-10 pb-28 lg:mx-6">
-      <div className="mx-auto max-w-[1200px] space-y-28">
+      <div className="mx-auto max-w-300 space-y-28">
         <div className="flex w-full flex-col items-start gap-10 lg:flex-row">
           <div className="w-full lg:w-[70%]">
             <ProductCart cartData={cartData?.items ?? []} />

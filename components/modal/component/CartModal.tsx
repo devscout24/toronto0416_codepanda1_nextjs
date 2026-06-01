@@ -151,18 +151,25 @@ export default function CartModal() {
         <Rating rating={productDetails.rating} readOnly />
 
         {/* Price */}
-        <div className="flex items-center gap-2">
-          {productDetails.oldPrice && (
-            <span className="text-xs text-gray-400 line-through">
-              ${productDetails.oldPrice}
-            </span>
+        <div className="flex items-center gap-0.5 overflow-hidden sm:gap-2.5">
+          {Number(productDetails?.price) > 0 ? (
+            <>
+              {productDetails?.old_price && (
+                <del className="price-original text-xs text-neutral-400 line-through">
+                  ${productDetails?.old_price}
+                </del>
+              )}
+              <p className="price-sale text-primary-600 text-xs font-medium sm:text-sm">
+                ${productDetails?.price}/{productDetails?.unit}
+              </p>
+            </>
+          ) : (
+            productDetails?.old_price && (
+              <p className="text-xs font-medium text-neutral-800 sm:text-sm">
+                ${productDetails?.old_price}/{productDetails?.unit}
+              </p>
+            )
           )}
-          <span className="text-primary-600 text-sm font-semibold">
-            ${productDetails.price}
-            <span className="text-xs font-normal text-gray-400">
-              /{productDetails.unit}
-            </span>
-          </span>
         </div>
 
         {/* Packing Instructions */}

@@ -5,6 +5,7 @@ import LikeIcon from "@/assets/icons/love.svg";
 import { IconButton } from "@/components/animate-ui/components/buttons/icon";
 import { cn } from "@/lib/utils";
 import { TProduct } from "@/types/product.type";
+import { Heart } from "lucide-react";
 import { MouseEvent, useState } from "react";
 
 export default function LikeButton({ payload }: { payload?: TProduct }) {
@@ -42,7 +43,7 @@ export default function LikeButton({ payload }: { payload?: TProduct }) {
       onClick={handleClick}
       disabled={loading}
     >
-      <LikeIcon className="mt-0.5 size-[18px]" />
+      <LikeIcon className="mt-0.5 size-4.5" />
     </IconButton>
   );
 }

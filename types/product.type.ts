@@ -10,6 +10,7 @@ export type TProduct = {
   tags: string[];
   badge?: string;
   oldPrice: string;
+  old_price?: string;
   price: string;
   unit: string;
   stockStatus: "out-of-stock" | "in-stock";
